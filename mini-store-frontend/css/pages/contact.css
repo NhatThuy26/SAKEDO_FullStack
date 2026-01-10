@@ -1,0 +1,397 @@
+/* =====================================================
+   CONTACT PAGE STYLES - BẢN ĐẦY ĐỦ (FULL)
+   ===================================================== */
+
+/* --- 1. PHẦN MỞ ĐẦU (HERO) --- */
+.contact-hero {
+  padding: 60px 0 80px 0;
+  text-align: center;
+  background-color: #fff;
+}
+
+.contact-title {
+  font-family: "Fruktur", cursive;
+  color: #d8b26e;
+  font-size: 2.8rem;
+  margin-bottom: 15px;
+  font-weight: 400;
+}
+
+.contact-desc {
+  font-family: "Epilogue", sans-serif;
+  color: #555;
+  font-size: 1.1rem;
+  margin-bottom: 60px;
+  font-weight: 500;
+}
+
+/* --- 2. GRID 3 THẺ THỐNG KÊ (STATS) --- */
+.contact-stats-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 300px;
+  max-width: 380px;
+  border: 2px solid #d8b26e;
+  border-radius: 16px;
+  padding: 50px 20px;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(216, 178, 110, 0.15);
+  transition: 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(216, 178, 110, 0.25);
+  background-color: #fffcf5;
+}
+
+.stat-icon {
+  font-size: 3.5rem;
+  color: #d8b26e;
+  margin-bottom: 25px;
+}
+
+.stat-number {
+  font-family: "Epilogue", sans-serif;
+  font-weight: 800;
+  font-size: 2.5rem;
+  color: #d8b26e;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.stat-text {
+  font-family: "Epilogue", sans-serif;
+  color: #555;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* =====================================================
+   3. SECTION FORM LIÊN HỆ & THÔNG TIN
+   ===================================================== */
+.contact-form-section {
+  padding: 80px 0 120px 0;
+  background-color: #fff;
+}
+
+.contact-row {
+  display: flex;
+  gap: 60px;
+  align-items: flex-start;
+  max-width: 1150px;
+  margin: 0 auto;
+}
+
+/* =====================================================
+   STYLE CỘT TRÁI - THÔNG TIN LIÊN HỆ (NEW DESIGN)
+   ===================================================== */
+
+/* 1. Phần Tiêu đề cột */
+.col-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.col-header-icon {
+  font-size: 2rem;
+  color: #d8b26e;
+  margin-bottom: 10px;
+}
+
+.col-header-text h2 {
+  font-family: "Epilogue", sans-serif; /* Dùng font hiện đại */
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.col-header-text p {
+  font-size: 0.95rem;
+  color: #777;
+}
+
+/* 2. Danh sách thẻ (Card List) */
+.info-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Khoảng cách giữa các thẻ */
+}
+
+/* 3. Style từng thẻ (Card) */
+.info-card {
+  background-color: #f8f9fa; /* Màu nền xám nhẹ sạch sẽ */
+  border-radius: 12px; /* Bo góc */
+  padding: 20px 25px;
+  display: flex;
+  align-items: center;
+  position: relative; /* Để căn chỉnh thanh dọc bên trái */
+  overflow: hidden; /* Để thanh dọc không bị lòi ra ngoài góc bo */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  transition: 0.3s;
+}
+
+/* Thanh dọc màu vàng bên trái - GIỐNG HÌNH MẪU */
+.info-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px; /* Độ dày thanh dọc */
+  background-color: #d8b26e;
+}
+
+.info-card:hover {
+  transform: translateX(5px); /* Hiệu ứng đẩy nhẹ sang phải khi hover */
+  box-shadow: 0 8px 25px rgba(216, 178, 110, 0.15);
+  background-color: #fff;
+}
+
+/* 4. Icon tròn bên trái */
+.card-icon-box {
+  width: 50px;
+  height: 50px;
+  background-color: #d8b26e; /* Nền cam/vàng */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff; /* Icon màu trắng */
+  font-size: 1.4rem;
+  margin-right: 20px; /* Khoảng cách với chữ */
+  flex-shrink: 0;
+  margin-left: 10px; /* Cách thanh dọc ra một chút */
+}
+
+/* 5. Phần nội dung chữ */
+.card-details h3 {
+  font-family: "Epilogue", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.main-info {
+  font-family: "Epilogue", sans-serif;
+  font-size: 0.95rem;
+  color: #555;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.sub-info {
+  font-family: "Epilogue", sans-serif;
+  font-size: 0.8rem;
+  color: #999; /* Màu chữ nhạt cho thông tin phụ */
+  font-style: italic;
+}
+
+/* --- CỘT PHẢI: FORM GỬI TIN NHẮN --- */
+.contact-form-col {
+  flex: 1.4;
+  background: #fff;
+  padding: 50px;
+  border-radius: 25px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f0f0f0;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.header-icon {
+  font-size: 2.5rem;
+  color: #d8b26e;
+  margin-bottom: 15px;
+}
+
+.form-header h2 {
+  font-family: "Epilogue", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.form-header p {
+  font-size: 0.95rem;
+  color: #777;
+  font-style: italic;
+}
+
+/* --- CHI TIẾT INPUT & LABEL (Đây là phần bạn bị thiếu) --- */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-family: "Epilogue", sans-serif;
+  font-weight: 700;
+  color: #d8b26e;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.form-label i {
+  margin-right: 5px;
+}
+
+/* Style cho ô nhập liệu */
+.sakedo-form input[type="text"],
+.sakedo-form input[type="email"],
+.sakedo-form input[type="tel"],
+.sakedo-form select,
+.sakedo-form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-family: "Epilogue", sans-serif;
+  font-size: 0.95rem;
+  color: #333;
+  background: #fff;
+  transition: 0.3s;
+  outline: none;
+}
+
+/* Hiệu ứng khi bấm vào nhập */
+.sakedo-form input:focus,
+.sakedo-form select:focus,
+.sakedo-form textarea:focus {
+  border-color: #d8b26e;
+  box-shadow: 0 0 0 3px rgba(216, 178, 110, 0.1);
+}
+
+/* Textarea & Đếm ký tự */
+.textarea-wrap {
+  position: relative;
+}
+
+.char-count {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 0.75rem;
+  color: #aaa;
+}
+
+/* Checkbox */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #d8b26e;
+  cursor: pointer;
+}
+
+.checkbox-group label {
+  font-size: 0.9rem;
+  color: #666;
+  cursor: pointer;
+  font-family: "Epilogue", sans-serif;
+}
+
+/* Nút Gửi */
+.btn-submit-gold {
+  width: 100%;
+  padding: 14px;
+  background-color: #d8b26e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: "Epilogue", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-submit-gold:hover {
+  background-color: #c59f5e;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(216, 178, 110, 0.4);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 992px) {
+  .contact-row {
+    flex-direction: column;
+    gap: 60px;
+  }
+  .contact-info-col,
+  .contact-form-col {
+    flex: auto;
+    width: 100%;
+    padding: 30px;
+  }
+}
+
+/* =====================================================
+   STYLE PHẦN BẢN ĐỒ (MAP)
+   ===================================================== */
+
+/* Đẩy phần Map xuống cách xa danh sách thông tin một chút */
+.map-section {
+  margin-top: 50px;
+  border-top: 1px dashed #eee; /* Đường kẻ mờ ngăn cách cho đẹp */
+  padding-top: 30px;
+}
+
+/* Tiêu đề Map */
+.map-header .col-header-icon {
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+}
+
+.map-header h2 {
+  font-size: 1.4rem;
+}
+
+/* Khung chứa bản đồ (Wrapper) */
+.map-wrapper {
+  width: 100%;
+  height: 300px; /* Chiều cao cố định của bản đồ */
+  border-radius: 15px; /* Bo góc tròn trịa */
+  overflow: hidden; /* Ẩn phần thừa để bo góc hoạt động */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Bóng đổ tạo chiều sâu */
+  border: 4px solid #fff; /* Viền trắng bao quanh cho giống khung tranh */
+  outline: 2px solid #d8b26e; /* Viền ngoài màu vàng Sakedo */
+  transition: 0.3s;
+}
+
+/* Hiệu ứng khi rê chuột vào bản đồ */
+.map-wrapper:hover {
+  box-shadow: 0 15px 40px rgba(216, 178, 110, 0.2);
+  transform: translateY(-5px);
+}

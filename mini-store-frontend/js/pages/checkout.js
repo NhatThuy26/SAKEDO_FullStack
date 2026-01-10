@@ -1,203 +1,172 @@
-// --- BIẾN TOÀN CỤC ---
-let subTotalAmount = 0; // Tổng tiền hàng (chưa ship)
+// --- FILE: js/pages/checkout.js (PHIÊN BẢN DEBUG) ---
 
-// --- 1. KHỞI TẠO KHI LOAD TRANG ---
+console.log("--> FILE JS ĐÃ ĐƯỢC TẢI THÀNH CÔNG!"); // Dòng này hiện nghĩa là file JS đã kết nối đúng
+
+let subTotalAmount = 0;
+
 document.addEventListener("DOMContentLoaded", function () {
-  // A. Kiểm tra giỏ hàng có hàng không
+  console.log("1. Trang đã tải xong HTML");
+
+  // Kiểm tra giỏ hàng
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  console.log("2. Giỏ hàng hiện có:", cart);
 
   if (cart.length === 0) {
-    alert("Giỏ hàng của bạn đang trống! Vui lòng chọn món ăn.");
-    window.location.href = "/index.html"; // Quay về trang chủ
+    console.warn("Giỏ hàng trống!");
+    // Tạm thời comment dòng này để test giao diện
+    // alert("Giỏ hàng trống!");
+    // window.location.href = "/index.html";
     return;
   }
 
-  // B. Render danh sách món ăn thu nhỏ (Mini Cart)
   const miniList = document.getElementById("mini-cart-list");
-  miniList.innerHTML = ""; // Xóa nội dung cũ (nếu có)
+  if (!miniList) {
+    console.error("LỖI: Không tìm thấy thẻ có id='mini-cart-list' trong HTML");
+    return;
+  }
 
-  subTotalAmount = 0; // Reset tổng tiền
-
+  // Render
+  subTotalAmount = 0;
   cart.forEach((item) => {
-    // Xử lý giá tiền an toàn (Chuyển chuỗi "35.000đ" thành số 35000)
     let price = item.price;
     if (typeof price === "string") {
       price = parseFloat(price.replace(/\./g, "").replace("đ", ""));
     }
-
-    // Cộng dồn tổng tiền hàng
     subTotalAmount += price * item.quantity;
 
-    // HTML cho từng món
     miniList.innerHTML += `
             <div class="item-mini">
-                <img src="/assets/images/${
-                  item.image
-                }" onerror="this.src='https://placehold.co/60x60?text=Food'">
-                <div>
-                    <div style="font-weight:bold; color:#333;">${
-                      item.name
-                    }</div>
-                    <div style="font-size:0.85rem; color:#777;">Số lượng: ${
-                      item.quantity
-                    }</div>
-                    <div style="color:#d32f2f; font-weight:600;">${(
-                      price * item.quantity
-                    ).toLocaleString()}đ</div>
-                </div>
-            </div>
-        `;
+                <div><b>${item.name}</b> x ${item.quantity}</div>
+                <div>${(price * item.quantity).toLocaleString()}đ</div>
+            </div>`;
   });
 
-  // C. Hiển thị Tạm tính lên giao diện
+  // Hiển thị tạm tính
   const subTotalEl = document.getElementById("ck-subtotal");
   if (subTotalEl)
     subTotalEl.textContent = subTotalAmount.toLocaleString() + "đ";
 
-  // D. Gọi hàm tính ship lần đầu (để cập nhật Tổng cộng mặc định)
   calculateShipping();
-
-  // E. Tự động điền thông tin khách hàng (Nếu đã đăng nhập)
-  const userJson = localStorage.getItem("user");
-  if (userJson) {
-    try {
-      const user = JSON.parse(userJson);
-      const nameInput = document.getElementById("cus-name");
-      const phoneInput = document.getElementById("cus-phone");
-
-      if (nameInput && user.name) nameInput.value = user.name;
-      if (phoneInput && user.phone) phoneInput.value = user.phone;
-    } catch (e) {
-      console.error("Lỗi đọc dữ liệu user:", e);
-    }
-  }
 });
 
-// --- 2. HÀM TÍNH PHÍ SHIP & TỔNG TIỀN (GỌI KHI ĐỔI QUẬN) ---
 function calculateShipping() {
+  console.log("--> Đang tính phí ship...");
   const districtSelect = document.getElementById("shipping-district");
-  const shippingFeeEl = document.getElementById("shipping-fee-display");
   const totalEl = document.getElementById("ck-total");
+  const shipDisplay = document.getElementById("shipping-fee-display");
 
-  // Lấy giá trị ship từ value của option (Nếu chưa chọn gì thì = 0)
   let shippingFee = 0;
   if (districtSelect && districtSelect.value) {
     shippingFee = parseInt(districtSelect.value);
   }
 
-  // Cập nhật hiển thị phí ship lên màn hình
-  if (shippingFeeEl) {
-    shippingFeeEl.textContent =
-      shippingFee > 0 ? shippingFee.toLocaleString() + "đ" : "0đ";
-
-    // Đổi màu nếu chưa chọn ship
-    shippingFeeEl.style.color = shippingFee > 0 ? "#28a745" : "#555";
-  }
-
-  // Cập nhật Tổng Thanh Toán (Hàng + Ship)
-  const finalTotal = subTotalAmount + shippingFee;
-  if (totalEl) {
-    totalEl.textContent = finalTotal.toLocaleString() + "đ";
-  }
+  if (shipDisplay) shipDisplay.textContent = shippingFee.toLocaleString() + "đ";
+  if (totalEl)
+    totalEl.textContent = (subTotalAmount + shippingFee).toLocaleString() + "đ";
 }
 
-// --- 3. HÀM GỬI ĐƠN HÀNG (SUBMIT) ---
+// --- HÀM QUAN TRỌNG NHẤT: SUBMIT ---
 async function submitOrder() {
-  // A. Lấy dữ liệu từ Form
-  const name = document.getElementById("cus-name").value.trim();
-  const phone = document.getElementById("cus-phone").value.trim();
-  const addressDetail = document
-    .getElementById("cus-address-detail")
-    .value.trim();
-  const districtSelect = document.getElementById("shipping-district");
-  const note = document.getElementById("cus-note").value.trim();
+  console.log(">>> BẮT ĐẦU ẤN NÚT ĐẶT HÀNG <<<"); // Nếu bấm nút mà không thấy dòng này -> Lỗi HTML
 
-  // B. Validate (Kiểm tra dữ liệu)
+  // 1. Lấy dữ liệu
+  const nameEl = document.getElementById("cus-name");
+  const phoneEl = document.getElementById("cus-phone");
+  const addrEl = document.getElementById("cus-address-detail");
+  const distEl = document.getElementById("shipping-district");
+  const noteEl = document.getElementById("cus-note");
+
+  if (!nameEl || !phoneEl || !addrEl || !distEl) {
+    console.error(
+      "LỖI: HTML thiếu id của các ô nhập liệu (cus-name, cus-phone...)"
+    );
+    alert("Lỗi code HTML: Thiếu ID input");
+    return;
+  }
+
+  const name = nameEl.value.trim();
+  const phone = phoneEl.value.trim();
+  const addressDetail = addrEl.value.trim();
+  const districtValue = distEl.value;
+  const note = noteEl ? noteEl.value.trim() : "";
+
+  console.log("Dữ liệu nhập vào:", {
+    name,
+    phone,
+    addressDetail,
+    districtValue,
+  });
+
+  // 2. Validate
   if (!name || !phone || !addressDetail) {
-    alert("Vui lòng điền đầy đủ các thông tin bắt buộc (*)");
+    console.warn("Chưa điền đủ thông tin");
+    alert("Vui lòng điền đủ: Họ tên, SĐT, Địa chỉ!");
     return;
   }
 
-  // Kiểm tra đã chọn Quận chưa
-  if (!districtSelect || districtSelect.value === "") {
-    alert("Vui lòng chọn Khu vực giao hàng để chúng tôi tính phí ship!");
-    districtSelect.focus();
+  if (!districtValue) {
+    console.warn("Chưa chọn quận");
+    alert("Vui lòng chọn Quận/Huyện!");
     return;
   }
 
-  // C. Xử lý dữ liệu đơn hàng
-  // Lấy tên quận (Text) thay vì lấy giá tiền (Value)
-  const districtName = districtSelect.options[districtSelect.selectedIndex].text
-    .split("(")[0]
-    .trim();
-
-  // Gộp địa chỉ đầy đủ (Thêm TP.HCM mặc định)
+  // 3. Chuẩn bị gửi
+  const districtName = distEl.options[distEl.selectedIndex].text;
   const fullAddress = `${addressDetail}, ${districtName}, TP. Hồ Chí Minh`;
+  const shippingFee = parseInt(districtValue);
+  const totalAmount = subTotalAmount + shippingFee;
 
-  const shippingFee = parseInt(districtSelect.value);
-  const finalTotal = subTotalAmount + shippingFee;
-  const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+  // Chuẩn bị Items (Map dữ liệu cho khớp Backend)
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const itemsToSend = cart.map((item) => {
+    let p = item.price;
+    if (typeof p === "string")
+      p = parseFloat(p.replace(/\./g, "").replace("đ", ""));
+    return {
+      productName: item.name,
+      quantity: item.quantity,
+      price: p,
+    };
+  });
 
-  // Tạo Object Đơn Hàng chuẩn để gửi về Backend
   const orderData = {
     customerName: name,
     customerPhone: phone,
     customerAddress: fullAddress,
     note: note,
     shippingFee: shippingFee,
-    totalAmount: finalTotal,
-    items: cartItems,
-    createdAt: new Date().toISOString(),
+    totalAmount: totalAmount,
+    status: 0,
+    items: itemsToSend,
   };
 
-  console.log("--> Đang gửi đơn hàng:", orderData);
+  console.log("--> Đang gửi dữ liệu lên Server:", orderData);
 
-  // D. Gửi dữ liệu (Giả lập hoặc gọi API thật)
+  // 4. Gửi API
   try {
-    // --- CÁCH 1: NẾU ĐÃ CÓ API BACKEND ---
-    /*
-        const response = await fetch('http://localhost:8080/api/orders', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(orderData)
-        });
-        
-        if (!response.ok) throw new Error("Lỗi Server");
-        const result = await response.json(); // Nhận về Order ID ví dụ: { id: "ORD-123" }
-        */
+    const response = await fetch("http://localhost:8080/api/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderData),
+    });
 
-    // --- CÁCH 2: GIẢ LẬP THÀNH CÔNG (Dùng tạm khi chưa có Backend Order) ---
-    // Giả vờ đợi 1 giây cho giống thật
-    const btn = document.querySelector(".btn-confirm");
-    const originalText = btn.innerText;
-    btn.innerText = "ĐANG XỬ LÝ...";
-    btn.disabled = true;
+    console.log("--> Trạng thái Server trả về:", response.status);
 
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    // Tạo mã đơn hàng giả
-    const fakeOrderId = "SKD-" + Math.floor(Math.random() * 10000);
-
-    // THÔNG BÁO THÀNH CÔNG
-    alert(
-      `🎉 ĐẶT HÀNG THÀNH CÔNG!\nMã đơn: ${fakeOrderId}\nTổng tiền: ${finalTotal.toLocaleString()}đ\n\nChúng tôi sẽ giao đến: ${fullAddress}`
-    );
-
-    // E. Dọn dẹp và Chuyển hướng
-    localStorage.removeItem("cart"); // Xóa giỏ hàng
-
-    // NẾU BẠN ĐÃ LÀM TRANG TRACKING:
-    // window.location.href = `/pages/order-tracking.html?id=${fakeOrderId}`;
-
-    // NẾU CHƯA CÓ TRANG TRACKING THÌ VỀ TRANG CHỦ:
-    window.location.href = "/index.html";
+    if (response.ok) {
+      const result = await response.json();
+      console.log("--> THÀNH CÔNG:", result);
+      alert("ĐẶT HÀNG THÀNH CÔNG! ID: " + result.orderId);
+      localStorage.removeItem("cart");
+      window.location.href = "/index.html";
+    } else {
+      const errText = await response.text();
+      console.error("--> LỖI SERVER:", errText);
+      alert("Lỗi Server: " + errText);
+    }
   } catch (error) {
-    console.error("Lỗi đặt hàng:", error);
-    alert("Có lỗi xảy ra khi gửi đơn hàng. Vui lòng thử lại!");
-
-    // Reset nút bấm
-    const btn = document.querySelector(".btn-confirm");
-    btn.innerText = "XÁC NHẬN ĐẶT HÀNG";
-    btn.disabled = false;
+    console.error("--> LỖI KẾT NỐI (Fetch Error):", error);
+    alert(
+      "Không thể kết nối đến Backend. Hãy kiểm tra xem IntelliJ có đang chạy không?"
+    );
   }
 }

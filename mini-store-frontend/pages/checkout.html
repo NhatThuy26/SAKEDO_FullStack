@@ -17,20 +17,19 @@
     <link rel="stylesheet" href="../css/base/variables.css" />
     <link rel="stylesheet" href="../css/base/header.css" />
     <link rel="stylesheet" href="../css/pages/global.css" />
-
     <link rel="stylesheet" href="../css/pages/checkout.css" />
   </head>
   <body>
     <header class="header">
       <div class="container header-inner">
-        <a href="/index.html" class="logo"
-          ><img src="/assets/images/logo.png" alt="Sakedo Logo"
-        /></a>
+        <a href="/index.html" class="logo">
+          <img src="/assets/images/logo.png" alt="Sakedo Logo" />
+        </a>
         <nav class="navbar">
-          <a href="/pages/cart.html" class="nav-link"
-            ><i class="fas fa-arrow-left" style="margin-right: 5px"></i> Quay
-            lại giỏ hàng</a
-          >
+          <a href="/pages/cart.html" class="nav-link">
+            <i class="fas fa-arrow-left" style="margin-right: 5px"></i> Quay lại
+            giỏ hàng
+          </a>
         </nav>
       </div>
     </header>
@@ -98,17 +97,15 @@
               <option value="" disabled selected>
                 -- Vui lòng chọn Quận/Huyện --
               </option>
-              <option value="15000">Quận 1 (Phí ship: 15.000đ)</option>
-              <option value="15000">Quận 3 (Phí ship: 15.000đ)</option>
-              <option value="20000">Quận 5 (Phí ship: 20.000đ)</option>
-              <option value="20000">Quận 10 (Phí ship: 20.000đ)</option>
-              <option value="25000">Quận Bình Thạnh (Phí ship: 25.000đ)</option>
-              <option value="30000">TP. Thủ Đức (Phí ship: 30.000đ)</option>
-              <option value="35000">Quận 7 (Phí ship: 35.000đ)</option>
-              <option value="40000">
-                Huyện Bình Chánh (Phí ship: 40.000đ)
-              </option>
-              <option value="50000">Các quận khác (Phí ship: 50.000đ)</option>
+              <option value="15000">Quận 1</option>
+              <option value="15000">Quận 3</option>
+              <option value="20000">Quận 5</option>
+              <option value="20000">Quận 10</option>
+              <option value="25000">Quận Bình Thạnh</option>
+              <option value="30000">TP. Thủ Đức</option>
+              <option value="35000">Quận 7</option>
+              <option value="40000">Huyện Bình Chánh</option>
+              <option value="50000">Các quận khác</option>
             </select>
           </div>
 
@@ -154,9 +151,20 @@
           >
         </div>
 
-        <div class="order-row order-total">
+        <div
+          class="summary-total"
+          style="
+            margin-top: 20px;
+            border-top: 1px dashed #ccc;
+            padding-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: bold;
+          "
+        >
           <span>Tổng thanh toán:</span>
-          <span id="ck-total">0đ</span>
+          <span id="ck-total" style="color: #d32f2f">0đ</span>
         </div>
 
         <button type="button" class="btn-confirm" onclick="submitOrder()">

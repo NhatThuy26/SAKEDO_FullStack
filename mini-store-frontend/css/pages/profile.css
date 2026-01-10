@@ -1,0 +1,710 @@
+/* ===============================================
+   PROFILE PAGE - THÔNG TIN CÁ NHÂN
+   =============================================== */
+
+.profile-page {
+  padding: 120px 0 80px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* --- PROFILE CARD --- */
+.profile-card {
+  background: linear-gradient(135deg, #f5f5f5 0%, #fafafa 100%);
+  border-radius: 20px;
+  padding: 35px 45px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+/* Card Header Row */
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-title i {
+  color: #d8b26e;
+  font-size: 1.5rem;
+}
+
+.card-title h2 {
+  font-family: "Fruktur", cursive;
+  font-size: 1.8rem;
+  color: #1a1a1a;
+  margin: 0;
+  -webkit-text-stroke: 0 !important;
+  text-shadow: none !important;
+}
+
+.btn-edit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #d8b26e;
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+}
+
+.btn-edit:hover {
+  background-color: #d8b26e;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+}
+
+.btn-edit i {
+  font-size: 0.9rem;
+}
+
+/* Card Body Row */
+.card-body-row {
+  display: flex;
+  gap: 50px;
+  align-items: flex-start;
+}
+
+/* Avatar Column */
+.avatar-column {
+  flex-shrink: 0;
+}
+
+.avatar-frame {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  padding: 5px;
+  background: linear-gradient(135deg, #ffd200 0%, #d8b26e 50%, #d8b26e 100%);
+  box-shadow: 0 10px 30px rgba(216, 178, 110, 0.3);
+}
+
+.avatar-frame img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #fff;
+}
+
+/* Form Column */
+.form-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #d8b26e;
+}
+
+.form-group label i {
+  font-size: 0.9rem;
+  width: 18px;
+  text-align: center;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  font-family: "Consolas", "Monaco", monospace;
+  font-size: 1rem;
+  color: #333;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #d8b26e;
+  box-shadow: 0 0 0 3px rgba(216, 178, 110, 0.15);
+}
+
+.form-group input:read-only,
+.form-group textarea:read-only {
+  background-color: #fafafa;
+  cursor: default;
+}
+
+.form-group textarea {
+  min-height: 80px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Textarea Wrapper with Counter */
+.textarea-wrapper {
+  position: relative;
+}
+
+.char-counter {
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  font-size: 0.8rem;
+  color: #999;
+}
+
+/* --- SECURITY SECTION --- */
+.security-card {
+  padding-bottom: 25px;
+}
+
+.card-header-row.no-border {
+  border-bottom: none;
+  margin-bottom: 20px;
+  padding-bottom: 0;
+}
+
+.security-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.security-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.security-item:last-child {
+  border-bottom: none;
+}
+
+.security-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.security-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.security-icon i {
+  font-size: 1.2rem;
+  color: #d8b26e;
+}
+
+.security-text h4 {
+  font-family: "Fruktur", cursive;
+  font-size: 1.1rem;
+  color: #1a1a1a;
+  margin: 0 0 5px 0;
+  -webkit-text-stroke: 0 !important;
+  text-shadow: none !important;
+}
+
+.security-text p {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0;
+}
+
+.btn-security {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #d8b26e;
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(216, 178, 110, 0.3);
+}
+
+.btn-security:hover {
+  background-color: #c9a45f;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(216, 178, 110, 0.4);
+}
+
+.btn-security i {
+  font-size: 0.85rem;
+}
+
+.btn-security.btn-toggle {
+  background-color: #fff;
+  color: #d8b26e;
+  border: 2px solid #d8b26e;
+}
+
+.btn-security.btn-toggle:hover {
+  background-color: #d8b26e;
+  color: #fff;
+}
+
+.btn-security.btn-toggle.active {
+  background-color: #d8b26e;
+  color: #fff;
+}
+
+.btn-security.btn-toggle.active i::before {
+  content: "\f205";
+  /* fa-toggle-on */
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .profile-page {
+    padding: 100px 0 60px;
+  }
+
+  .profile-card {
+    padding: 25px 20px;
+    border-radius: 15px;
+  }
+
+  .card-header-row {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .card-title {
+    justify-content: center;
+  }
+
+  .card-body-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .avatar-frame {
+    width: 130px;
+    height: 130px;
+  }
+
+  .form-column {
+    width: 100%;
+  }
+
+  .security-item {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .security-info {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-title h2 {
+    font-size: 1.5rem;
+  }
+
+  .btn-edit {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 12px 15px;
+  }
+
+  .btn-security {
+    padding: 8px 18px;
+    font-size: 0.85rem;
+  }
+}
+
+/* --- EDITING STATE --- */
+.form-group input.editing,
+.form-group textarea.editing {
+  background-color: #fff;
+  border-color: #d8b26e;
+  box-shadow: 0 0 0 3px rgba(216, 178, 110, 0.15);
+  cursor: text;
+}
+
+.btn-edit.btn-save-mode {
+  background-color: #4caf50;
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+
+.btn-edit.btn-save-mode:hover {
+  background-color: #45a049;
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+}
+
+/* --- NOTIFICATION --- */
+.profile-notification {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  background-color: #4caf50;
+  color: #fff;
+  padding: 15px 25px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  transform: translateX(120%);
+  transition: transform 0.3s ease;
+}
+
+.profile-notification.show {
+  transform: translateX(0);
+}
+
+.profile-notification i {
+  font-size: 1.2rem;
+}
+
+.profile-notification.error {
+  background-color: #f44336;
+}
+
+/* ===============================================
+   MODAL - ĐỔI MẬT KHẨU
+   =============================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 20px;
+  padding: 35px 40px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  transform: translateY(-30px);
+  transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-content {
+  transform: translateY(0);
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: #333;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.modal-header i {
+  font-size: 1.8rem;
+  color: #d8b26e;
+}
+
+.modal-header h3 {
+  font-family: "Fruktur", cursive;
+  font-size: 1.8rem;
+  color: #1a1a1a;
+  margin: 0;
+  -webkit-text-stroke: 0 !important;
+  text-shadow: none !important;
+}
+
+/* Modal Form */
+.modal-form-group {
+  margin-bottom: 22px;
+}
+
+.modal-form-group label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #d8b26e;
+  margin-bottom: 10px;
+}
+
+.modal-form-group label i {
+  font-size: 0.9rem;
+  width: 18px;
+  text-align: center;
+}
+
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper input {
+  width: 100%;
+  padding: 14px 50px 14px 18px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+.password-input-wrapper input:focus {
+  outline: none;
+  border-color: #d8b26e;
+  box-shadow: 0 0 0 3px rgba(216, 178, 110, 0.15);
+}
+
+.toggle-password {
+  position: absolute;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  padding: 5px;
+  transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+  color: #d8b26e;
+}
+
+/* Password Strength */
+.password-strength {
+  margin-top: 10px;
+}
+
+.strength-text {
+  font-size: 0.85rem;
+  color: #888;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.strength-bar {
+  height: 4px;
+  background-color: #e0e0e0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.strength-fill {
+  height: 100%;
+  width: 0%;
+  background-color: #f44336;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.strength-fill.weak {
+  width: 25%;
+  background-color: #f44336;
+}
+
+.strength-fill.fair {
+  width: 50%;
+  background-color: #ff9800;
+}
+
+.strength-fill.good {
+  width: 75%;
+  background-color: #d8b26e;
+}
+
+.strength-fill.strong {
+  width: 100%;
+  background-color: #4caf50;
+}
+
+/* Password Requirements */
+.password-requirements {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 25px;
+}
+
+.password-requirements h4 {
+  font-size: 0.95rem;
+  color: #333;
+  margin: 0 0 12px 0;
+  font-weight: 700;
+}
+
+.password-requirements ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.password-requirements li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #666;
+  padding: 5px 0;
+}
+
+.req-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ccc;
+  transition: background-color 0.3s ease;
+}
+
+.password-requirements li.valid .req-dot {
+  background-color: #4caf50;
+}
+
+.password-requirements li.valid {
+  color: #4caf50;
+}
+
+/* Modal Buttons */
+.modal-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.btn-update-password {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #d8b26e;
+  color: #fff;
+  border: none;
+  padding: 14px 25px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(216, 178, 110, 0.3);
+}
+
+.btn-update-password:hover {
+  background-color: #c9a45f;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(216, 178, 110, 0.4);
+}
+
+.btn-cancel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #fff;
+  color: #666;
+  border: 1px solid #ddd;
+  padding: 14px 25px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+  background-color: #f5f5f5;
+  border-color: #ccc;
+}
+
+/* Modal Responsive */
+@media (max-width: 520px) {
+  .modal-content {
+    margin: 15px;
+    padding: 25px 20px;
+  }
+
+  .modal-header h3 {
+    font-size: 1.5rem;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+  }
+
+  .btn-cancel {
+    order: 1;
+  }
+}

@@ -1,0 +1,116 @@
+.header {
+    background-color: #fff;
+    /* 3. CHIỀU CAO GỌN LẠI: Đặt cố định 70px và bỏ padding thừa */
+    height: 70px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #eee;
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+/* 1. LOGO  */
+.logo img {
+    height: 68px; 
+    width: auto;
+    object-fit: contain;
+    display: block; 
+}
+
+/* 2. KHOẢNG CÁCH MENU*/
+.nav-list {
+    display: flex;
+    list-style: none;
+    gap: 40px; 
+    margin: 0;
+    padding: 0;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #1A1A1A; 
+    font-weight: 700; 
+    font-size: 15px;
+    text-transform: uppercase;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.5px;
+}
+
+/* Hiệu ứng hover màu vàng */
+.nav-link:hover, .nav-link.active {
+    color: #D8B26E;
+}
+
+/* Icon mũi tên nhỏ ở Trang Chủ */
+.nav-link i {
+    font-size: 11px;
+    margin-left: 6px;
+    margin-top: -2px; /* Canh chỉnh vị trí mũi tên */
+    color: #D8B26E;
+}
+
+/* ================= PHẦN BÊN PHẢI (Đúng chuẩn Figma) ================= */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 30px; /* Tăng khoảng cách giữa giỏ hàng và nút */
+}
+
+/* Giỏ hàng màu xanh lá */
+.cart-btn {
+    position: relative;
+    color: #D8B26E;
+    font-size: 22px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+/* Số lượng: Nền đen chữ trắng */
+.cart-count {
+    position: absolute;
+    top: -7px;
+    right: -10px;
+    background: #000;
+    color: #fff;
+    font-size: 10px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+/* Nút Đăng Nhập: Nền vàng CHỮ TRẮNG */
+.btn-primary {
+    background-color: #D8B26E; /* Màu vàng */
+    color: #FFFFFF !important; /* BẮT BUỘC CHỮ TRẮNG */
+    padding: 10px 28px; /* Padding gọn gàng */
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: none;
+    box-shadow: 0 4px 6px rgba(216, 178, 110, 0.2);
+    transition: 0.3s;
+    white-space: nowrap; /* Giữ chữ trên 1 dòng */
+}
+
+.btn-primary:hover {
+    background-color: #c59f5e; /* Màu vàng tối hơn khi hover */
+    transform: translateY(-1px);
+}
