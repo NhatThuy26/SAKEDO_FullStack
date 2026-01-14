@@ -2,25 +2,28 @@ package com.sakedo.mini_store_backend.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field; // <--- QUAN TRỌNG
 
 @Document(collection = "users")
 public class User {
     @Id
     private String id;
-    private String fullName;
+
+    // QUAN TRỌNG NHẤT: Dòng này giúp Java map đúng chữ "Knhu" từ DB
+    @Field("name")
+    private String name;
+
     private String email;
     private String phone;
-    private String address; // Thêm trường này
+    private String address;
     private String avatar;
     private String password;
 
-    // 1. Constructor rỗng (Bắt buộc)
     public User() {}
 
-    // 2. Constructor đầy đủ (Để sửa lỗi Controller)
-    public User(String id, String fullName, String email, String phone, String address, String avatar, String password) {
+    public User(String id, String name, String email, String phone, String address, String avatar, String password) {
         this.id = id;
-        this.fullName = fullName;
+        this.name = name;
         this.email = email;
         this.phone = phone;
         this.address = address;
@@ -28,12 +31,12 @@ public class User {
         this.password = password;
     }
 
-    // 3. Getters & Setters
+    // --- GETTER & SETTER ---
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
-    public String getFullName() { return fullName; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
@@ -41,8 +44,8 @@ public class User {
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
 
-    public String getAddress() { return address; } // Getter Address
-    public void setAddress(String address) { this.address = address; } // Setter Address
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
 
     public String getAvatar() { return avatar; }
     public void setAvatar(String avatar) { this.avatar = avatar; }

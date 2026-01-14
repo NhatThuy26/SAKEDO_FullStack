@@ -1,163 +1,212 @@
-// CẤU HÌNH API
-const API_BASE = "http://localhost:8080/api";
-// Giả định User ID = 1 (Sau này bạn lấy từ token đăng nhập hoặc localStorage)
-const USER_ID = 1;
-
 document.addEventListener("DOMContentLoaded", function () {
-  loadUserProfile(); // Chỉ chạy hàm lấy thông tin user
-  initProfileEvents(); // Khởi tạo các sự kiện nút bấm
+  loadProfileData();
+  setupActionHandler();
+  setupPasswordModal();
 });
 
-// =================================================
-// 1. GỌI API LẤY THÔNG TIN USER (GET)
-// =================================================
-async function loadUserProfile() {
+let isEditing = false;
+
+// ============================================================
+// 1. TẢI THÔNG TIN NGƯỜI DÙNG
+// ============================================================
+async function loadProfileData() {
+  const localUser = JSON.parse(localStorage.getItem("user"));
+
+  if (!localUser || !localUser.email) {
+    alert("Vui lòng đăng nhập!");
+    window.location.href = "auth.html";
+    return;
+  }
+
   try {
-    // --- CÁCH 1: DÙNG MOCK DATA (Để test giao diện khi chưa có Backend) ---
-    // const user = {
-    //   fullName: "Huỳnh Lê Khả Như",
-    //   email: "khanhu@example.com",
-    //   phone: "0909123456",
-    //   address: "KTX Khu B, ĐHQG TP.HCM",
-    //   avatar: "avata1.png" // Tên file ảnh trong thư mục assets
-    // };
+    // Gọi API lấy thông tin mới nhất
+    const response = await fetch(
+      `http://localhost:8080/api/users/email/${localUser.email}`
+    );
+    if (!response.ok) throw new Error("User not found");
 
-    // --- CÁCH 2: GỌI API THẬT (Khi Backend đã chạy) ---
-    // Bạn bỏ comment đoạn dưới này để chạy thật nhé:
-    const response = await fetch(`${API_BASE}/users/${USER_ID}`);
-    if (!response.ok) throw new Error("Không thể lấy thông tin User");
-    const user = await response.json();
-    // -----------------------------------------------------------
+    const userData = await response.json();
 
-    // Đổ dữ liệu vào các ô Input
-    // Lưu ý: Đảm bảo tên biến (user.fullName...) khớp với JSON Backend trả về
-    document.getElementById("input-name").value =
-      user.fullName || user.name || "";
-    document.getElementById("input-email").value = user.email || "";
-    document.getElementById("input-phone").value =
-      user.phone || user.phoneNumber || "";
-    document.getElementById("input-address").value = user.address || "";
+    // Xử lý tên hiển thị
+    const displayName =
+      userData.name || userData.fullName || userData.email.split("@")[0];
 
-    // Xử lý ảnh đại diện
-    const avatarImg = document.getElementById("user-avatar");
-    if (user.avatar) {
-      // Kiểm tra nếu là link online hay ảnh local
-      const imgSrc = user.avatar.startsWith("http")
-        ? user.avatar
-        : `../assets/images/${user.avatar}`;
-      avatarImg.src = imgSrc;
+    // --- ĐIỀN DỮ LIỆU VÀO Ô INPUT ---
+    // (Thay vì dùng hàm ngoài, mình viết trực tiếp ở đây cho chắc chắn)
+    if (document.getElementById("profile-name"))
+      document.getElementById("profile-name").value = displayName;
+
+    if (document.getElementById("profile-email"))
+      document.getElementById("profile-email").value = userData.email;
+
+    if (document.getElementById("profile-phone"))
+      document.getElementById("profile-phone").value = userData.phone || "";
+
+    if (document.getElementById("profile-address"))
+      document.getElementById("profile-address").value = userData.address || "";
+
+    // Điền tên to dưới avatar
+    const heroName = document.querySelector(".profile-hero-name");
+    if (heroName) heroName.textContent = displayName;
+
+    // Xử lý Avatar
+    const avatarImg = document.getElementById("profile-avatar-img");
+    if (avatarImg) {
+      let avatarUrl = userData.avatar;
+      if (!avatarUrl || avatarUrl.trim() === "") {
+        avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+          displayName
+        )}&background=d8b26e&color=fff&size=128&bold=true`;
+      } else if (!avatarUrl.startsWith("http")) {
+        const cleanPath = avatarUrl.replace(/^(\.\/|\/|assets\/images\/)/, "");
+        avatarUrl = `../assets/images/${cleanPath}`;
+      }
+      avatarImg.src = avatarUrl;
     }
+
+    // Lưu ID để dùng cho việc cập nhật sau này
+    localStorage.setItem("currentUserId", userData.id);
   } catch (error) {
-    console.error("Lỗi tải thông tin user:", error);
-    alert("Không thể tải thông tin cá nhân. Vui lòng kiểm tra kết nối!");
+    console.error("Lỗi tải profile:", error);
   }
 }
 
-// =================================================
-// 2. GỌI API CẬP NHẬT USER (PUT)
-// =================================================
-async function updateUserProfile() {
-  // 1. Gom dữ liệu từ các ô input
-  const updatedData = {
-    fullName: document.getElementById("input-name").value,
-    phone: document.getElementById("input-phone").value,
-    address: document.getElementById("input-address").value,
-    // Email thường là định danh, ít khi cho sửa ở đây, tùy logic Backend của bạn
-  };
+// ============================================================
+// 2. XỬ LÝ NÚT CHỈNH SỬA / LƯU
+// ============================================================
+function setupActionHandler() {
+  const actionBtn = document.getElementById("btn-profile-action");
+  const inputs = [
+    document.getElementById("profile-name"),
+    document.getElementById("profile-phone"),
+    document.getElementById("profile-address"),
+  ];
 
-  try {
-    // 2. Gọi API PUT để lưu xuống DB
-    const response = await fetch(`${API_BASE}/users/${USER_ID}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        // Nếu có Token bảo mật thì thêm: 'Authorization': 'Bearer ...'
-      },
-      body: JSON.stringify(updatedData),
-    });
+  if (actionBtn) {
+    actionBtn.addEventListener("click", async function (e) {
+      e.preventDefault();
 
-    if (!response.ok) {
-      throw new Error("Cập nhật thất bại");
-    }
-
-    // 3. Thông báo thành công
-    const result = await response.json(); // Nhận kết quả mới nhất từ server
-    alert("✅ Đã cập nhật thông tin thành công!");
-    return true;
-  } catch (error) {
-    console.error(error);
-    alert("❌ Lỗi khi lưu: " + error.message);
-    return false;
-  }
-}
-
-// =================================================
-// 3. XỬ LÝ SỰ KIỆN GIAO DIỆN (Nút Sửa/Lưu)
-// =================================================
-function initProfileEvents() {
-  const btnEdit = document.getElementById("btn-edit-profile");
-  const inputs = document.querySelectorAll(
-    ".form-column input, .form-column textarea"
-  );
-  const avatarUpload = document.getElementById("avatar-upload");
-  const charCounter = document.getElementById("char-counter");
-
-  let isEditing = false; // Trạng thái: Đang xem hay Đang sửa
-
-  if (btnEdit) {
-    btnEdit.addEventListener("click", async function () {
       if (!isEditing) {
-        // --- CHUYỂN SANG CHẾ ĐỘ SỬA ---
+        // >>> CHUYỂN SANG CHẾ ĐỘ SỬA
         isEditing = true;
-
-        // Đổi nút thành "Lưu lại"
-        btnEdit.innerHTML = '<i class="fas fa-save"></i> <span>Lưu lại</span>';
-        btnEdit.classList.add("active"); // Thêm class để đổi màu xanh (trong CSS)
-
-        // Mở khóa các ô input (trừ Email)
         inputs.forEach((input) => {
-          if (input.id !== "input-email") input.removeAttribute("readonly");
-          input.classList.add("editing"); // Thêm style viền sáng
+          if (input) input.disabled = false;
         });
+        if (inputs[0]) inputs[0].focus();
 
-        // Hiện nút sửa ảnh & đếm ký tự
-        if (avatarUpload) avatarUpload.style.display = "flex";
-        if (charCounter) charCounter.style.display = "block";
-
-        // Focus vào tên để nhập luôn
-        document.getElementById("input-name").focus();
+        actionBtn.innerHTML =
+          '<i class="fas fa-save"></i> <span>Lưu thay đổi</span>';
+        actionBtn.style.backgroundColor = "var(--primary-color)";
+        actionBtn.style.color = "#000";
       } else {
-        // --- BẤM LƯU (GỌI API) ---
-        // Gọi hàm updateUserProfile và đợi kết quả
-        const success = await updateUserProfile();
+        // >>> THỰC HIỆN LƯU
+        const userId = localStorage.getItem("currentUserId");
+        if (!userId) return;
 
-        if (success) {
-          // Nếu lưu thành công thì mới quay về chế độ Xem
-          isEditing = false;
+        const updateData = {
+          name: document.getElementById("profile-name").value, // Đã sửa thành name
+          phone: document.getElementById("profile-phone").value,
+          address: document.getElementById("profile-address").value,
+        };
 
-          // Đổi nút về "Chỉnh sửa"
-          btnEdit.innerHTML =
-            '<i class="fas fa-edit"></i> <span>Chỉnh sửa</span>';
-          btnEdit.classList.remove("active");
+        try {
+          actionBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> <span>Đang lưu...</span>';
 
-          // Khóa lại input
-          inputs.forEach((input) => {
-            input.setAttribute("readonly", true);
-            input.classList.remove("editing");
-          });
+          const response = await fetch(
+            `http://localhost:8080/api/users/update/${userId}`,
+            {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(updateData),
+            }
+          );
 
-          if (avatarUpload) avatarUpload.style.display = "none";
-          if (charCounter) charCounter.style.display = "none";
+          if (response.ok) {
+            const updatedUser = await response.json();
+
+            // Cập nhật localStorage
+            let currentUser = JSON.parse(localStorage.getItem("user"));
+            const newUserState = { ...currentUser, ...updatedUser };
+            localStorage.setItem("user", JSON.stringify(newUserState));
+
+            alert("Cập nhật thành công!");
+            window.location.reload();
+          } else {
+            alert("Cập nhật thất bại!");
+            actionBtn.innerHTML =
+              '<i class="fas fa-save"></i> <span>Lưu thay đổi</span>';
+          }
+        } catch (error) {
+          console.error("Lỗi update:", error);
+          alert("Lỗi kết nối Server!");
+          actionBtn.innerHTML =
+            '<i class="fas fa-save"></i> <span>Lưu thay đổi</span>';
         }
       }
     });
   }
+}
 
-  // Tiện ích: Đếm ký tự khi nhập địa chỉ
-  const addressInput = document.getElementById("input-address");
-  if (addressInput && charCounter) {
-    addressInput.addEventListener("input", function () {
-      charCounter.textContent = `${this.value.length}/1000 ký tự`;
+// ============================================================
+// 3. XỬ LÝ MODAL ĐỔI MẬT KHẨU
+// ============================================================
+function setupPasswordModal() {
+  const modal = document.getElementById("password-modal");
+  const openBtn = document.getElementById("btn-open-password-modal");
+  const closeBtn = document.getElementById("modal-close");
+  const cancelBtn = document.getElementById("btn-cancel");
+  const passwordForm = document.getElementById("password-form");
+
+  if (openBtn)
+    openBtn.onclick = () => {
+      modal.style.display = "flex";
+      if (passwordForm) passwordForm.reset();
+    };
+  if (closeBtn) closeBtn.onclick = () => (modal.style.display = "none");
+  if (cancelBtn) cancelBtn.onclick = () => (modal.style.display = "none");
+  window.onclick = (event) => {
+    if (event.target == modal) modal.style.display = "none";
+  };
+
+  if (passwordForm) {
+    passwordForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const currentPassword = document.getElementById("current-password").value;
+      const newPassword = document.getElementById("new-password").value;
+      const confirmPassword = document.getElementById("confirm-password").value;
+      const userId = localStorage.getItem("currentUserId");
+
+      if (newPassword !== confirmPassword) {
+        alert("Mật khẩu xác nhận không khớp!");
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/users/change-password/${userId}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              oldPassword: currentPassword,
+              newPassword: newPassword,
+            }),
+          }
+        );
+
+        const result = await response.json();
+        if (response.ok) {
+          alert("🎉 " + result.message);
+          modal.style.display = "none";
+          passwordForm.reset();
+        } else {
+          alert("❌ " + (result.message || "Lỗi đổi mật khẩu"));
+        }
+      } catch (error) {
+        alert("Lỗi kết nối Server!");
+      }
     });
   }
 }

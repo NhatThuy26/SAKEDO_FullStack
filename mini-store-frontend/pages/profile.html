@@ -22,6 +22,9 @@
     <link rel="stylesheet" href="../css/components/footer.css" />
   </head>
   <body>
+    <script>
+      window.ROOT_PATH = "../";
+    </script>
     <div id="header-placeholder"></div>
 
     <main class="profile-page">
@@ -41,16 +44,16 @@
                   <span class="order-id">#ORD-001</span>
                   <span class="order-date">25/10/2025 - 10:30</span>
                 </div>
-                <span class="status-badge status-delivering">
-                  <i class="fas fa-motorcycle"></i> Đang giao hàng
-                </span>
+                <span class="status-badge status-delivering"
+                  ><i class="fas fa-motorcycle"></i> Đang giao hàng</span
+                >
               </div>
               <div class="order-body">
                 <div class="product-preview">
                   <img
                     src="../assets/images/comga.png"
                     alt="Món ăn"
-                    onerror="this.src='https://via.placeholder.com/60'"
+                    onerror="this.src='https://placehold.co/60x60?text=Food'"
                   />
                   <div class="product-info-short">
                     <h4>Cơm Gà Xối Mỡ (và 2 món khác)</h4>
@@ -62,11 +65,6 @@
                 </div>
                 <p class="status-text-mini">Tài xế đang giao đến bạn...</p>
               </div>
-              <div class="order-footer">
-                <a href="tracking.html?id=ORD-001" class="btn-track-order"
-                  >Theo Dõi Đơn Hàng</a
-                >
-              </div>
             </div>
           </div>
         </section>
@@ -77,62 +75,84 @@
               <i class="fas fa-id-card"></i>
               <h2>Thông Tin Cá Nhân</h2>
             </div>
-            <button class="btn-edit" id="btn-edit-profile">
-              <i class="fas fa-edit"></i><span>Chỉnh sửa</span>
+            <button
+              class="btn-edit"
+              id="btn-profile-action"
+              style="background-color: #333; color: #fff; border: none"
+            >
+              <i class="fas fa-edit"></i> <span>Chỉnh sửa</span>
             </button>
           </div>
+
           <div class="card-body-row">
             <div class="avatar-column">
               <div class="avatar-frame">
                 <img
                   src="../assets/images/avata1.png"
                   alt="Avatar"
-                  id="user-avatar"
+                  id="profile-avatar-img"
                   onerror="this.src='https://via.placeholder.com/150'"
                 />
-                <div
-                  class="avatar-upload"
-                  id="avatar-upload"
-                  style="display: none"
-                >
-                  <i class="fas fa-camera"></i>
-                </div>
               </div>
+              <h3
+                class="profile-hero-name"
+                style="
+                  text-align: center;
+                  margin-top: 15px;
+                  font-family: 'Fruktur';
+                "
+              >
+                ...
+              </h3>
             </div>
+
             <div class="form-column">
               <div class="form-group">
-                <label><i class="fas fa-user"></i> Họ và tên</label
-                ><input
+                <label><i class="fas fa-user"></i> Họ và tên</label>
+                <input
                   type="text"
-                  id="input-name"
-                  value="Nguyễn Văn A"
-                  readonly
+                  id="profile-name"
+                  placeholder="Đang tải..."
+                  disabled
                 />
               </div>
+
               <div class="form-group">
-                <label><i class="fas fa-envelope"></i> Email</label
-                ><input
+                <label><i class="fas fa-envelope"></i> Email</label>
+                <input
                   type="email"
-                  id="input-email"
-                  value="usthy@1234gmail.com"
-                  readonly
+                  id="profile-email"
+                  placeholder="Đang tải..."
+                  disabled
+                  style="opacity: 0.7"
                 />
               </div>
+
               <div class="form-group">
-                <label><i class="fas fa-phone"></i> Số điện thoại</label
-                ><input
+                <label><i class="fas fa-phone"></i> Số điện thoại</label>
+                <input
                   type="tel"
-                  id="input-phone"
-                  value="0123456789"
-                  readonly
+                  id="profile-phone"
+                  placeholder="Nhập số điện thoại..."
+                  disabled
                 />
               </div>
+
               <div class="form-group">
                 <label><i class="fas fa-map-marker-alt"></i> Địa chỉ</label>
                 <div class="textarea-wrapper">
-                  <textarea id="input-address" rows="3" readonly>
-123 Đường ABC, Quận 8, TP.HCM</textarea
-                  >
+                  <input
+                    type="text"
+                    id="profile-address"
+                    placeholder="Nhập địa chỉ giao hàng..."
+                    style="
+                      width: 100%;
+                      padding: 10px;
+                      border: 1px solid #ddd;
+                      border-radius: 8px;
+                    "
+                    disabled
+                  />
                 </div>
               </div>
             </div>
@@ -172,6 +192,51 @@
           <h3>Đổi Mật Khẩu</h3>
         </div>
         <form id="password-form">
+          <div class="form-group" style="margin-bottom: 15px">
+            <label>Mật khẩu hiện tại</label>
+            <input
+              type="password"
+              id="current-password"
+              class="form-control"
+              required
+              style="
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+              "
+            />
+          </div>
+          <div class="form-group" style="margin-bottom: 15px">
+            <label>Mật khẩu mới</label>
+            <input
+              type="password"
+              id="new-password"
+              class="form-control"
+              required
+              style="
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+              "
+            />
+          </div>
+          <div class="form-group" style="margin-bottom: 20px">
+            <label>Xác nhận mật khẩu mới</label>
+            <input
+              type="password"
+              id="confirm-password"
+              class="form-control"
+              required
+              style="
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+              "
+            />
+          </div>
           <div class="modal-buttons">
             <button type="submit" class="btn-update-password">Cập nhật</button>
             <button type="button" class="btn-cancel" id="btn-cancel">
