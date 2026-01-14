@@ -3,15 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trang Chủ - Sakedo</title>
+    <title>Liên Hệ - Sakedo</title>
 
-    <!-- Google Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&family=Fruktur&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Stylesheets -->
     <link rel="stylesheet" href="/css/base/variables.css" />
     <link rel="stylesheet" href="/css/base/header.css" />
     <link rel="stylesheet" href="/css/pages/global.css" />
@@ -147,6 +145,7 @@
                 </div>
               </div>
             </div>
+
             <div class="contact-form-col">
               <div class="form-header">
                 <div class="header-icon">
@@ -159,13 +158,14 @@
                 </p>
               </div>
 
-              <form class="sakedo-form">
+              <form class="sakedo-form" id="contact-form">
                 <div class="form-group">
                   <label class="form-label"
                     ><i class="fas fa-user"></i> Họ tên</label
                   >
                   <input
                     type="text"
+                    id="contact-name"
                     placeholder="Nhập họ tên của bạn"
                     required
                   />
@@ -177,6 +177,7 @@
                   >
                   <input
                     type="email"
+                    id="contact-email"
                     placeholder="Nhập email của bạn"
                     required
                   />
@@ -188,6 +189,7 @@
                   >
                   <input
                     type="tel"
+                    id="contact-phone"
                     placeholder="Nhập số điện thoại (không bắt buộc)"
                   />
                 </div>
@@ -196,7 +198,7 @@
                   <label class="form-label"
                     ><i class="fas fa-tag"></i> Chủ đề</label
                   >
-                  <select required>
+                  <select id="contact-topic" required>
                     <option value="" disabled selected>Chọn chủ đề</option>
                     <option value="tuvan">Tư vấn đặt bàn</option>
                     <option value="khieunai">Góp ý / Khiếu nại</option>
@@ -211,11 +213,13 @@
                   >
                   <div class="textarea-wrap">
                     <textarea
+                      id="contact-message"
                       rows="5"
                       placeholder="Mô tả chi tiết vấn đề của bạn..."
                       required
+                      maxlength="1000"
                     ></textarea>
-                    <span class="char-count">0/1000 ký tự</span>
+                    <span class="char-count" id="char-count">0/1000 ký tự</span>
                   </div>
                 </div>
 
@@ -227,7 +231,11 @@
                   >
                 </div>
 
-                <button type="submit" class="btn-submit-gold">
+                <button
+                  type="submit"
+                  class="btn-submit-gold"
+                  id="btn-submit-contact"
+                >
                   <i class="fas fa-paper-plane"></i> Gửi tin nhắn
                 </button>
               </form>
@@ -241,5 +249,6 @@
 
     <script src="../js/components/header.js"></script>
     <script src="../js/components/footer.js"></script>
+    <script src="../js/pages/contact.js"></script>
   </body>
 </html>

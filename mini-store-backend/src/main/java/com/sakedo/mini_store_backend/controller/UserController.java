@@ -40,10 +40,16 @@ public class UserController {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            // Lưu ý: Dùng setName (khớp với file User.java mới)
+
             user.setName(userDetails.getName());
             user.setPhone(userDetails.getPhone());
             user.setAddress(userDetails.getAddress());
+
+            // --- THÊM DÒNG NÀY ĐỂ LƯU ẢNH ---
+            // Nếu Frontend có gửi avatar lên thì mới cập nhật
+            if (userDetails.getAvatar() != null && !userDetails.getAvatar().isEmpty()) {
+                user.setAvatar(userDetails.getAvatar());
+            }
 
             User updatedUser = userRepository.save(user);
             updatedUser.setPassword(null);

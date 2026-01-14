@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trang Chủ - Sakedo</title>
+    <title>Đặt Bàn - Sakedo</title>
 
     <!-- Google Fonts -->
     <link
@@ -11,21 +11,17 @@
       rel="stylesheet"
     />
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/css/base/variables.css" />
-    <link rel="stylesheet" href="/css/base/header.css" />
-    <link rel="stylesheet" href="/css/pages/global.css" />
-    <link rel="stylesheet" href="/css/pages/home.css" />
-    <link rel="stylesheet" href="/css/pages/booking.css" />
-    <link rel="stylesheet" href="../css/components/footer.css">
+    <!-- Stylesheets (relative paths so server root doesn't matter) -->
+    <link rel="stylesheet" href="../css/base/variables.css" />
+    <link rel="stylesheet" href="../css/components/header.css" />
+    <link rel="stylesheet" href="../css/pages/global.css" />
+    <link rel="stylesheet" href="../css/pages/booking.css" />
+    <link rel="stylesheet" href="../css/components/footer.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
   </head>
-  <body>
-    <div id="header-placeholder"></div>
-
   <body>
     <div id="header-placeholder"></div>
 
@@ -39,27 +35,76 @@
                 <span class="highlight-yellow">An Lành Mỗi Bữa</span>
               </h2>
 
-              <form class="booking-form">
-                <div class="form-input full-width">
-                  <input type="number" placeholder="Số lượng khách" required />
-                </div>
+              <form class="booking-form" id="bookingForm">
+                <div
+                  id="booking-message"
+                  class="booking-message"
+                  role="status"
+                  aria-live="polite"
+                  style="display: none"
+                ></div>
+
                 <div class="form-row">
                   <div class="form-input">
                     <input
+                      id="name"
                       type="text"
-                      onfocus="(this.type='date')"
-                      placeholder="Ngày"
+                      placeholder="Tên khách hàng"
+                      required
                     />
                   </div>
                   <div class="form-input">
                     <input
-                      type="text"
-                      onfocus="(this.type='time')"
-                      placeholder="Thời gian"
+                      id="phone"
+                      type="tel"
+                      placeholder="Số điện thoại"
+                      required
                     />
                   </div>
                 </div>
-                <button type="submit" class="btn-booking">Đặt bàn</button>
+
+                <div class="form-row">
+                  <div class="form-input">
+                    <input
+                      id="date"
+                      type="text"
+                      onfocus="(this.type='date')"
+                      placeholder="Ngày"
+                      required
+                    />
+                  </div>
+                  <div class="form-input">
+                    <input
+                      id="time"
+                      type="text"
+                      onfocus="(this.type='time')"
+                      placeholder="Thời gian"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-input">
+                    <input
+                      id="quantity"
+                      type="number"
+                      min=""
+                      value=""
+                      placeholder="Số lượng"
+                      required
+                    />
+                  </div>
+                  <div class="form-input">
+                    <input id="note" type="text" placeholder="Ghi chú" />
+                  </div>
+                </div>
+
+                <div class="btn-frame">
+                  <button id="btnSubmit" type="submit" class="btn-booking">
+                    Đặt bàn
+                  </button>
+                </div>
               </form>
             </div>
 
@@ -110,7 +155,7 @@
                   />
                 </div>
                 <div class="round-img bottom-img">
-                  <img src="../assets/images/comtamve.png" alt="Cơm tấm" />
+                  <img src="../assets/images/comtam.png" alt="Cơm tấm" />
                 </div>
               </div>
             </div>

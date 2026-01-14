@@ -91,9 +91,26 @@
                   src="../assets/images/avata1.png"
                   alt="Avatar"
                   id="profile-avatar-img"
+                  style="object-fit: cover"
                   onerror="this.src='https://via.placeholder.com/150'"
                 />
+
+                <div
+                  class="avatar-upload"
+                  id="btn-trigger-upload"
+                  style="display: none; cursor: pointer"
+                >
+                  <i class="fas fa-camera"></i>
+                </div>
+
+                <input
+                  type="file"
+                  id="file-upload-input"
+                  accept="image/*"
+                  style="display: none"
+                />
               </div>
+
               <h3
                 class="profile-hero-name"
                 style="
