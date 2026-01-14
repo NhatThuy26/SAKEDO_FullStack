@@ -1,7 +1,6 @@
 package com.sakedo.mini_store_backend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -12,27 +11,28 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    // Lấy email từ file properties để làm người gửi
-    @Value("${spring.mail.username}")
-    private String fromEmail;
+    // SỬA LỖI: Điền trực tiếp email vào đây thay vì dùng @Value("${...}")
+    // Để tránh lỗi "Could not resolve placeholder"
+    private final String fromEmail = "nhimvleggo@gmail.com";
 
-    public void sendOtpEmail(String toEmail, String otpCode) {
+    public void sendOtpEmail(String toEmail, String otp) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
+
             message.setFrom(fromEmail);
             message.setTo(toEmail);
-            message.setSubject("Mã xác thực OTP - SAKDO Store");
-            message.setText("Chào bạn,\n\n"
-                    + "Mã xác thực (OTP) để đặt lại mật khẩu của bạn là: " + otpCode + "\n\n"
+            message.setSubject("Mã OTP xác thực - Sakedo Mini Store");
+            message.setText("Xin chào,\n\n"
+                    + "Mã xác thực (OTP) của bạn là: " + otp + "\n\n"
                     + "Mã này sẽ hết hạn trong vòng 5 phút.\n"
-                    + "Nếu bạn không yêu cầu mã này, vui lòng bỏ qua email này.\n\n"
-                    + "Trân trọng,\nSAKDO Team");
+                    + "Vui lòng không chia sẻ mã này cho bất kỳ ai.");
 
             mailSender.send(message);
-            System.out.println("Mail sent successfully to " + toEmail);
+            System.out.println("Đã gửi OTP đến: " + toEmail);
+
         } catch (Exception e) {
-            System.err.println("Error sending email: " + e.getMessage());
-            throw e; // Ném lỗi để Controller bắt được
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi gửi email: " + e.getMessage());
         }
     }
 }
