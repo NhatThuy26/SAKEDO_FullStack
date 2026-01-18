@@ -63,42 +63,40 @@
                   </div>
                 </div>
 
-                <div class="form-row">
-                  <div class="form-input">
-                    <input
-                      id="date"
-                      type="text"
-                      onfocus="(this.type='date')"
-                      placeholder="Ngày"
-                      required
-                    />
-                  </div>
-                  <div class="form-input">
-                    <input
-                      id="time"
-                      type="text"
-                      onfocus="(this.type='time')"
-                      placeholder="Thời gian"
-                      required
-                    />
-                  </div>
-                </div>
+<div class="form-row">
+  <div class="form-input">
+    <label for="date" style="font-size: 0.8rem; color: #777; margin-bottom: 5px; display: block;">Ngày đặt bàn</label>
+    <input
+      id="date"
+      type="date"
+      required
+    />
+  </div>
+  <div class="form-input">
+    <label for="time" style="font-size: 0.8rem; color: #777; margin-bottom: 5px; display: block;">Giờ đặt bàn</label>
+    <input
+      id="time"
+      type="time"
+      required
+    />
+  </div>
+</div>
 
-                <div class="form-row">
-                  <div class="form-input">
-                    <input
-                      id="quantity"
-                      type="number"
-                      min=""
-                      value=""
-                      placeholder="Số lượng"
-                      required
-                    />
-                  </div>
-                  <div class="form-input">
-                    <input id="note" type="text" placeholder="Ghi chú" />
-                  </div>
-                </div>
+<div class="form-row">
+  <div class="form-input">
+    <input
+      id="quantity"
+      type="number"
+      min="1"
+      max="20"
+      placeholder="Số lượng khách"
+      required
+    />
+  </div>
+  <div class="form-input">
+    <input id="note" type="text" placeholder="Ghi chú (Ví dụ: bàn ngoài trời)" />
+  </div>
+</div>
 
                 <div class="btn-frame">
                   <button id="btnSubmit" type="submit" class="btn-booking">
