@@ -189,16 +189,20 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 15px; /* Bo góc mặc định */
+  border-radius: 15px;
+  /* Bo góc mặc định */
   transition: transform 0.5s ease;
   display: block;
 }
 
 /* STYLE ẢNH RIÊNG CHO BEST SELLER (Hình tròn) */
 .best-selling-section .product-card .card-img img {
-  border-radius: 50%; /* Ảnh tròn */
-  aspect-ratio: 1/1; /* Vuông để thành tròn */
-  border: 5px solid #fff; /* Viền trắng */
+  border-radius: 50%;
+  /* Ảnh tròn */
+  aspect-ratio: 1/1;
+  /* Vuông để thành tròn */
+  border: 5px solid #fff;
+  /* Viền trắng */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
@@ -214,7 +218,8 @@
   background: linear-gradient(135deg, #ff4757, #ff6b81);
   color: white;
   padding: 4px 10px;
-  border-radius: 20px; /* Hình viên thuốc */
+  border-radius: 20px;
+  /* Hình viên thuốc */
   font-size: 0.8rem;
   font-weight: 800;
   z-index: 100;
@@ -232,6 +237,7 @@
   0% {
     transform: scale(0);
   }
+
   100% {
     transform: scale(1);
   }
@@ -630,8 +636,8 @@
   background-color: #d6b268;
   border-radius: 50px;
   top: 50%;
-  left: 0;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 1;
   opacity: 0.8;
 }

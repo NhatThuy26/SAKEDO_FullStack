@@ -2,10 +2,12 @@
 .detail-container {
   max-width: 1100px;
   margin: 40px auto;
+  padding-top: 70px;
   display: grid;
   grid-template-columns: 1fr 1.2fr;
   gap: 50px;
-  padding: 0 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 /* CỘT TRÁI: ẢNH */
@@ -38,9 +40,33 @@
 .old-price {
   text-decoration: line-through;
   color: #999;
-  font-size: 1.2rem;
-  margin-right: 15px;
+  font-size: 1rem;
+  margin-right: 10px;
   font-weight: normal;
+}
+
+/* Giá hiện tại */
+.current-price {
+  color: #d32f2f;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* Badge giảm giá */
+.discount-badge {
+  background: #d32f2f;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  margin-left: 10px;
+}
+
+/* Wrapper cho giá */
+.price-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .product-desc {
@@ -54,12 +80,14 @@
 .note-box {
   margin-bottom: 25px;
 }
+
 .note-label {
   font-weight: 700;
   display: block;
   margin-bottom: 8px;
   color: #333;
 }
+
 .note-input {
   width: 100%;
   padding: 12px;
@@ -70,6 +98,7 @@
   height: 80px;
   transition: 0.3s;
 }
+
 .note-input:focus {
   border-color: #d8b26e;
   outline: none;
@@ -89,29 +118,30 @@
   display: flex;
   align-items: center;
 }
+
 .qty-input {
-  width: 60px;
-  height: 50px;
+  width: 50px;
+  height: 42px;
   text-align: center;
   border: 2px solid #ddd;
   border-radius: 8px;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .btn {
-  height: 50px;
-  padding: 0 25px;
+  height: 42px;
+  padding: 0 20px;
   border-radius: 8px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   transition: 0.3s;
   border: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 /* Nút Thêm Giỏ (Vàng) */
@@ -120,6 +150,7 @@
   color: #d8b26e;
   border: 2px solid #d8b26e;
 }
+
 .btn-add-cart:hover {
   background-color: #d8b26e;
   color: #fff;
@@ -132,6 +163,7 @@
   flex: 1;
   box-shadow: 0 5px 15px rgba(243, 39, 76, 0.3);
 }
+
 .btn-buy-now:hover {
   background-color: #d61c3d;
   transform: translateY(-2px);
@@ -147,6 +179,7 @@
   font-size: 0.9rem;
   color: #555;
 }
+
 .policy-item i {
   color: #28a745;
   margin-right: 5px;
@@ -168,6 +201,7 @@
   margin-bottom: 40px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
 }
+
 .write-title {
   font-weight: 700;
   margin-bottom: 15px;
@@ -181,11 +215,13 @@
   margin-bottom: 15px;
   cursor: pointer;
 }
+
 .star-rating i {
   font-size: 24px;
   color: #ddd;
   transition: 0.2s;
 }
+
 .star-rating i.active {
   color: #ffd600;
 }
@@ -198,6 +234,7 @@
   margin-bottom: 15px;
   font-family: inherit;
 }
+
 .btn-submit-review {
   background: #333;
   color: #fff;
@@ -214,25 +251,30 @@
   flex-direction: column;
   gap: 20px;
 }
+
 .review-item {
   background: #fcfcfc;
   padding: 20px;
   border-radius: 10px;
   border-bottom: 1px solid #eee;
 }
+
 .reviewer-top {
   display: flex;
   justify-content: space-between;
   margin-bottom: 8px;
 }
+
 .reviewer-name {
   font-weight: 700;
   color: #333;
 }
+
 .review-stars {
   color: #ffd600;
   font-size: 0.9rem;
 }
+
 .review-text {
   color: #555;
   line-height: 1.5;

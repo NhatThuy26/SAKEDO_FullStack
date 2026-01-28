@@ -1,438 +1,392 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Đặt Bàn - Sakedo</title>
 
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&family=Fruktur&display=swap"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đặt Bàn - Sakedo</title>
 
-    <!-- Stylesheets (relative paths so server root doesn't matter) -->
-    <link rel="stylesheet" href="../css/base/variables.css" />
-    <link rel="stylesheet" href="../css/components/header.css" />
-    <link rel="stylesheet" href="../css/pages/global.css" />
-    <link rel="stylesheet" href="../css/pages/booking.css" />
-    <link rel="stylesheet" href="../css/components/footer.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-  </head>
-  <body>
-    <div id="header-placeholder"></div>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&family=Fruktur&display=swap"
+    rel="stylesheet" />
 
-    <main>
-      <section class="booking-form-area">
-        <div class="container">
-          <div class="booking-card">
-            <div class="form-side">
-              <h2 class="form-heading">
-                Tươi Ngon Từ Tâm <br />
-                <span class="highlight-yellow">An Lành Mỗi Bữa</span>
-              </h2>
+  <!-- Stylesheets (relative paths so server root doesn't matter) -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/components/header.css" />
+  <link rel="stylesheet" href="../css/pages/global.css" />
+  <link rel="stylesheet" href="../css/pages/booking.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
 
-              <form class="booking-form" id="bookingForm">
-                <div
-                  id="booking-message"
-                  class="booking-message"
-                  role="status"
-                  aria-live="polite"
-                  style="display: none"
-                ></div>
+<body>
+  <div id="header-placeholder"></div>
 
-                <div class="form-row">
-                  <div class="form-input">
-                    <input
-                      id="name"
-                      type="text"
-                      placeholder="Tên khách hàng"
-                      required
-                    />
-                  </div>
-                  <div class="form-input">
-                    <input
-                      id="phone"
-                      type="tel"
-                      placeholder="Số điện thoại"
-                      required
-                    />
-                  </div>
-                </div>
+  <main>
+    <section class="booking-form-area">
+      <div class="container">
+        <div class="booking-card">
+          <div class="form-side">
+            <h2 class="form-heading">
+              Tươi Ngon Từ Tâm <br />
+              <span class="highlight-yellow">An Lành Mỗi Bữa</span>
+            </h2>
 
-<div class="form-row">
-  <div class="form-input">
-    <label for="date" style="font-size: 0.8rem; color: #777; margin-bottom: 5px; display: block;">Ngày đặt bàn</label>
-    <input
-      id="date"
-      type="date"
-      required
-    />
-  </div>
-  <div class="form-input">
-    <label for="time" style="font-size: 0.8rem; color: #777; margin-bottom: 5px; display: block;">Giờ đặt bàn</label>
-    <input
-      id="time"
-      type="time"
-      required
-    />
-  </div>
-</div>
-
-<div class="form-row">
-  <div class="form-input">
-    <input
-      id="quantity"
-      type="number"
-      min="1"
-      max="20"
-      placeholder="Số lượng khách"
-      required
-    />
-  </div>
-  <div class="form-input">
-    <input id="note" type="text" placeholder="Ghi chú (Ví dụ: bàn ngoài trời)" />
-  </div>
-</div>
-
-                <div class="btn-frame">
-                  <button id="btnSubmit" type="submit" class="btn-booking">
-                    Đặt bàn
-                  </button>
-                </div>
-              </form>
-            </div>
-
-            <div class="image-side">
-              <div class="capsule-img img-1">
-                <img src="../assets/images/nuocdau.png" alt="Nước dâu" />
+            <form class="booking-form" id="bookingForm">
+              <div id="booking-message" class="booking-message" role="status" aria-live="polite" style="display: none">
               </div>
-              <div class="capsule-img img-2">
-                <img src="../assets/images/thitkho.png" alt="Thịt kho" />
+
+              <div class="form-row">
+                <div class="form-input">
+                  <input id="name" type="text" placeholder="Tên khách hàng" required />
+                </div>
+                <div class="form-input">
+                  <input id="phone" type="tel" placeholder="Số điện thoại" required />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-input">
+                  <input id="date" type="text" onfocus="this.type = 'date'" placeholder="Ngày" required />
+                </div>
+                <div class="form-input">
+                  <input id="time" type="text" onfocus="this.type = 'time'" placeholder="Thời gian" required />
+                </div>
+              </div>
+              <div class="form-input">
+                <input id="quantity" type="number" min="1" max="20" placeholder="Số lượng khách" required />
+              </div>
+              <div class="form-input">
+                <input id="note" type="text" placeholder="Ghi chú (Ví dụ: bàn ngoài trời)" />
+              </div>
+
+              <div class="btn-frame">
+                <button id="btnSubmit" type="submit" class="btn-booking">
+                  Đặt bàn
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="image-side">
+            <div class="capsule-img img-1">
+              <img src="../assets/images/nuocdau.png" alt="Nước dâu" />
+            </div>
+            <div class="capsule-img img-2">
+              <img src="../assets/images/thitkho.png" alt="Thịt kho" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Welcome Section -->
+    <section class="welcome-section">
+      <div class="container">
+        <div class="welcome-wrapper">
+          <!-- Left Image - Pho -->
+          <div class="welcome-img-left">
+            <div class="capsule-welcome">
+              <img src="../assets/images/pho3.png" alt="Phở" />
+            </div>
+          </div>
+
+          <!-- Center Content -->
+          <div class="welcome-content">
+            <span class="welcome-label">WELCOME TO SAKEDO</span>
+            <h2 class="welcome-title">Cảm nhận hương <br />vị ẩm thực</h2>
+            <p class="welcome-desc">
+              Gói ghém vị ngon quê nhà bằng sự tận tâm và an toàn tuyệt đối.
+              Hãy đặt bàn ngay hôm nay để cùng gia đình thưởng thức trọn vẹn.
+            </p>
+            <div class="welcome-hours">
+              <span>Thứ 2 đến thứ 6 - 09:30 đến 22:00</span>
+            </div>
+            <a href="tel:+19006988" class="welcome-phone">+1900 6988</a>
+          </div>
+
+          <!-- Right Images -->
+          <div class="welcome-img-right">
+            <div class="right-images-stack">
+              <div class="round-img top-img">
+                <img src="../assets/images/canhchuaca.png" alt="Canh chua cá" />
+              </div>
+              <div class="round-img bottom-img">
+                <img src="../assets/images/comtam.png" alt="Cơm tấm" />
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Welcome Section -->
-      <section class="welcome-section">
-        <div class="container">
-          <div class="welcome-wrapper">
-            <!-- Left Image - Pho -->
-            <div class="welcome-img-left">
-              <div class="capsule-welcome">
-                <img src="../assets/images/pho3.png" alt="Phở" />
+    <!-- Promotion Section - Ăn cơm nhà -->
+    <section class="promo-section">
+      <div class="container">
+        <div class="promo-wrapper">
+          <!-- Left Title -->
+          <div class="promo-title-left">
+            <h2 class="promo-heading">Ăn cơm nhà,<br />nhớ vị xưa</h2>
+          </div>
+
+          <!-- Center Image with Badge -->
+          <div class="promo-image-center">
+            <div class="discount-badge">
+              <span class="badge-small">GIẢM GIÁ</span>
+              <span class="badge-big">20%</span>
+            </div>
+            <div class="promo-img-wrap">
+              <img src="../assets/images/mamcom2.png" alt="Mâm cơm Việt Nam" />
+            </div>
+          </div>
+
+          <!-- Right Content - Benefits -->
+          <div class="promo-benefits">
+            <ul class="benefits-list">
+              <li>
+                <span class="check-icon">✓</span>
+                <span>Thực phẩm tươi ngon mỗi ngày</span>
+              </li>
+              <li>
+                <span class="check-icon">✓</span>
+                <span>Thực phẩm tươi ngon mỗi ngày</span>
+              </li>
+              <li>
+                <span class="check-icon">✓</span>
+                <span>Món ăn thanh lành, tốt sức khỏe</span>
+              </li>
+              <li>
+                <span class="check-icon">✓</span>
+                <span>Điểm hẹn cho bữa cơm gia đình</span>
+              </li>
+            </ul>
+            <a href="#" class="btn-book-table">Đặt bàn</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Menu Section - Bếp Nhà SAKEDO -->
+    <section class="menu-region-section">
+      <div class="container">
+        <div class="menu-region-header">
+          <h2 class="menu-region-title">Bếp Nhà SAKEDO</h2>
+          <div class="title-underline"></div>
+        </div>
+
+        <div class="menu-cards-wrapper">
+          <!-- Miền Nam -->
+          <div class="menu-card">
+            <h3 class="region-title">Miền Nam</h3>
+
+            <div class="menu-item">
+              <div class="item-header">
+                <span class="item-name">Cơm tấm</span>
+                <span class="item-price">65.000</span>
               </div>
+              <p class="item-desc">Cơm, thịt nướng, chả, bì, dưa leo</p>
             </div>
 
-            <!-- Center Content -->
-            <div class="welcome-content">
-              <span class="welcome-label">WELCOME TO SAKEDO</span>
-              <h2 class="welcome-title">Cảm nhận hương <br />vị ẩm thực</h2>
-              <p class="welcome-desc">
-                Gói ghém vị ngon quê nhà bằng sự tận tâm và an toàn tuyệt đối.
-                Hãy đặt bàn ngay hôm nay để cùng gia đình thưởng thức trọn vẹn.
+            <div class="menu-item">
+              <div class="item-header">
+                <span class="item-name">Lẩu mắm</span>
+                <span class="item-price">230.000</span>
+              </div>
+              <p class="item-desc">
+                Nước lẩu mắm, cá, thịt, tôm, mực và rau sống
               </p>
-              <div class="welcome-hours">
-                <span>Thứ 2 đến thứ 6 - 09:30 đến 22:00</span>
-              </div>
-              <a href="tel:+19006988" class="welcome-phone">+1900 6988</a>
             </div>
 
-            <!-- Right Images -->
-            <div class="welcome-img-right">
-              <div class="right-images-stack">
-                <div class="round-img top-img">
-                  <img
-                    src="../assets/images/canhchuaca.png"
-                    alt="Canh chua cá"
-                  />
-                </div>
-                <div class="round-img bottom-img">
-                  <img src="../assets/images/comtam.png" alt="Cơm tấm" />
-                </div>
+            <div class="menu-item">
+              <div class="item-header">
+                <span class="item-name">Bánh xèo miền Tây</span>
+                <span class="item-price">65.000</span>
               </div>
+              <p class="item-desc">
+                Nhân tôm, thịt, nước mắm chua ngọt, rau sống
+              </p>
+            </div>
+          </div>
+
+          <!-- Miền Trung -->
+          <div class="menu-card featured">
+            <h3 class="region-title">Miền Trung</h3>
+
+            <div class="menu-item">
+              <div class="item-header">
+                <span class="item-name">Mì Quảng</span>
+                <span class="item-price">70.000</span>
+              </div>
+              <p class="item-desc">
+                Sợi mì vàng tươi, đậu phộng, tôm thịt, rau sống, bánh tráng
+                nướng
+              </p>
+            </div>
+
+            <div class="menu-item">
+              <div class="item-header">
+                <span class="item-name">Bún bò Huế</span>
+                <span class="item-price">65.000</span>
+              </div>
+              <p class="item-desc">Bánh phở, thịt bò, chả Huế, rau sống</p>
+            </div>
+
+            <div class="menu-item">
+              <div class="item-header">
+                <span class="item-name">Bánh bột lọc</span>
+                <span class="item-price">55.000</span>
+              </div>
+              <p class="item-desc">Nhân tôm, thịt, kèm nước mắm chua ngọt</p>
+            </div>
+
+            <div class="menu-item">
+              <div class="item-header">
+                <span class="item-name">Cơm Hến</span>
+                <span class="item-price">70.000</span>
+              </div>
+              <p class="item-desc">
+                Nước hến, cơm, mắm ruốc, môn bạc hà, bẹ chuối, rau mè, rau
+                thơm
+              </p>
+            </div>
+          </div>
+
+          <!-- Miền Bắc -->
+          <div class="menu-card">
+            <h3 class="region-title">Miền Bắc</h3>
+
+            <div class="menu-item">
+              <div class="item-header">
+                <span class="item-name">Bún đậu</span>
+                <span class="item-price">120.000</span>
+              </div>
+              <p class="item-desc">
+                Bún tươi, đậu hũ chiên vàng, chả cốm, thịt luộc, nem chua,
+                dồi, mắm tôm pha tắc
+              </p>
+            </div>
+
+            <div class="menu-item">
+              <div class="item-header">
+                <span class="item-name">Chả cá lã vọng</span>
+                <span class="item-price">200.000</span>
+              </div>
+              <p class="item-desc">
+                Chả cá, bún, mắm tôm, thìa là, bánh đa nướng
+              </p>
+            </div>
+
+            <div class="menu-item">
+              <div class="item-header">
+                <span class="item-name">Phở bò</span>
+                <span class="item-price">65.000</span>
+              </div>
+              <p class="item-desc">Bánh phở và nước dùng, thịt bò, hành</p>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Promotion Section - Ăn cơm nhà -->
-      <section class="promo-section">
-        <div class="container">
-          <div class="promo-wrapper">
-            <!-- Left Title -->
-            <div class="promo-title-left">
-              <h2 class="promo-heading">Ăn cơm nhà,<br />nhớ vị xưa</h2>
-            </div>
-
-            <!-- Center Image with Badge -->
-            <div class="promo-image-center">
-              <div class="discount-badge">
-                <span class="badge-small">GIẢM GIÁ</span>
-                <span class="badge-big">20%</span>
-              </div>
-              <div class="promo-img-wrap">
-                <img
-                  src="../assets/images/mamcom2.png"
-                  alt="Mâm cơm Việt Nam"
-                />
-              </div>
-            </div>
-
-            <!-- Right Content - Benefits -->
-            <div class="promo-benefits">
-              <ul class="benefits-list">
-                <li>
-                  <span class="check-icon">✓</span>
-                  <span>Thực phẩm tươi ngon mỗi ngày</span>
-                </li>
-                <li>
-                  <span class="check-icon">✓</span>
-                  <span>Thực phẩm tươi ngon mỗi ngày</span>
-                </li>
-                <li>
-                  <span class="check-icon">✓</span>
-                  <span>Món ăn thanh lành, tốt sức khỏe</span>
-                </li>
-                <li>
-                  <span class="check-icon">✓</span>
-                  <span>Điểm hẹn cho bữa cơm gia đình</span>
-                </li>
-              </ul>
-              <a href="#" class="btn-book-table">Đặt bàn</a>
-            </div>
+    <!-- Features Section - Trọn Vẹn Yêu Thương -->
+    <section class="features-section">
+      <div class="container">
+        <div class="features-header">
+          <div class="features-title-left">
+            <h2 class="features-main-title">Trọn Vẹn<br />Yêu Thương</h2>
+          </div>
+          <div class="features-desc-right">
+            <p>
+              Dù là bữa trưa vội và với món lẻ đậm đà hay bữa tối sum họp bên
+              set cơm gia đình ấm cúng, SAKEDO luôn sẵn sàng phục vụ. Chúng
+              tôi gói ghém hương vị "mẹ nấu" vào từng món ăn, để mỗi lần ghé
+              quán là một lần bạn được trở về nhà.
+            </p>
           </div>
         </div>
-      </section>
 
-      <!-- Menu Section - Bếp Nhà SAKEDO -->
-      <section class="menu-region-section">
-        <div class="container">
-          <div class="menu-region-header">
-            <h2 class="menu-region-title">Bếp Nhà SAKEDO</h2>
-            <div class="title-underline"></div>
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <img src="../assets/images/icon_donut.png" alt="Trà chiều" />
+            </div>
+            <h4 class="feature-title">Trà chiều</h4>
+            <p class="feature-desc">
+              Thưởng thức chè quê và trà thảo mộc thanh mát sau bữa ăn.
+            </p>
           </div>
 
-          <div class="menu-cards-wrapper">
-            <!-- Miền Nam -->
-            <div class="menu-card">
-              <h3 class="region-title">Miền Nam</h3>
-
-              <div class="menu-item">
-                <div class="item-header">
-                  <span class="item-name">Cơm tấm</span>
-                  <span class="item-price">65.000</span>
-                </div>
-                <p class="item-desc">Cơm, thịt nướng, chả, bì, dưa leo</p>
-              </div>
-
-              <div class="menu-item">
-                <div class="item-header">
-                  <span class="item-name">Lẩu mắm</span>
-                  <span class="item-price">230.000</span>
-                </div>
-                <p class="item-desc">
-                  Nước lẩu mắm, cá, thịt, tôm, mực và rau sống
-                </p>
-              </div>
-
-              <div class="menu-item">
-                <div class="item-header">
-                  <span class="item-name">Bánh xèo miền Tây</span>
-                  <span class="item-price">65.000</span>
-                </div>
-                <p class="item-desc">
-                  Nhân tôm, thịt, nước mắm chua ngọt, rau sống
-                </p>
-              </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <img src="../assets/images/icon_nha.png" alt="Giao hàng" />
             </div>
+            <h4 class="feature-title">Giao hàng và mang về</h4>
+            <p class="feature-desc">
+              Giao hàng nhanh chóng, giữ trọn hương vị nóng sốt cho bữa ăn.
+            </p>
+          </div>
 
-            <!-- Miền Trung -->
-            <div class="menu-card featured">
-              <h3 class="region-title">Miền Trung</h3>
-
-              <div class="menu-item">
-                <div class="item-header">
-                  <span class="item-name">Mì Quảng</span>
-                  <span class="item-price">70.000</span>
-                </div>
-                <p class="item-desc">
-                  Sợi mì vàng tươi, đậu phộng, tôm thịt, rau sống, bánh tráng
-                  nướng
-                </p>
-              </div>
-
-              <div class="menu-item">
-                <div class="item-header">
-                  <span class="item-name">Bún bò Huế</span>
-                  <span class="item-price">65.000</span>
-                </div>
-                <p class="item-desc">Bánh phở, thịt bò, chả Huế, rau sống</p>
-              </div>
-
-              <div class="menu-item">
-                <div class="item-header">
-                  <span class="item-name">Bánh bột lọc</span>
-                  <span class="item-price">55.000</span>
-                </div>
-                <p class="item-desc">Nhân tôm, thịt, kèm nước mắm chua ngọt</p>
-              </div>
-
-              <div class="menu-item">
-                <div class="item-header">
-                  <span class="item-name">Cơm Hến</span>
-                  <span class="item-price">70.000</span>
-                </div>
-                <p class="item-desc">
-                  Nước hến, cơm, mắm ruốc, môn bạc hà, bẹ chuối, rau mè, rau
-                  thơm
-                </p>
-              </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <img src="../assets/images/icon_ly.png" alt="Thức uống" />
             </div>
+            <h4 class="feature-title">Thức uống thanh mát</h4>
+            <p class="feature-desc">
+              Các loại nước mát, nước ép trái cây tự nhiên tốt cho sức khỏe.
+            </p>
+          </div>
 
-            <!-- Miền Bắc -->
-            <div class="menu-card">
-              <h3 class="region-title">Miền Bắc</h3>
-
-              <div class="menu-item">
-                <div class="item-header">
-                  <span class="item-name">Bún đậu</span>
-                  <span class="item-price">120.000</span>
-                </div>
-                <p class="item-desc">
-                  Bún tươi, đậu hũ chiên vàng, chả cốm, thịt luộc, nem chua,
-                  dồi, mắm tôm pha tắc
-                </p>
-              </div>
-
-              <div class="menu-item">
-                <div class="item-header">
-                  <span class="item-name">Chả cá lã vọng</span>
-                  <span class="item-price">200.000</span>
-                </div>
-                <p class="item-desc">
-                  Chả cá, bún, mắm tôm, thìa là, bánh đa nướng
-                </p>
-              </div>
-
-              <div class="menu-item">
-                <div class="item-header">
-                  <span class="item-name">Phở bò</span>
-                  <span class="item-price">65.000</span>
-                </div>
-                <p class="item-desc">Bánh phở và nước dùng, thịt bò, hành</p>
-              </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <img src="../assets/images/icon_amtra.png" alt="Mâm cơm" />
             </div>
+            <h4 class="feature-title">Mâm cơm gia đình</h4>
+            <p class="feature-desc">
+              Không gian và thực đơn hoàn hảo cho những buổi họp mặt sum vầy.
+            </p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Features Section - Trọn Vẹn Yêu Thương -->
-      <section class="features-section">
-        <div class="container">
-          <div class="features-header">
-            <div class="features-title-left">
-              <h2 class="features-main-title">Trọn Vẹn<br />Yêu Thương</h2>
+    <!-- Party Section - Góc Bếp SAKEDO -->
+    <section class="party-section">
+      <div class="container">
+        <div class="party-header">
+          <h2 class="party-main-title">Góc Bếp Nhà Hàng</h2>
+          <div class="title-underline party-underline"></div>
+        </div>
+
+        <div class="party-card">
+          <div class="party-images-grid">
+            <div class="party-img-item">
+              <img src="../assets/images/tiec1.png" alt="Mâm cơm gia đình" />
             </div>
-            <div class="features-desc-right">
-              <p>
-                Dù là bữa trưa vội và với món lẻ đậm đà hay bữa tối sum họp bên
-                set cơm gia đình ấm cúng, SAKEDO luôn sẵn sàng phục vụ. Chúng
-                tôi gói ghém hương vị "mẹ nấu" vào từng món ăn, để mỗi lần ghé
-                quán là một lần bạn được trở về nhà.
-              </p>
+            <div class="party-img-item">
+              <img src="../assets/images/tiec2.png" alt="Không gian vui vẻ" />
+            </div>
+            <div class="party-img-item">
+              <img src="../assets/images/tiec3.png" alt="Không gian nhà hàng" />
+            </div>
+            <div class="party-img-item">
+              <img src="../assets/images/tiec4.png" alt="Góc nhà hàng" />
             </div>
           </div>
 
-          <div class="features-grid">
-            <div class="feature-item">
-              <div class="feature-icon">
-                <img src="../assets/images/icon_donut.png" alt="Trà chiều" />
-              </div>
-              <h4 class="feature-title">Trà chiều</h4>
-              <p class="feature-desc">
-                Thưởng thức chè quê và trà thảo mộc thanh mát sau bữa ăn.
-              </p>
-            </div>
-
-            <div class="feature-item">
-              <div class="feature-icon">
-                <img src="../assets/images/icon_nha.png" alt="Giao hàng" />
-              </div>
-              <h4 class="feature-title">Giao hàng và mang về</h4>
-              <p class="feature-desc">
-                Giao hàng nhanh chóng, giữ trọn hương vị nóng sốt cho bữa ăn.
-              </p>
-            </div>
-
-            <div class="feature-item">
-              <div class="feature-icon">
-                <img src="../assets/images/icon_ly.png" alt="Thức uống" />
-              </div>
-              <h4 class="feature-title">Thức uống thanh mát</h4>
-              <p class="feature-desc">
-                Các loại nước mát, nước ép trái cây tự nhiên tốt cho sức khỏe.
-              </p>
-            </div>
-
-            <div class="feature-item">
-              <div class="feature-icon">
-                <img src="../assets/images/icon_amtra.png" alt="Mâm cơm" />
-              </div>
-              <h4 class="feature-title">Mâm cơm gia đình</h4>
-              <p class="feature-desc">
-                Không gian và thực đơn hoàn hảo cho những buổi họp mặt sum vầy.
-              </p>
-            </div>
+          <div class="party-content">
+            <h3 class="party-title">Không Gian Sum Vầy<br />& Đặt Tiệc</h3>
+            <a href="#" class="btn-party-booking">Đặt bàn ngay</a>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+  </main>
 
-      <!-- Party Section - Góc Bếp SAKEDO -->
-      <section class="party-section">
-        <div class="container">
-          <div class="party-header">
-            <h2 class="party-main-title">Góc Bếp Nhà Hàng</h2>
-            <div class="title-underline party-underline"></div>
-          </div>
+  <div id="footer-placeholder"></div>
 
-          <div class="party-card">
-            <div class="party-images-grid">
-              <div class="party-img-item">
-                <img src="../assets/images/tiec1.png" alt="Mâm cơm gia đình" />
-              </div>
-              <div class="party-img-item">
-                <img src="../assets/images/tiec2.png" alt="Không gian vui vẻ" />
-              </div>
-              <div class="party-img-item">
-                <img
-                  src="../assets/images/tiec3.png"
-                  alt="Không gian nhà hàng"
-                />
-              </div>
-              <div class="party-img-item">
-                <img src="../assets/images/tiec4.png" alt="Góc nhà hàng" />
-              </div>
-            </div>
+  <script src="../js/components/header.js"></script>
+  <script src="../js/components/footer.js"></script>
+  <script src="../js/pages/booking.js"></script>
+</body>
 
-            <div class="party-content">
-              <h3 class="party-title">Không Gian Sum Vầy<br />& Đặt Tiệc</h3>
-              <a href="#" class="btn-party-booking">Đặt bàn ngay</a>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <div id="footer-placeholder"></div>
-
-    <script src="../js/components/header.js"></script>
-    <script src="../js/components/footer.js"></script>
-    <script src="../js/pages/booking.js"></script>
-  </body>
 </html>

@@ -6,33 +6,39 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Document(collection = "orders") // MongoDB dùng @Document
+@Document(collection = "orders")
 public class Order {
 
     @Id
-    private String id; // MongoDB tự sinh ID là chuỗi (String), không phải Long
+    private String id;
 
+    private String userId;           // ID người dùng (để liên kết giỏ hàng với user)
     private String customerName;
     private String customerPhone;
     private String customerAddress;
-    private String note;
+    private String note;             // Ghi chú của khách (không hành, ít rau...)
+    private String paymentMethod;    // Phương thức thanh toán: COD, BANK
     private double shippingFee;
     private double totalAmount;
 
-    private int status; // 0: Chờ xác nhận, 1: Bếp làm, 2: Chờ ship...
+    // Status: 0 = Chờ xác nhận, 1 = Đã thanh toán, 2 = Đang giao, 3 = Hoàn thành, 4 = Đã hủy
+    private int status;
     private Date createdAt;
+    private Date paidAt;             // Thời gian thanh toán
 
-    // Trong MongoDB, List này sẽ được nhúng thẳng vào trong Document Order
     private List<OrderItem> items = new ArrayList<>();
 
     public Order() {
         this.createdAt = new Date();
-        this.status = 0;
+        this.status = 0; // Mặc định là giỏ hàng
     }
 
     // Getters và Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
+
+    public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId; }
 
     public String getCustomerName() { return customerName; }
     public void setCustomerName(String customerName) { this.customerName = customerName; }
@@ -46,6 +52,9 @@ public class Order {
     public String getNote() { return note; }
     public void setNote(String note) { this.note = note; }
 
+    public String getPaymentMethod() { return paymentMethod; }
+    public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
+
     public double getShippingFee() { return shippingFee; }
     public void setShippingFee(double shippingFee) { this.shippingFee = shippingFee; }
 
@@ -57,6 +66,9 @@ public class Order {
 
     public Date getCreatedAt() { return createdAt; }
     public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
+
+    public Date getPaidAt() { return paidAt; }
+    public void setPaidAt(Date paidAt) { this.paidAt = paidAt; }
 
     public List<OrderItem> getItems() { return items; }
     public void setItems(List<OrderItem> items) { this.items = items; }

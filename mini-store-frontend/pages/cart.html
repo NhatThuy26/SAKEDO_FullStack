@@ -1,72 +1,93 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trang Chủ - Sakedo</title>
 
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&family=Fruktur&display=swap"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giỏ Hàng - Sakedo</title>
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/css/base/variables.css" />
-    <link rel="stylesheet" href="/css/base/header.css" />
-    <link rel="stylesheet" href="/css/pages/global.css" />
-    <link rel="stylesheet" href="/css/pages/home.css" />
-    <link rel="stylesheet" href="../css/pages/cart.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-  </head>
-  <body>
-    <div id="header-placeholder"></div>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&family=Fruktur&display=swap"
+    rel="stylesheet" />
 
-    <main>
-      <div class="container cart-container">
-        <h1 class="page-title">Giỏ Hàng Của Bạn</h1>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
-        <div id="cart-content" class="cart-layout">
-          <div class="cart-list" id="cart-items-wrapper"></div>
+  <!-- Stylesheets - Dùng đường dẫn tương đối -->
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/components/header.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+  <link rel="stylesheet" href="../css/pages/global.css" />
+  <link rel="stylesheet" href="../css/pages/cart.css" />
+</head>
 
-          <div class="cart-summary">
-            <h3 style="margin-bottom: 20px">Tóm tắt đơn hàng</h3>
-            <div class="summary-row">
-              <span>Tạm tính:</span>
-              <span id="sub-total">0đ</span>
-            </div>
-            <div class="summary-row">
-              <span>Phí giao hàng:</span>
-              <span id="shipping-fee" style="font-size: 0.9rem; color: #666"
-                >Tính khi thanh toán</span
-              >
-            </div>
-            <div class="summary-total">
-              <span>Tổng cộng:</span>
-              <span id="final-total" style="color: #d32f2f">0đ</span>
-            </div>
-            <button
-              class="btn-checkout"
-              onclick="window.location.href='/pages/checkout.html'"
-            >
-              THANH TOÁN NGAY
-            </button>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main>
+    <div class="container cart-container">
+      <h1 class="page-title">Giỏ Hàng Của Bạn</h1>
+
+      <div id="cart-content" class="cart-layout">
+        <div class="cart-list" id="cart-items-wrapper"></div>
+
+        <div class="cart-summary">
+          <h3 style="margin-bottom: 20px">Tóm tắt đơn hàng</h3>
+          <div class="summary-row">
+            <span>Tạm tính:</span>
+            <span id="sub-total">0đ</span>
           </div>
-        </div>
+          <div class="summary-total">
+            <span>Tổng cộng:</span>
+            <span id="final-total" style="color: #d32f2f">0đ</span>
+          </div>
 
-        <div id="empty-cart-msg" class="empty-cart">
-          <i class="fas fa-shopping-cart"></i>
-          <h3>Giỏ hàng đang trống</h3>
-          <p>Bạn chưa thêm món nào vào giỏ cả.</p>
-          <a href="/index.html" class="btn-back">Quay lại thực đơn</a>
+          <!-- PHƯƠNG THỨC THANH TOÁN -->
+          <div class="payment-methods">
+            <h4>Phương thức thanh toán</h4>
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="cod" checked>
+              <span class="option-content">
+                <i class="fas fa-money-bill-wave"></i>
+                <div class="option-text">
+                  <span class="option-title">Tiền mặt (COD)</span>
+                  <span class="option-desc">Thanh toán khi nhận hàng</span>
+                </div>
+              </span>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="bank">
+              <span class="option-content">
+                <i class="fas fa-qrcode"></i>
+                <div class="option-text">
+                  <span class="option-title">Chuyển khoản QR</span>
+                  <span class="option-desc">Quét mã QR để thanh toán</span>
+                </div>
+              </span>
+            </label>
+          </div>
+
+          <button class="btn-checkout">
+            <i class="fas fa-shopping-bag"></i> ĐẶT HÀNG NGAY
+          </button>
         </div>
       </div>
-    </main>
 
-    <script src="../js/pages/global.js"></script>
-    <script src="../js/pages/cart.js"></script>
-  </body>
+      <div id="empty-cart-msg" class="empty-cart">
+        <i class="fas fa-shopping-cart"></i>
+        <h3>Giỏ hàng đang trống</h3>
+        <p>Bạn chưa thêm món nào vào giỏ cả.</p>
+        <a href="menu.html" class="btn-back">Quay lại thực đơn</a>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="../js/components/header.js"></script>
+  <script src="../js/components/footer.js"></script>
+  <script src="../js/pages/cart.js"></script>
+</body>
+
 </html>

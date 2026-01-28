@@ -52,7 +52,7 @@ function renderHeroProduct(products) {
                 <p>${product.name}</p>
                 <div class="stars">★★★★★</div>
             </div>
-            <img src="/assets/images/${product.image}" 
+            <img src="../assets/images/${product.image}" 
                  alt="${product.name}" 
                  class="card-img"
                  onerror="this.src='https://via.placeholder.com/400x400?text=Sakedo'"/>
@@ -67,15 +67,15 @@ function renderPromoSection(products) {
   const container = document.getElementById("promo-container");
   if (!container) return;
 
-  // Lọc ra các món có discount > 0, lấy tối đa 2 món
-  const promoItems = products.filter((p) => p.discount > 0).slice(0, 2);
+  // Lọc ra các món có discount > 0, lấy tối đa 4 món
+  const promoItems = products.filter((p) => p.discount > 0).slice(0, 4);
 
-  // Tạo HTML giữ nguyên class .promo-card
+  // Tạo HTML giữ nguyên class .promo-card, thêm onclick để chuyển trang
   container.innerHTML = promoItems
     .map(
       (item) => `
-        <div class="promo-card">
-            <img src="/assets/images/${item.image}" 
+        <div class="promo-card" onclick="window.location.href='product-detail.html?id=${item.id}'" style="cursor: pointer;">
+            <img src="../assets/images/${item.image}" 
                  alt="${item.name}" 
                  class="promo-img" 
                  onerror="this.src='https://via.placeholder.com/300'"/>
@@ -120,11 +120,11 @@ function renderBestSellers(products) {
       }
 
       return `
-            <div class="food-card">
+            <div class="food-card" onclick="window.location.href='product-detail.html?id=${item.id}'" style="cursor: pointer;">
                 <div class="card-header">
                     <span class="sale-badge">HOT</span>
                     <div class="img-bg"></div>
-                    <img src="/assets/images/${item.image}" 
+                    <img src="../assets/images/${item.image}" 
                          alt="${item.name}" 
                          class="food-img"
                          onerror="this.src='https://via.placeholder.com/200'"/>
@@ -136,7 +136,7 @@ function renderBestSellers(products) {
                             ${oldPriceHtml}
                             <span class="new-price">${price}</span>
                         </div>
-                        <button class="cart-btn-small" onclick="alert('Đã thêm ${item.name} vào giỏ!')">
+                        <button class="cart-btn-small" onclick="event.stopPropagation(); handleHomeAddToCart(${item.id}, '${item.name.replace(/'/g, "\\'").replace(/"/g, '&quot;')}', ${item.price}, '${item.image}')">
                             <i class="fas fa-shopping-bag"></i>
                         </button>
                     </div>
@@ -171,12 +171,9 @@ function setupMenuTabs(allProducts) {
     }
 
     if (imgElement && filtered.length > 0) {
-      imgElement.src = `/assets/images/${filtered[0].image}`;
+      imgElement.src = `../assets/images/${filtered[0].image}`;
     }
 
-    // Vẽ danh sách món nhỏ bên phải
-    // Ở đây mình dùng style inline nhẹ để đảm bảo list đẹp,
-    // hoặc bạn có thể dùng class .menu-item nếu trong CSS đã có.
     listContainer.innerHTML = filtered
       .map((item) => {
         const price = new Intl.NumberFormat("vi-VN", {
@@ -186,12 +183,10 @@ function setupMenuTabs(allProducts) {
         return `
                 <div class="menu-item" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed #eee;">
                      <div style="flex: 1;">
-                        <span class="item-name" style="display: block; font-weight: 700; color: #333; font-size: 16px;">${
-                          item.name
-                        }</span>
-                        <p class="item-desc" style="margin: 5px 0 0; font-size: 13px; color: #777;">${
-                          item.description || "Hương vị tuyệt hảo từ Sakedo"
-                        }</p>
+                        <span class="item-name" style="display: block; font-weight: 700; color: #333; font-size: 16px;">${item.name
+          }</span>
+                        <p class="item-desc" style="margin: 5px 0 0; font-size: 13px; color: #777;">${item.description || "Hương vị tuyệt hảo từ Sakedo"
+          }</p>
                     </div>
                     <span class="item-price" style="font-weight: 700; color: #D4AF37; margin-left: 15px;">${price}</span>
                 </div>
@@ -219,4 +214,49 @@ function setupMenuTabs(allProducts) {
       renderList(this.getAttribute("data-type"));
     });
   });
+}
+
+// ==============================================
+// 5. CÁC HÀM HỖ TRỢ RIÊNG CHO HOME
+// ==============================================
+
+// Hàm xử lý thêm giỏ hàng (Có kiểm tra quyền từ global.js)
+function handleHomeAddToCart(id, name, price, image) {
+  // 1. Gọi hàm kiểm tra quyền trong global.js
+  if (typeof window.checkLoginRequired === "function") {
+    if (!window.checkLoginRequired()) return;
+  }
+
+  // 2. Logic thêm vào LocalStorage (Giống trong menu.js)
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const existing = cart.find((item) => item.id == id);
+
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({
+      id: id,
+      name: name,
+      price: price,
+      originalPrice: price,
+      image: image,
+      quantity: 1,
+      note: "",
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  // 3. Cập nhật Badge trên Header (Hàm trong global.js)
+  if (window.updateCartBadge) window.updateCartBadge();
+
+  alert(`Đã thêm "${name}" vào giỏ hàng!`);
+}
+
+// Hàm format tiền tệ (nếu global chưa có)
+function formatCurrency(amount) {
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(amount);
 }

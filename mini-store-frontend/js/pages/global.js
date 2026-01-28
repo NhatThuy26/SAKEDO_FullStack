@@ -1,17 +1,115 @@
 document.addEventListener("DOMContentLoaded", function () {
-  console.log(
-    "--> Global Page JS đã tải: Chỉ xử lý nội dung trang chủ (Slider, API, Tab)."
-  );
+  console.log("--> Global Page JS đã tải.");
 
   // ==================================================================
-  // 1. LOGIC TRANG CHỦ: GỌI API & RENDER SẢN PHẨM
+  // Phần 1: Xử lý giỏ hàng cho tài khoản Guest
   // ==================================================================
+  try {
+    const currentUser = JSON.parse(localStorage.getItem("user"));
+    if (currentUser && currentUser.role === "guest") {
+      localStorage.removeItem("cart");
+      console.log("🧹 Đã tự động xóa giỏ hàng của Khách (guest).");
+
+      if (typeof window.updateCartBadge === "function") {
+        window.updateCartBadge();
+      }
+    }
+  } catch (err) {
+    console.error("Lỗi khi dọn dẹp giỏ hàng guest:", err);
+  }
+
+  // ==================================================================
+  // Phần 2: XỬ LÝ THANH TOÁN TỪ PAYOS 
+  // ==================================================================
+  async function handlePaymentCallback() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentStatus = urlParams.get('payment');
+    const payosStatus = urlParams.get('status');
+
+    console.log("--> URL Params: payment=" + paymentStatus + ", status=" + payosStatus);
+
+    // 1. Nếu thanh toán THÀNH CÔNG (payment=success)
+    if (paymentStatus === 'success') {
+      console.log("--> Phát hiện thanh toán thành công. Bắt đầu xử lý...");
+
+      // Lấy pendingOrderId từ localStorage (được lưu khi tạo order trước khi chuyển sang PayOS)
+      const pendingOrderId = localStorage.getItem("pendingOrderId");
+
+      if (pendingOrderId) {
+        console.log("--> Có pendingOrderId:", pendingOrderId, "- Cập nhật status order...");
+
+        try {
+          // Cập nhật status order từ 0 -> 1 (đã thanh toán)
+          const response = await fetch(`http://localhost:8080/api/orders/${pendingOrderId}/status?newStatus=1`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json"
+            }
+          });
+
+          if (response.ok) {
+            console.log("--> ✅ Đã cập nhật trạng thái đơn hàng thành công!");
+          } else {
+            console.error("--> ❌ Lỗi cập nhật trạng thái:", await response.text());
+          }
+        } catch (error) {
+          console.error("--> ❌ Lỗi kết nối:", error);
+        }
+
+        // Xóa pendingOrderId
+        localStorage.removeItem("pendingOrderId");
+      } else {
+        console.log("--> Không có pendingOrderId - Order đã được tạo trước đó.");
+      }
+
+      // Xóa giỏ hàng (phòng trường hợp còn sót)
+      localStorage.removeItem("cart");
+
+      alert("✅ Thanh toán thành công! Đơn hàng đã được xác nhận.");
+      window.history.replaceState({}, document.title, window.location.pathname);
+      location.reload();
+    }
+
+    // 2. Nếu khách HỦY thanh toán (status=CANCELLED)
+    else if (payosStatus === 'CANCELLED') {
+      console.log("--> Khách hàng đã hủy thanh toán.");
+
+      // Hủy order đã tạo nếu có pendingOrderId
+      const pendingOrderId = localStorage.getItem("pendingOrderId");
+      if (pendingOrderId) {
+        console.log("--> Hủy order:", pendingOrderId);
+        try {
+          await fetch(`http://localhost:8080/api/orders/${pendingOrderId}/status?newStatus=4`, {
+            method: "PUT"
+          });
+        } catch (e) {
+          console.error("--> Lỗi hủy order:", e);
+        }
+        localStorage.removeItem("pendingOrderId");
+      }
+
+      alert("⚠️ Bạn đã hủy thanh toán. Đơn hàng đã bị hủy.");
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }
+  handlePaymentCallback();
+
+
+  // ==================================================================
+  // Phần 3: RANG CHỦ: GỌI API & RENDER SẢN PHẨM
+  // ==================================================================
+
+  function getImageUrl(imgName) {
+    if (!imgName || imgName.trim() === "") return "https://placehold.co/300x300?text=No+Image";
+    if (imgName.startsWith("http") || imgName.startsWith("data:")) return imgName;
+    if (imgName.startsWith("../") || imgName.startsWith("./")) return imgName;
+    return `../assets/images/${imgName}`;
+  }
 
   async function fetchAndRenderHomeData() {
     const promoContainer = document.getElementById("promo-container");
     const mustTryContainer = document.getElementById("mustTryTrack");
 
-    // Nếu không tìm thấy các container này, dừng lại
     if (!promoContainer && !mustTryContainer) return;
 
     try {
@@ -22,22 +120,18 @@ document.addEventListener("DOMContentLoaded", function () {
         throw new Error("Không thể kết nối đến Backend Spring Boot");
 
       const products = await response.json();
-      console.log(`--> Đã tải được ${products.length} sản phẩm.`);
 
-      // --- A. RENDER MỤC ƯU ĐÃI (Discount > 0) ---
+      // --- A. RENDER MỤC ƯU ĐÃI ---
       if (promoContainer) {
         const promoList = products.filter((p) => p.discount > 0).slice(0, 4);
         promoContainer.innerHTML = "";
 
         if (promoList.length === 0) {
-          promoContainer.innerHTML =
-            "<p>Hiện chưa có chương trình khuyến mãi.</p>";
+          promoContainer.innerHTML = "<p>Hiện chưa có chương trình khuyến mãi.</p>";
         } else {
           promoList.forEach((product) => {
-            // LƯU Ý: Đường dẫn ảnh dùng ../ để lùi ra ngoài thư mục pages
-            const imgPath = `../assets/images/${product.image}`;
+            const imgPath = getImageUrl(product.image);
             const detailLink = `product-detail.html?id=${product.id}`;
-
             const html = `
                 <div class="promo-card">
                     <a href="${detailLink}" style="display:block; width:100%; height:100%;">
@@ -55,17 +149,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
 
-      // --- B. RENDER MỤC MÓN NGON PHẢI THỬ (Best Seller) ---
+      // --- B. RENDER MỤC MÓN NGON PHẢI THỬ ---
       if (mustTryContainer) {
-        const bestSellerList = products
-          .filter((p) => p.bestSeller === true)
-          .slice(0, 8);
+        const bestSellerList = products.filter((p) => p.bestSeller === true).slice(0, 8);
         mustTryContainer.innerHTML = "";
 
         bestSellerList.forEach((product) => {
           const oldPrice = product.price * (1 + (product.discount || 10) / 100);
           const detailLink = `product-detail.html?id=${product.id}`;
-          const imgPath = `../assets/images/${product.image}`; // Dùng ../
+          const imgPath = getImageUrl(product.image);
 
           const html = `
                 <div class="food-card">
@@ -73,9 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <span class="sale-badge">HOT</span>
                         <div class="img-bg"></div>
                         <a href="${detailLink}">
-                            <img src="${imgPath}" alt="${
-            product.name
-          }" class="food-img"
+                            <img src="${imgPath}" alt="${product.name}" class="food-img"
                                  onerror="this.src='https://placehold.co/200x200?text=Mon+Ngon'"/>
                         </a>
                     </div>
@@ -103,15 +193,14 @@ document.addEventListener("DOMContentLoaded", function () {
     } catch (error) {
       console.error("Lỗi khi gọi API:", error);
       if (promoContainer)
-        promoContainer.innerHTML =
-          '<p style="color:red; text-align:center">Không kết nối được Server Backend!</p>';
+        promoContainer.innerHTML = '<p style="color:red; text-align:center">Không kết nối được Server Backend!</p>';
     }
   }
 
   fetchAndRenderHomeData();
 
   // ==================================================================
-  // 2. LOGIC UI TĨNH: TAB MENU, SLIDER, MODAL
+  // Phần 4: TAB MENU, SLIDER, MODAL
   // ==================================================================
 
   const menuImg = document.getElementById("menu-img");
@@ -125,16 +214,8 @@ document.addEventListener("DOMContentLoaded", function () {
         title: "Chè",
         image: "../assets/images/setche.png",
         items: [
-          {
-            name: "Chè bưởi",
-            price: "35.000 VND",
-            desc: "Cùi bưởi giòn sần sật.",
-          },
-          {
-            name: "Chè Hạt Sen",
-            price: "55.000 VND",
-            desc: "Vị ngọt thanh mát.",
-          },
+          { name: "Chè bưởi", price: "35.000 VND", desc: "Cùi bưởi giòn sần sật." },
+          { name: "Chè Hạt Sen", price: "55.000 VND", desc: "Vị ngọt thanh mát." },
           { name: "Chè đậu đỏ", price: "40.000 VND", desc: "Đậu đỏ ninh mềm." },
         ],
       },
@@ -142,21 +223,9 @@ document.addEventListener("DOMContentLoaded", function () {
         title: "Ăn sáng",
         image: "../assets/images/banhmichao.png",
         items: [
-          {
-            name: "Bánh mì chảo",
-            price: "45.000 VND",
-            desc: "Thịt bò mềm mại.",
-          },
-          {
-            name: "Bánh cuốn",
-            price: "40.000 VND",
-            desc: "Nhân thịt, mộc nhĩ.",
-          },
-          {
-            name: "Bánh mì thập cẩm",
-            price: "40.000 VND",
-            desc: "Thịt heo quay.",
-          },
+          { name: "Bánh mì chảo", price: "45.000 VND", desc: "Thịt bò mềm mại." },
+          { name: "Bánh cuốn", price: "40.000 VND", desc: "Nhân thịt, mộc nhĩ." },
+          { name: "Bánh mì thập cẩm", price: "40.000 VND", desc: "Thịt heo quay." },
         ],
       },
       coffee: {
@@ -164,16 +233,8 @@ document.addEventListener("DOMContentLoaded", function () {
         image: "../assets/images/coffee_set.png",
         items: [
           { name: "Coffee đen", price: "35.000 VND", desc: "Đậm đà hương vị." },
-          {
-            name: "Coconut Coffee",
-            price: "55.000 VND",
-            desc: "Cốt dừa béo ngậy.",
-          },
-          {
-            name: "Vanila Coffee",
-            price: "40.000 VND",
-            desc: "Hương thơm vani.",
-          },
+          { name: "Coconut Coffee", price: "55.000 VND", desc: "Cốt dừa béo ngậy." },
+          { name: "Vanila Coffee", price: "40.000 VND", desc: "Hương thơm vani." },
         ],
       },
     };
@@ -215,9 +276,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // --- SLIDERS ---
   const track1 = document.getElementById("mustTryTrack");
-  const dots1 = document.querySelectorAll(
-    ".must-try-section .carousel-dots .dot"
-  );
+  const dots1 = document.querySelectorAll(".must-try-section .carousel-dots .dot");
   if (track1 && dots1.length > 0) {
     dots1.forEach((dot) => {
       dot.addEventListener("mouseover", function () {
@@ -256,7 +315,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function closeVideoModal() {
       videoModal.style.display = "none";
       const currentSrc = iframe.src;
-      iframe.src = "";
+      iframe.src = ""; // Stop video
       iframe.src = currentSrc;
     }
     if (closeVideo) closeVideo.addEventListener("click", closeVideoModal);
@@ -264,7 +323,21 @@ document.addEventListener("DOMContentLoaded", function () {
       if (e.target === videoModal) closeVideoModal();
     });
   }
+  // ==================================================================
+  // Hàm check login (nếu các trang khác gọi)
+  // ==================================================================
+  window.checkLoginRequired = function () {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      if (
+        confirm(
+          "Bạn cần đăng nhập để sử dụng tính năng này.\nĐi tới trang đăng nhập ngay?",
+        )
+      ) {
+        window.location.href = "auth.html";
+      }
+      return false;
+    }
+    return true;
+  };
 });
-
-// Lưu ý: Các hàm global như handleLogout, updateCartBadge đã có bên header.js
-// Không cần khai báo lại ở đây để tránh trùng lặp.

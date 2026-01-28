@@ -1,25 +1,31 @@
 package com.sakedo.mini_store_backend.model;
 
-// Không cần @Entity, @Table nữa
 public class OrderItem {
-    // Trong MongoDB, item con không bắt buộc phải có ID riêng, nhưng có thể giữ nếu muốn
     private String productName;
     private int quantity;
     private double price;
+    private String image;
+    private String note;  // Ghi chú cho món ăn (không hành, ít rau...)
 
     public OrderItem() {}
 
-    public OrderItem(String productName, int quantity, double price) {
+    public OrderItem(String productName, int quantity, double price, String image, String note) {
         this.productName = productName;
         this.quantity = quantity;
         this.price = price;
+        this.image = image;
+        this.note = note;
     }
 
-    // Getters và Setters
+    // Getters & Setters
     public String getProductName() { return productName; }
     public void setProductName(String productName) { this.productName = productName; }
     public int getQuantity() { return quantity; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
     public double getPrice() { return price; }
     public void setPrice(double price) { this.price = price; }
+    public String getImage() { return image; }
+    public void setImage(String image) { this.image = image; }
+    public String getNote() { return note; }
+    public void setNote(String note) { this.note = note; }
 }

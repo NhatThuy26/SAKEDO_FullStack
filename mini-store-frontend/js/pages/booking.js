@@ -1,48 +1,44 @@
 document.addEventListener('DOMContentLoaded', () => {
     const bookingForm = document.getElementById('bookingForm');
-    
+
     if (bookingForm) {
         bookingForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            // 1. Lấy dữ liệu
+
             const name = document.getElementById('name').value;
             const phone = document.getElementById('phone').value;
             const date = document.getElementById('date').value;
             const time = document.getElementById('time').value;
-            const quantity = parseInt(document.getElementById('quantity').value); // Ép kiểu số
-            const note = document.getElementById('note').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const note = document.getElementById('note') ? document.getElementById('note').value : "";
 
-            // Kiểm tra dữ liệu cơ bản
             if (!date || !time) {
-                alert("Vui lòng chọn đầy đủ ngày và giờ đặt bàn!");
-                return;
+                alert("Vui lòng chọn ngày giờ!"); return;
+            }
+            if (quantity <= 0 || quantity > 50) {
+                alert("Số lượng khách không hợp lệ!"); return;
             }
 
-            // KIỂM TRA QUY ĐỊNH SỐ LƯỢNG KHÁCH (Tối đa 20 người)
-            if (quantity > 20) {
-                alert("Sakedo chỉ phục vụ tối đa 20 khách mỗi bàn. Vui lòng liên hệ hotline để đặt tiệc lớn hơn!");
-                return;
-            }
-            if (quantity <= 0) {
-                alert("Số lượng khách không hợp lệ!");
-                return;
-            }
-
-            // 2. Chuyển đổi sang định dạng LocalDateTime ISO cho Java
             const bookingDateISO = `${date}T${time}:00`;
 
-            // 3. Lấy thông tin user
-            const user = JSON.parse(localStorage.getItem('user')) || { id: "guest_user" };
+            // Xử lý User ID an toàn
+            let userId = null;
+            try {
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (user && user.id) userId = user.id;
+            } catch (err) { }
 
             const bookingData = {
-                userId: user.id,
+                userId: userId, // Backend chấp nhận null
                 fullName: name,
                 phone: phone,
                 guestCount: quantity,
                 bookingDate: bookingDateISO,
-                status: "PENDING"
+                status: "PENDING",
+                note: note
             };
+
+            console.log("Đang gửi Booking:", bookingData);
 
             try {
                 const response = await fetch('http://localhost:8080/api/bookings/create', {
@@ -51,20 +47,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify(bookingData)
                 });
 
+                // Kiểm tra nếu response không phải JSON
+                const contentType = response.headers.get("content-type");
+                if (!contentType || !contentType.includes("application/json")) {
+                    throw new Error("Server trả về lỗi không phải JSON (Có thể lỗi 500)");
+                }
+
                 const result = await response.json();
 
                 if (response.ok) {
-                    alert(`ĐẶT BÀN THÀNH CÔNG!
-- Số bàn: ${result.tableNumber}
-- Thời gian giữ bàn: 3 tiếng (đến ${new Date(result.expiryDate).toLocaleTimeString()})`);
-                    window.location.reload(); 
+                    alert(`✅ ĐẶT BÀN THÀNH CÔNG!\nSố bàn: ${result.tableNumber || 'Đang xếp'}\nThời gian: ${time} ngày ${date}`);
+                    window.location.reload();
                 } else {
-                    // Hiển thị lỗi từ Backend (Hết bàn hoặc trùng lịch)
-                    alert("Thông báo: " + (result.message || "Hiện tại đã hết bàn phù hợp trong khung giờ này!"));
+                    alert("❌ Lỗi: " + (result.message || "Không thể đặt bàn lúc này."));
                 }
             } catch (err) {
                 console.error("Kết nối thất bại:", err);
-                alert("Không thể kết nối đến máy chủ Backend!");
+                alert("❌ Lỗi kết nối Server! Vui lòng kiểm tra lại Console.");
             }
         });
     }

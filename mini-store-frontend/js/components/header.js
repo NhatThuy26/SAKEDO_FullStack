@@ -52,7 +52,12 @@ async function updateLoginState(assetRoot) {
         `http://localhost:8080/api/users/email/${localUser.email}`
       );
       if (response.ok) {
-        currentUser = await response.json();
+        const apiUser = await response.json();
+        // Kết hợp dữ liệu: ưu tiên avatar từ localStorage nếu API không có
+        currentUser = {
+          ...apiUser,
+          avatar: apiUser.avatar || localUser.avatar // Giữ avatar local nếu API không có
+        };
         localStorage.setItem("user", JSON.stringify(currentUser));
       }
     } catch (error) {
@@ -79,7 +84,7 @@ async function updateLoginState(assetRoot) {
     let finalAvatarUrl = defaultAvatarUrl;
 
     if (currentUser.avatar && currentUser.avatar.trim() !== "") {
-      if (currentUser.avatar.startsWith("http")) {
+      if (currentUser.avatar.startsWith("http") || currentUser.avatar.startsWith("data:")) {
         finalAvatarUrl = currentUser.avatar;
       } else {
         const cleanPath = currentUser.avatar.replace(
@@ -123,7 +128,16 @@ function highlightActiveMenu() {
 }
 
 function updateCartBadge() {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  // Nếu đang ở chế độ Mua Ngay, hiển thị số lượng từ cart_backup (giỏ hàng cũ)
+  const isBuyNowMode = localStorage.getItem("buyNowMode") === "true";
+  let cart;
+
+  if (isBuyNowMode) {
+    cart = JSON.parse(localStorage.getItem("cart_backup")) || [];
+  } else {
+    cart = JSON.parse(localStorage.getItem("cart")) || [];
+  }
+
   const total = cart.reduce((sum, item) => sum + item.quantity, 0);
   document
     .querySelectorAll(".cart-count")

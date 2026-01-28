@@ -1,133 +1,111 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chi Tiết Món Ăn - Sakedo</title>
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&family=Fruktur&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="../css/base/variables.css" />
-    <link rel="stylesheet" href="../css/pages/global.css" />
-    <link rel="stylesheet" href="../css/base/header.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chi Tiết Món Ăn - Sakedo</title>
 
-    <link rel="stylesheet" href="../css/pages/product-detail.css" />
-  </head>
-  <body>
-    <div id="header-placeholder"></div>
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&family=Fruktur&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/pages/global.css" />
+  <link rel="stylesheet" href="../css/components/header.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+  <link rel="stylesheet" href="../css/pages/product-detail.css" />
+</head>
 
-    <main>
-      <div class="container detail-container">
-        <div class="product-image-box">
-          <img id="detail-img" src="" alt="Đang tải..." />
-        </div>
+<body>
+  <div id="header-placeholder"></div>
 
-        <div class="product-info">
-          <h1 id="detail-name">Đang tải...</h1>
-
-          <div class="rating-overview">
-            <span class="review-stars"
-              ><i class="fas fa-star"></i><i class="fas fa-star"></i
-              ><i class="fas fa-star"></i><i class="fas fa-star"></i
-              ><i class="fas fa-star"></i
-            ></span>
-            <span style="color: #777; margin-left: 10px; font-size: 0.9rem"
-              >(Đánh giá khách hàng)</span
-            >
-          </div>
-
-          <div class="product-price" id="detail-price">...</div>
-
-          <p class="product-desc" id="detail-desc">...</p>
-
-          <div class="note-box">
-            <label class="note-label"
-              ><i class="fas fa-pen"></i> Ghi chú cho món ăn:</label
-            >
-            <textarea
-              id="order-note"
-              class="note-input"
-              placeholder="Ví dụ: Không hành, ít cay, nước sốt để riêng..."
-            ></textarea>
-          </div>
-
-          <div class="action-area">
-            <div class="qty-wrapper">
-              <input
-                type="number"
-                id="qty-input"
-                class="qty-input"
-                value="1"
-                min="1"
-              />
-            </div>
-
-            <button class="btn btn-add-cart" onclick="addToCartDetail(false)">
-              <i class="fas fa-cart-plus"></i> Thêm vào giỏ
-            </button>
-
-            <button class="btn btn-buy-now" onclick="addToCartDetail(true)">
-              <i class="fas fa-bolt"></i> MUA NGAY
-            </button>
-          </div>
-
-          <div class="policy-box">
-            <div class="policy-item">
-              <i class="fas fa-check-circle"></i> ATVSTP 100%
-            </div>
-            <div class="policy-item">
-              <i class="fas fa-truck"></i> Giao nhanh 30p
-            </div>
-            <div class="policy-item">
-              <i class="fas fa-undo"></i> Đổi trả nếu lỗi
-            </div>
-          </div>
-        </div>
+  <main>
+    <div class="container detail-container">
+      <div class="product-image-box">
+        <img id="detail-img" src="" alt="Đang tải..." />
       </div>
 
-      <div class="reviews-box">
-        <h2
-          class="section-heading"
-          style="margin-bottom: 20px; text-align: center"
-        >
-          Đánh Giá Từ Thực Khách
-        </h2>
+      <div class="product-info">
+        <h1 id="detail-name">Đang tải...</h1>
 
-        <div class="write-review-area">
-          <span class="write-title">Viết nhận xét của bạn</span>
+        <div class="rating-overview">
+          <span class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+              class="fas fa-star"></i><i class="fas fa-star"></i></span>
+          <span style="color: #777; margin-left: 10px; font-size: 0.9rem">(Đánh giá khách hàng)</span>
+        </div>
 
-          <div class="star-rating" id="star-rating-input">
-            <i class="fas fa-star active" data-value="1"></i>
-            <i class="fas fa-star active" data-value="2"></i>
-            <i class="fas fa-star active" data-value="3"></i>
-            <i class="fas fa-star active" data-value="4"></i>
-            <i class="fas fa-star active" data-value="5"></i>
+        <div class="product-price" id="detail-price">...</div>
+
+        <p class="product-desc" id="detail-desc">...</p>
+
+        <div class="note-box">
+          <label class="note-label"><i class="fas fa-pen"></i> Ghi chú cho món ăn:</label>
+          <textarea id="order-note" class="note-input"
+            placeholder="Ví dụ: Không hành, ít cay, nước sốt để riêng..."></textarea>
+        </div>
+
+        <div class="action-area">
+          <div class="qty-wrapper">
+            <input type="number" id="qty-input" class="qty-input" value="1" min="1" />
           </div>
-          <input type="hidden" id="rating-value" value="5" />
 
-          <textarea
-            id="review-comment"
-            class="review-input"
-            rows="3"
-            placeholder="Món ăn thế nào? Hãy chia sẻ cảm nhận của bạn..."
-          ></textarea>
+          <button class="btn btn-add-cart" onclick="addToCartDetail(false)">
+            <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+          </button>
 
-          <button class="btn-submit-review" onclick="submitReview()">
-            Gửi đánh giá
+          <button class="btn btn-buy-now" onclick="addToCartDetail(true)">
+            <i class="fas fa-bolt"></i> MUA NGAY
           </button>
         </div>
 
-        <div id="review-list" class="review-list"></div>
+        <div class="policy-box">
+          <div class="policy-item">
+            <i class="fas fa-check-circle"></i> ATVSTP 100%
+          </div>
+          <div class="policy-item">
+            <i class="fas fa-truck"></i> Giao nhanh 30p
+          </div>
+          <div class="policy-item">
+            <i class="fas fa-undo"></i> Đổi trả nếu lỗi
+          </div>
+        </div>
       </div>
-    </main>
+    </div>
 
-    <script src="../js/pages/global.js"></script>
-    <script src="../js/pages/product-detail.js"></script>
-  </body>
+    <div class="reviews-box">
+      <h2 class="section-heading" style="margin-bottom: 20px; text-align: center">
+        Đánh Giá Từ Thực Khách
+      </h2>
+
+      <div class="write-review-area">
+        <span class="write-title">Viết nhận xét của bạn</span>
+
+        <div class="star-rating" id="star-rating-input">
+          <i class="fas fa-star active" data-value="1"></i>
+          <i class="fas fa-star active" data-value="2"></i>
+          <i class="fas fa-star active" data-value="3"></i>
+          <i class="fas fa-star active" data-value="4"></i>
+          <i class="fas fa-star active" data-value="5"></i>
+        </div>
+        <input type="hidden" id="rating-value" value="5" />
+
+        <textarea id="review-comment" class="review-input" rows="3"
+          placeholder="Món ăn thế nào? Hãy chia sẻ cảm nhận của bạn..."></textarea>
+
+        <button class="btn-submit-review" onclick="submitReview()">
+          Gửi đánh giá
+        </button>
+      </div>
+
+      <div id="review-list" class="review-list"></div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/components/header.js"></script>
+  <script src="../js/components/footer.js"></script>
+  <script src="../js/pages/product-detail.js"></script>
+</body>
+
 </html>

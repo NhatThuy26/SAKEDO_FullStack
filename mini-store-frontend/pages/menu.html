@@ -1,142 +1,152 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Thực Đơn - Sakedo</title>
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&family=Fruktur&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thực Đơn - Sakedo</title>
 
-    <link rel="stylesheet" href="../css/base/variables.css" />
-    <link rel="stylesheet" href="../css/pages/global.css" />
-    <link rel="stylesheet" href="../css/pages/menu.css" />
-    <link rel="stylesheet" href="../css/components/header.css" />
-    <link rel="stylesheet" href="../css/components/footer.css" />
-  </head>
-  <body>
-    <div id="header-placeholder"></div>
-    <main>
-      <section class="menu-hero">
-        <div class="container">
-          <div class="menu-hero-wrap">
-            <div class="menu-hero-content">
-              <h2 class="hero-sub-title">Cơm nhà Việt - Vị mẹ nấu</h2>
-              <h1 class="hero-main-title">Combo Gà 4 món</h1>
-              <div class="hero-actions">
-                <a href="#menu-list" class="btn-view-menu">Xem thực đơn</a>
-              </div>
-            </div>
-            <div class="menu-hero-image">
-              <div class="img-box">
-                <img src="../assets/images/setga.png" alt="Combo Gà 4 món" />
-                <div class="discount-badge">
-                  <span class="percent">20%</span>
-                  <span class="text">Giảm giá</span>
-                </div>
-              </div>
+
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&family=Fruktur&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/pages/global.css" />
+  <link rel="stylesheet" href="../css/pages/menu.css" />
+  <link rel="stylesheet" href="../css/components/header.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+</head>
+
+<body>
+  <div id="header-placeholder"></div>
+
+
+  <main>
+    <section class="menu-hero">
+      <div class="container">
+        <div class="menu-hero-wrap">
+          <div class="menu-hero-content">
+            <h2 class="hero-sub-title">Cơm nhà Việt - Vị mẹ nấu</h2>
+            <h1 class="hero-main-title">Combo Gà 4 món</h1>
+            <div class="hero-actions">
+              <a href="#menu-list" class="btn-view-menu">Xem thực đơn</a>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section class="best-selling-section" id="menu-list">
-        <div class="container">
-          <h2 class="menu-section-title">BEST SELLER</h2>
-          <div class="product-grid">
-            <p style="text-align: center; width: 100%; color: #777">
-              Đang tải món ngon...
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="services-section">
-        <div class="container">
-          <div class="section-header-center">
-            <h2 class="service-title">DỊCH VỤ CỦA SAKEDO</h2>
-            <div class="title-underline-yellow"></div>
-          </div>
-          <div class="services-grid">
-            <div class="service-item">
-              <div class="service-img-frame">
-                <img src="../assets/images/cvanphong.png" alt="Cơm văn phòng" />
+          <div class="menu-hero-image">
+            <div class="img-box">
+              <img src="../assets/images/setga.png" alt="Combo Gà 4 món" onerror="
+                    this.src = 'https://placehold.co/600x400?text=Combo+Ga'
+                  " />
+              <div class="discount-badge">
+                <span class="percent">20%</span>
+                <span class="text">Giảm giá</span>
               </div>
-              <h3 class="service-name">Cơm văn phòng</h3>
-              <p class="service-desc">Tiện lợi, đầy đủ dinh dưỡng</p>
-            </div>
-            <div class="service-item">
-              <div class="service-img-frame">
-                <img
-                  src="../assets/images/comgiadinh.png"
-                  alt="Mâm Cơm Gia Đình"
-                />
-              </div>
-              <h3 class="service-name">Mâm Cơm Gia Đình</h3>
-              <p class="service-desc">Cơm 3-4 món cho nhóm</p>
-            </div>
-            <div class="service-item">
-              <div class="service-img-frame">
-                <img src="../assets/images/tiecnho.png" alt="Đặt Tiệc Nhỏ" />
-              </div>
-              <h3 class="service-name">Đặt Tiệc Nhỏ</h3>
-              <p class="service-desc">Nhận đặt tiệc, liên hoan</p>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="suggestion-section">
-        <div class="container">
-          <div class="section-header-center">
-            <h2 class="suggestion-title">Gợi Ý Cho Bữa Ăn</h2>
-            <div class="title-underline-yellow"></div>
-          </div>
-          <div class="suggestion-grid">
-            <p style="text-align: center; width: 100%; color: #777">
-              Đang tải gợi ý...
-            </p>
-          </div>
-        </div>
-      </section>
 
-      <section class="daily-offer-section">
-        <div class="container">
-          <h2 class="offer-title">ƯU ĐÃI TRONG NGÀY</h2>
-          <div class="offer-grid">
-            <p style="text-align: center; width: 100%; color: #777">
-              Đang tìm ưu đãi...
-            </p>
+    <section class="best-selling-section" id="menu-list">
+      <div class="container">
+        <h2 class="menu-section-title">BEST SELLER</h2>
+        <div class="product-grid">
+          <div style="
+                text-align: center;
+                width: 100%;
+                padding: 40px;
+                color: #999;
+              ">
+            <i class="fas fa-spinner fa-spin fa-2x"></i>
+            <p style="margin-top: 10px">Đang tải món ngon...</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="dessert-section">
-        <div class="container">
-          <div class="section-header-center">
-            <h2 class="dessert-title">MÁT LÀNH & NGỌT NGÀO</h2>
-            <div class="title-underline-yellow"></div>
+
+    <section class="services-section">
+      <div class="container">
+        <div class="section-header-center">
+          <h2 class="service-title">DỊCH VỤ CỦA SAKEDO</h2>
+          <div class="title-underline-yellow"></div>
+        </div>
+        <div class="services-grid">
+          <div class="service-item">
+            <div class="service-img-frame">
+              <img src="../assets/images/cvanphong.png" alt="Cơm văn phòng" onerror="
+                    this.src = 'https://placehold.co/200x200?text=Com+VP'
+                  " />
+            </div>
+            <h3 class="service-name">Cơm văn phòng</h3>
+            <p class="service-desc">Tiện lợi, đầy đủ dinh dưỡng</p>
           </div>
-          <div class="dessert-grid">
-            <p style="text-align: center; width: 100%; color: #777">
-              Đang tải tráng miệng...
-            </p>
+          <div class="service-item">
+            <div class="service-img-frame">
+              <img src="../assets/images/comgiadinh.png" alt="Mâm Cơm Gia Đình" onerror="
+                    this.src = 'https://placehold.co/200x200?text=Com+Gia+Dinh'
+                  " />
+            </div>
+            <h3 class="service-name">Mâm Cơm Gia Đình</h3>
+            <p class="service-desc">Cơm 3-4 món cho nhóm</p>
+          </div>
+          <div class="service-item">
+            <div class="service-img-frame">
+              <img src="../assets/images/tiecnho.png" alt="Đặt Tiệc Nhỏ" onerror="
+                    this.src = 'https://placehold.co/200x200?text=Tiec+Nho'
+                  " />
+            </div>
+            <h3 class="service-name">Đặt Tiệc Nhỏ</h3>
+            <p class="service-desc">Nhận đặt tiệc, liên hoan</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="more-menu-section" style="display: none"></section>
-    </main>
-    <div id="footer-placeholder"></div>
 
-    <script src="../js/components/header.js"></script>
-    <script src="../js/components/footer.js"></script>
-    <script src="../js/pages/menu.js"></script>
-  </body>
+    <section class="suggestion-section">
+      <div class="container">
+        <div class="section-header-center">
+          <h2 class="suggestion-title">Gợi Ý Cho Bữa Ăn</h2>
+          <div class="title-underline-yellow"></div>
+        </div>
+        <div class="suggestion-grid"></div>
+      </div>
+    </section>
+
+
+    <section class="daily-offer-section">
+      <div class="container">
+        <h2 class="offer-title">ƯU ĐÃI TRONG NGÀY</h2>
+        <div class="offer-grid"></div>
+      </div>
+    </section>
+
+
+    <section class="dessert-section">
+      <div class="container">
+        <div class="section-header-center">
+          <h2 class="dessert-title">MÁT LÀNH & NGỌT NGÀO</h2>
+          <div class="title-underline-yellow"></div>
+        </div>
+        <div class="dessert-grid"></div>
+      </div>
+    </section>
+
+
+    <section class="more-menu-section" style="display: none"></section>
+  </main>
+
+
+  <div id="footer-placeholder"></div>
+
+
+  <script src="../js/components/header.js"></script>
+  <script src="../js/components/footer.js"></script>
+  <script src="../js/pages/menu.js"></script>
+</body>
+
 </html>
