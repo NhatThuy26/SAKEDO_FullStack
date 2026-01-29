@@ -14,12 +14,10 @@ public class MiniStoreBackendApplication {
 		SpringApplication.run(MiniStoreBackendApplication.class, args);
 	}
 
-	// Cấu hình bắt buộc để sửa lỗi "Unrecognized field expiredAt"
 	@Bean
 	@Primary
 	public ObjectMapper objectMapper() {
 		ObjectMapper mapper = new ObjectMapper();
-		// Lệnh cho Java bỏ qua các trường lạ từ API mà không báo lỗi sập hệ thống
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		return mapper;
 	}

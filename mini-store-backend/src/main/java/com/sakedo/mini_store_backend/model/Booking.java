@@ -9,12 +9,12 @@ import java.time.LocalDateTime;
 public class Booking {
     @Id
     private String id;
-    private String userId;       // Bắt buộc đăng nhập nên cần ID này
+    private String userId;
     private String fullName;
     private String phone;
     private int guestCount;
-    private LocalDateTime bookingDate; // Ngày giờ khách chọn
-    private LocalDateTime expiryDate;  // Tự động = bookingDate + 3 tiếng
-    private int tableNumber;           // Số bàn hệ thống tự gán
-    private String status;             // "PENDING", "CONFIRMED"
+    private LocalDateTime bookingDate;
+    private LocalDateTime expiryDate;
+    private int tableNumber;
+    private String status;
 }

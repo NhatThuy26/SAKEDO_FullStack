@@ -12,25 +12,24 @@ public class Order {
     @Id
     private String id;
 
-    private String userId;           // ID người dùng (để liên kết giỏ hàng với user)
+    private String userId;
     private String customerName;
     private String customerPhone;
     private String customerAddress;
-    private String note;             // Ghi chú của khách (không hành, ít rau...)
-    private String paymentMethod;    // Phương thức thanh toán: COD, BANK
+    private String note;
+    private String paymentMethod;
     private double shippingFee;
     private double totalAmount;
 
-    // Status: 0 = Chờ xác nhận, 1 = Đã thanh toán, 2 = Đang giao, 3 = Hoàn thành, 4 = Đã hủy
     private int status;
     private Date createdAt;
-    private Date paidAt;             // Thời gian thanh toán
+    private Date paidAt;
 
     private List<OrderItem> items = new ArrayList<>();
 
     public Order() {
         this.createdAt = new Date();
-        this.status = 0; // Mặc định là giỏ hàng
+        this.status = 0;
     }
 
     // Getters và Setters

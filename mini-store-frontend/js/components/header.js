@@ -8,7 +8,6 @@ async function loadHeader() {
 
   const assetRoot = "../";
 
-  // Vẽ khung Header cơ bản (Chưa có user)
   headerPlaceholder.innerHTML = `
     <header class="header">
       <div class="container header-inner">
@@ -28,18 +27,17 @@ async function loadHeader() {
             <a href="cart.html" class="cart-btn">
                 <i class="fas fa-shopping-basket"></i><span class="cart-count">0</span>
             </a>
-            <a href="auth.html" class="btn btn-primary" style="background-color: var(--primary-color); color: #fff !important;">Đăng Nhập</a>
+            <a href="auth.html" class="btn btn-primary btn-login-primary">Đăng Nhập</a>
         </div>
       </div>
     </header>
   `;
 
   highlightActiveMenu();
-  await updateLoginState(assetRoot); // Gọi hàm cập nhật user
+  await updateLoginState(assetRoot);
   updateCartBadge();
 }
 
-// --- HÀM CẬP NHẬT TRẠNG THÁI (ĐÃ SỬA LỖI LOGIC) ---
 async function updateLoginState(assetRoot) {
   const userArea = document.getElementById("header-user-area");
   let localUser = JSON.parse(localStorage.getItem("user"));
@@ -53,10 +51,9 @@ async function updateLoginState(assetRoot) {
       );
       if (response.ok) {
         const apiUser = await response.json();
-        // Kết hợp dữ liệu: ưu tiên avatar từ localStorage nếu API không có
         currentUser = {
           ...apiUser,
-          avatar: apiUser.avatar || localUser.avatar // Giữ avatar local nếu API không có
+          avatar: apiUser.avatar || localUser.avatar
         };
         localStorage.setItem("user", JSON.stringify(currentUser));
       }
@@ -64,11 +61,8 @@ async function updateLoginState(assetRoot) {
       console.warn("Server offline, dùng dữ liệu cũ.");
     }
 
-    // 1. TÍNH TOÁN TÊN TRƯỚC
-    // Ưu tiên 'name' -> 'fullName' -> 'email'
     let displayName = currentUser.name || currentUser.fullName;
 
-    // Nếu tên chưa có -> Lấy từ email
     if (!displayName || displayName.trim() === "") {
       if (currentUser.email) {
         displayName = currentUser.email.split("@")[0];
@@ -77,7 +71,6 @@ async function updateLoginState(assetRoot) {
       }
     }
 
-    // 2. TÍNH TOÁN AVATAR TRƯỚC
     const defaultAvatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(
       displayName
     )}&background=d8b26e&color=fff&size=128&bold=true`;
@@ -95,23 +88,22 @@ async function updateLoginState(assetRoot) {
       }
     }
 
-    // 3. SAU KHI CÓ BIẾN MỚI GÁN VÀO HTML
     userArea.innerHTML = `
-        <a href="cart.html" class="cart-btn" style="text-decoration: none;">
+        <a href="cart.html" class="cart-btn cart-btn-clean">
             <i class="fas fa-shopping-basket"></i>
             <span class="cart-count">0</span>
         </a>
         
-        <div class="user-dropdown" style="display: flex; align-items: center; gap: 10px; cursor: pointer; margin-left: 15px;" onclick="window.location.href='profile.html'">
+        <div class="user-dropdown user-dropdown-container" onclick="window.location.href='profile.html'">
             <img src="${finalAvatarUrl}" 
                  alt="${displayName}" 
-                 style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #d8b26e;"
+                 class="user-avatar-img"
                  onerror="this.src='${defaultAvatarUrl}'"
             >
-            <span style="font-weight: 700; color: #333; font-size: 0.95rem;">${displayName}</span>
+            <span class="user-display-name">${displayName}</span>
         </div>
         
-        <button onclick="handleLogout()" style="margin-left: 15px; background: none; border: none; color: #d32f2f; cursor: pointer; font-size: 1.2rem;" title="Đăng xuất">
+        <button onclick="handleLogout()" class="btn-logout-icon" title="Đăng xuất">
             <i class="fas fa-sign-out-alt"></i>
         </button>
     `;
@@ -128,7 +120,6 @@ function highlightActiveMenu() {
 }
 
 function updateCartBadge() {
-  // Nếu đang ở chế độ Mua Ngay, hiển thị số lượng từ cart_backup (giỏ hàng cũ)
   const isBuyNowMode = localStorage.getItem("buyNowMode") === "true";
   let cart;
 

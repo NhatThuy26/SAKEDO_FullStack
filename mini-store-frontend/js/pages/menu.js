@@ -20,7 +20,6 @@ async function fetchProducts() {
   }
 }
 
-// --- CÁC HÀM RENDER ---
 function renderBestSellers(products) {
   const container = document.querySelector(".best-selling-section .product-grid");
   if (container) {
@@ -70,7 +69,6 @@ function renderDesserts(products) {
   }
 }
 
-// --- HÀM TẠO CARD ---
 function createProductCard(product) {
   let finalPrice = product.price;
   let priceHTML = `<span class="price">${product.price.toLocaleString()}đ</span>`;
@@ -124,16 +122,13 @@ function createSuggestionCard(product) {
     `;
 }
 
-// --- HÀM XỬ LÝ ẢNH ---
 function getCleanImageUrl(imgName) {
   if (!imgName || imgName.trim() === "") return "https://placehold.co/300x300?text=No+Image";
   if (imgName.startsWith("http") || imgName.startsWith("data:")) return imgName;
   return `../assets/images/${imgName.replace(/^.*[\\\/]/, '')}`;
 }
 
-// 🔥 HÀM THÊM GIỎ HÀNG + SYNC MONGODB 🔥
 async function quickAddToCart(id, name, price, originalPrice, image) {
-  // 1. Làm sạch ảnh
   let cleanImage = "no-image.png";
   if (image) {
     if (image.startsWith("http")) {
@@ -145,7 +140,6 @@ async function quickAddToCart(id, name, price, originalPrice, image) {
     }
   }
 
-  // 2. Thêm vào localStorage
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   const existing = cart.find((item) => item.id == id);
 
@@ -168,8 +162,6 @@ async function quickAddToCart(id, name, price, originalPrice, image) {
 
   localStorage.setItem("cart", JSON.stringify(cart));
   updateCartBadge();
-
-  // 3. 🔥 SYNC LÊN MONGODB 🔥
   try {
     await syncCartToMongoDB();
   } catch (err) {
@@ -179,11 +171,8 @@ async function quickAddToCart(id, name, price, originalPrice, image) {
   alert(`Đã thêm "${name}" vào giỏ hàng!`);
 }
 
-// Hàm sync giỏ hàng lên MongoDB
 async function syncCartToMongoDB() {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-  // Lấy userId
   let userId = "guest";
   try {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -191,7 +180,6 @@ async function syncCartToMongoDB() {
     else if (user && user.email) userId = user.email;
   } catch (e) { }
 
-  // Nếu không có user, tạo guestId
   if (userId === "guest") {
     let guestId = localStorage.getItem("guestId");
     if (!guestId) {

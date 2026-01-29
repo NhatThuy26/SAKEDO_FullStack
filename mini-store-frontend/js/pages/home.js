@@ -1,49 +1,32 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Ngay khi web tải xong, gọi hàm lấy dữ liệu
   fetchAllProducts();
 });
 
-// --- HÀM CHÍNH: GỌI API ---
 function fetchAllProducts() {
   fetch("http://localhost:8080/api/products")
     .then((res) => res.json())
     .then((products) => {
       console.log("Đã lấy được danh sách món:", products);
-
-      // 1. Điền dữ liệu vào Banner (Món đầu tiên hoặc món bán chạy nhất)
       renderHeroProduct(products);
-
-      // 2. Điền dữ liệu vào mục Ưu đãi (Món có giảm giá)
       renderPromoSection(products);
-
-      // 3. Điền dữ liệu vào Carousel (Món ngon phải thử)
       renderBestSellers(products);
-
-      // 4. Kích hoạt logic chuyển Tab (Tráng miệng / Món chính...)
       setupMenuTabs(products);
     })
     .catch((err) => {
       console.error("Lỗi kết nối API:", err);
-      // Nếu lỗi thì thôi, để yên giao diện tĩnh hoặc hiện thông báo nhỏ
     });
 }
 
-// ==============================================
-// 1. XỬ LÝ BANNER (HERO SECTION)
-// ==============================================
 function renderHeroProduct(products) {
-  // Tìm khu vực banner bằng ID mà chúng ta đã thêm ở index.html
   const heroArea = document.getElementById("hero-product-area");
   if (!heroArea || products.length === 0) return;
 
-  // Lấy món đầu tiên trong danh sách làm Banner (hoặc lọc món nào bạn thích)
   const product = products[0];
   const price = new Intl.NumberFormat("vi-VN", {
     style: "currency",
     currency: "VND",
   }).format(product.price);
 
-  // Thay thế HTML bên trong, giữ nguyên Class CSS cũ (.hero-card, .float-card...)
   heroArea.innerHTML = `
         <div class="hero-card float-card">
             <div class="card-info">
@@ -60,21 +43,16 @@ function renderHeroProduct(products) {
     `;
 }
 
-// ==============================================
-// 2. XỬ LÝ MỤC KHÁM PHÁ ƯU ĐÃI (PROMOTION)
-// ==============================================
 function renderPromoSection(products) {
   const container = document.getElementById("promo-container");
   if (!container) return;
 
-  // Lọc ra các món có discount > 0, lấy tối đa 4 món
   const promoItems = products.filter((p) => p.discount > 0).slice(0, 4);
 
-  // Tạo HTML giữ nguyên class .promo-card, thêm onclick để chuyển trang
   container.innerHTML = promoItems
     .map(
       (item) => `
-        <div class="promo-card" onclick="window.location.href='product-detail.html?id=${item.id}'" style="cursor: pointer;">
+        <div class="promo-card clickable-card" onclick="window.location.href='product-detail.html?id=${item.id}'">
             <img src="../assets/images/${item.image}" 
                  alt="${item.name}" 
                  class="promo-img" 
@@ -89,17 +67,12 @@ function renderPromoSection(products) {
     .join("");
 }
 
-// ==============================================
-// 3. XỬ LÝ CAROUSEL (MÓN NGON PHẢI THỬ)
-// ==============================================
 function renderBestSellers(products) {
   const track = document.getElementById("mustTryTrack");
   if (!track) return;
 
-  // Lọc món Best Seller
   const bestSellers = products.filter((p) => p.bestSeller === true);
 
-  // Tạo HTML giữ nguyên class .food-card phức tạp của bạn
   track.innerHTML = bestSellers
     .map((item) => {
       const price = new Intl.NumberFormat("vi-VN", {
@@ -107,8 +80,6 @@ function renderBestSellers(products) {
         currency: "VND",
       }).format(item.price);
 
-      // Tính giá cũ giả định (để hiển thị cho đẹp nếu có giảm giá)
-      // Nếu không giảm giá thì ẩn giá cũ đi
       let oldPriceHtml = "";
       if (item.discount > 0) {
         const oldPrice = (item.price * (100 + item.discount)) / 100;
@@ -120,7 +91,7 @@ function renderBestSellers(products) {
       }
 
       return `
-            <div class="food-card" onclick="window.location.href='product-detail.html?id=${item.id}'" style="cursor: pointer;">
+            <div class="food-card clickable-card" onclick="window.location.href='product-detail.html?id=${item.id}'">
                 <div class="card-header">
                     <span class="sale-badge">HOT</span>
                     <div class="img-bg"></div>
@@ -147,23 +118,17 @@ function renderBestSellers(products) {
     .join("");
 }
 
-// ==============================================
-// 4. XỬ LÝ TAB MENU (TRÁNG MIỆNG / MÓN CHÍNH)
-// ==============================================
 function setupMenuTabs(allProducts) {
   const tabs = document.querySelectorAll(".cat-item");
   const listContainer = document.getElementById("menu-list");
   const titleElement = document.getElementById("menu-title");
   const imgElement = document.getElementById("menu-img");
 
-  // Hàm vẽ lại danh sách khi bấm Tab
   const renderList = (category) => {
-    // Lọc món theo loại (steak, dessert, coffee)
     const filtered = allProducts
       .filter((p) => p.category === category)
-      .slice(0, 4); // Lấy 4 món
+      .slice(0, 4);
 
-    // Cập nhật Tiêu đề và Ảnh to bên trái
     if (titleElement) {
       if (category === "steak") titleElement.innerText = "Món Chính";
       else if (category === "coffee") titleElement.innerText = "Coffee";
@@ -181,53 +146,39 @@ function setupMenuTabs(allProducts) {
           currency: "VND",
         }).format(item.price);
         return `
-                <div class="menu-item" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed #eee;">
-                     <div style="flex: 1;">
-                        <span class="item-name" style="display: block; font-weight: 700; color: #333; font-size: 16px;">${item.name
-          }</span>
-                        <p class="item-desc" style="margin: 5px 0 0; font-size: 13px; color: #777;">${item.description || "Hương vị tuyệt hảo từ Sakedo"
-          }</p>
+                <div class="menu-item menu-item-row">
+                     <div class="menu-item-content">
+                        <span class="item-name menu-item-name">${item.name}</span>
+                        <p class="item-desc menu-item-desc">${item.description || "Hương vị tuyệt hảo từ Sakedo"}</p>
                     </div>
-                    <span class="item-price" style="font-weight: 700; color: #D4AF37; margin-left: 15px;">${price}</span>
+                    <span class="item-price menu-item-price">${price}</span>
                 </div>
             `;
       })
       .join("");
   };
 
-  // 1. Mặc định chạy Tab đang active (thường là Tráng miệng)
   const activeTab = document.querySelector(".cat-item.active");
   if (activeTab) {
     renderList(activeTab.getAttribute("data-type"));
   }
 
-  // 2. Bắt sự kiện Click vào các Tab
   tabs.forEach((tab) => {
     tab.addEventListener("click", function () {
-      // Xóa active cũ, thêm active mới
       document
         .querySelectorAll(".cat-item")
         .forEach((t) => t.classList.remove("active"));
       this.classList.add("active");
-
-      // Vẽ lại dữ liệu tương ứng
       renderList(this.getAttribute("data-type"));
     });
   });
 }
 
-// ==============================================
-// 5. CÁC HÀM HỖ TRỢ RIÊNG CHO HOME
-// ==============================================
-
-// Hàm xử lý thêm giỏ hàng (Có kiểm tra quyền từ global.js)
 function handleHomeAddToCart(id, name, price, image) {
-  // 1. Gọi hàm kiểm tra quyền trong global.js
   if (typeof window.checkLoginRequired === "function") {
     if (!window.checkLoginRequired()) return;
   }
 
-  // 2. Logic thêm vào LocalStorage (Giống trong menu.js)
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
   const existing = cart.find((item) => item.id == id);
 
@@ -247,13 +198,11 @@ function handleHomeAddToCart(id, name, price, image) {
 
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  // 3. Cập nhật Badge trên Header (Hàm trong global.js)
   if (window.updateCartBadge) window.updateCartBadge();
 
   alert(`Đã thêm "${name}" vào giỏ hàng!`);
 }
 
-// Hàm format tiền tệ (nếu global chưa có)
 function formatCurrency(amount) {
   return new Intl.NumberFormat("vi-VN", {
     style: "currency",

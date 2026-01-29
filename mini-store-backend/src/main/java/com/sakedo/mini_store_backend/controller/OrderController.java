@@ -18,9 +18,7 @@ public class OrderController {
     @Autowired
     private OrderRepository orderRepository;
 
-    // ==========================================================================
-    // 1. SYNC GIỎ HÀNG: Thêm/Cập nhật món vào giỏ hàng (status = 0)
-    // ==========================================================================
+    // 1. SYNC GIỎ HÀNG
     @PostMapping("/cart/sync")
     public ResponseEntity<?> syncCart(@RequestBody Map<String, Object> requestData) {
         try {
@@ -32,7 +30,6 @@ public class OrderController {
             @SuppressWarnings("unchecked")
             List<Map<String, Object>> items = (List<Map<String, Object>>) requestData.get("items");
 
-            // Tìm giỏ hàng hiện tại của user (status = 0)
             Optional<Order> existingCart = orderRepository.findByUserIdAndStatus(userId, 0);
             Order cart;
 
@@ -41,7 +38,7 @@ public class OrderController {
             } else {
                 cart = new Order();
                 cart.setUserId(userId);
-                cart.setStatus(0); // Giỏ hàng chưa thanh toán
+                cart.setStatus(0);
                 cart.setCreatedAt(new Date());
             }
 
@@ -65,7 +62,6 @@ public class OrderController {
             cart.setItems(orderItems);
             cart.setTotalAmount(totalAmount);
 
-            // Lấy thông tin khách hàng nếu có
             if (requestData.get("customerName") != null) {
                 cart.setCustomerName((String) requestData.get("customerName"));
             }
@@ -92,9 +88,7 @@ public class OrderController {
         }
     }
 
-    // ==========================================================================
     // 2. LẤY GIỎ HÀNG HIỆN TẠI CỦA USER
-    // ==========================================================================
     @GetMapping("/cart/{userId}")
     public ResponseEntity<?> getCart(@PathVariable String userId) {
         Optional<Order> cart = orderRepository.findByUserIdAndStatus(userId, 0);
@@ -104,9 +98,7 @@ public class OrderController {
         return ResponseEntity.ok(Map.of("items", new ArrayList<>(), "totalAmount", 0));
     }
 
-    // ==========================================================================
-    // 3. THANH TOÁN: Cập nhật status từ 0 -> 1
-    // ==========================================================================
+    // 3. THANH TOÁN
     @PostMapping("/checkout")
     public ResponseEntity<?> checkout(@RequestBody Map<String, Object> requestData) {
         try {
@@ -115,7 +107,6 @@ public class OrderController {
 
             Order order;
 
-            // Tìm order bằng orderId hoặc userId
             if (orderId != null && !orderId.isEmpty()) {
                 order = orderRepository.findById(orderId).orElse(null);
             } else if (userId != null && !userId.isEmpty()) {
@@ -129,7 +120,7 @@ public class OrderController {
             }
 
             // Cập nhật trạng thái thanh toán
-            order.setStatus(1); // Đã thanh toán
+            order.setStatus(1);
             order.setPaidAt(new Date());
 
             // Cập nhật thông tin khách hàng nếu có
@@ -164,15 +155,13 @@ public class OrderController {
         }
     }
 
-    // ==========================================================================
-    // 4. TẠO ĐƠN HÀNG (API cũ - giữ lại để tương thích)
-    // ==========================================================================
+    // 4. TẠO ĐƠN HÀNG
     @PostMapping
     public ResponseEntity<?> createOrder(@RequestBody Order orderData) {
         try {
             orderData.setCreatedAt(new Date());
             if (orderData.getStatus() == 0) {
-                orderData.setStatus(1); // Mặc định là đã thanh toán nếu gọi API này
+                orderData.setStatus(1);
             }
 
             Order savedOrder = orderRepository.save(orderData);
@@ -189,12 +178,10 @@ public class OrderController {
         }
     }
 
-    // ==========================================================================
-    // 5. LẤY DANH SÁCH ĐƠN HÀNG (ADMIN)
-    // ==========================================================================
+    // 5. LẤY DANH SÁCH ĐƠN HÀNG
     @GetMapping("/admin/pending")
     public List<Order> getPendingOrders() {
-        return orderRepository.findByStatusIn(Arrays.asList(1, 2)); // Đã thanh toán + đang giao
+        return orderRepository.findByStatusIn(Arrays.asList(1, 2));
     }
 
     @GetMapping("/admin/all")
@@ -202,17 +189,14 @@ public class OrderController {
         return orderRepository.findAll();
     }
 
-    // ==========================================================================
+
     // 6. LẤY ĐƠN HÀNG CHO DRIVER
-    // ==========================================================================
     @GetMapping("/driver/available")
     public List<Order> getDriverOrders() {
         return orderRepository.findByStatus(2);
     }
 
-    // ==========================================================================
     // 7. CẬP NHẬT TRẠNG THÁI
-    // ==========================================================================
     @PutMapping("/{id}/status")
     public ResponseEntity<?> updateStatus(@PathVariable String id, @RequestParam int newStatus) {
         Order order = orderRepository.findById(id).orElse(null);
@@ -224,25 +208,19 @@ public class OrderController {
         return ResponseEntity.ok("Cập nhật thành công");
     }
 
-    // ==========================================================================
     // 8. LẤY LỊCH SỬ ĐƠN HÀNG CỦA USER
-    // ==========================================================================
     @GetMapping("/history/{userId}")
     public List<Order> getOrderHistory(@PathVariable String userId) {
         return orderRepository.findByUserIdOrderByCreatedAtDesc(userId);
     }
 
-    // ==========================================================================
-    // 9. LẤY TẤT CẢ ĐƠN HÀNG CỦA USER (cho trang cá nhân)
-    // ==========================================================================
+    // 9. LẤY TẤT CẢ ĐƠN HÀNG CỦA USER
     @GetMapping("/user/{userId}")
     public List<Order> getOrdersByUserId(@PathVariable String userId) {
         return orderRepository.findByUserIdOrderByCreatedAtDesc(userId);
     }
 
-    // ==========================================================================
     // 10. HỦY ĐƠN HÀNG
-    // ==========================================================================
     @PutMapping("/{id}/cancel")
     public ResponseEntity<?> cancelOrder(@PathVariable String id) {
         Order order = orderRepository.findById(id).orElse(null);
@@ -252,7 +230,7 @@ public class OrderController {
         if (order.getStatus() != 0) {
             return ResponseEntity.badRequest().body("Chỉ có thể hủy đơn hàng chờ xác nhận");
         }
-        order.setStatus(4); // 4 = Đã hủy
+        order.setStatus(4);
         orderRepository.save(order);
         return ResponseEntity.ok("Hủy đơn thành công");
     }

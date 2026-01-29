@@ -20,8 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const bookingDateISO = `${date}T${time}:00`;
-
-            // Xử lý User ID an toàn
             let userId = null;
             try {
                 const user = JSON.parse(localStorage.getItem('user'));
@@ -29,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (err) { }
 
             const bookingData = {
-                userId: userId, // Backend chấp nhận null
+                userId: userId,
                 fullName: name,
                 phone: phone,
                 guestCount: quantity,
@@ -46,8 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(bookingData)
                 });
-
-                // Kiểm tra nếu response không phải JSON
                 const contentType = response.headers.get("content-type");
                 if (!contentType || !contentType.includes("application/json")) {
                     throw new Error("Server trả về lỗi không phải JSON (Có thể lỗi 500)");

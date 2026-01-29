@@ -1,7 +1,4 @@
-/* --- FILE: css/pages/cart.css --- */
-
-/* KHUNG CHỨA CHÍNH */
-.cart-container {
+﻿.cart-container {
   max-width: 1100px;
   margin: 40px auto;
   padding: 0 20px;
@@ -16,31 +13,57 @@
   color: #333;
 }
 
-/* BỐ CỤC 2 CỘT */
+
 .cart-layout {
   display: flex;
   gap: 30px;
   align-items: flex-start;
 }
 
+/* Layout đơn giản cho giỏ hàng - chỉ hiển thị danh sách và nút mua */
+.cart-layout-simple {
+  flex-direction: column;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 .cart-list {
   flex: 2;
-  /* Chiếm 2 phần */
+  width: 100%;
+}
+
+/* Footer giỏ hàng với tổng tiền và nút mua */
+.cart-footer {
+  width: 100%;
+  background: #f9f9f9;
+  padding: 25px 30px;
+  border-radius: 15px;
+  border: 1px solid #eee;
+  margin-top: 20px;
+}
+
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
 }
 
 .cart-summary {
   flex: 1;
-  /* Chiếm 1 phần */
+
   background: #f9f9f9;
   padding: 30px;
   border-radius: 15px;
   position: sticky;
   top: 100px;
-  /* Trượt theo khi cuộn chuột */
+
   border: 1px solid #eee;
 }
 
-/* ITEM GIỎ HÀNG (Từng món ăn) */
+
 .cart-item {
   display: flex;
   align-items: center;
@@ -92,7 +115,7 @@
   font-size: 1.1rem;
 }
 
-/* BỘ ĐIỀU CHỈNH SỐ LƯỢNG (+ -) */
+
 .qty-ctrl {
   display: flex;
   align-items: center;
@@ -127,7 +150,7 @@
   line-height: 35px;
 }
 
-/* Nút xóa (Thùng rác) */
+
 .btn-remove {
   margin-left: 20px;
   color: #999;
@@ -143,7 +166,7 @@
   border-radius: 50%;
 }
 
-/* PHẦN TỔNG KẾT TIỀN */
+
 .summary-row {
   display: flex;
   justify-content: space-between;
@@ -183,12 +206,12 @@
   transform: translateY(-2px);
 }
 
-/* TRẠNG THÁI GIỎ RỖNG */
+
 .empty-cart {
   text-align: center;
   padding: 80px 0;
   display: none;
-  /* Mặc định ẩn, JS sẽ hiện */
+
 }
 
 .empty-cart i {
@@ -225,7 +248,7 @@
   color: #fff;
 }
 
-/* Responsive Mobile */
+
 @media (max-width: 768px) {
   .cart-layout {
     flex-direction: column;
@@ -237,11 +260,11 @@
 
   .qty-ctrl {
     margin-left: auto;
-    /* Đẩy bộ đếm sang phải */
+
   }
 }
 
-/* === PHƯƠNG THỨC THANH TOÁN === */
+
 .payment-methods {
   margin-top: 25px;
   padding-top: 20px;
@@ -311,7 +334,7 @@
   color: #888;
 }
 
-/* Checkmark khi được chọn */
+
 .payment-option input[type="radio"]:checked+.option-content::after {
   content: "\f00c";
   font-family: "Font Awesome 6 Free";
@@ -319,4 +342,57 @@
   color: #d8b26e;
   margin-left: auto;
   font-size: 1.1rem;
+}
+
+
+.summary-title {
+  margin-bottom: 20px;
+}
+
+.final-total {
+  color: #d32f2f;
+}
+
+
+
+
+.buy-now-notice {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buy-now-notice span {
+  color: #856404;
+}
+
+.buy-now-notice button {
+  background: #fff;
+  border: 1px solid #856404;
+  color: #856404;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.item-note {
+  font-size: 0.8rem;
+  color: #888;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.item-note i {
+  margin-right: 5px;
+}
+
+
+.item-price-bold {
+  font-weight: 700;
 }

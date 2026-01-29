@@ -55,7 +55,7 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Test Starter (đã có sẵn) -->
+        <!-- Test Starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -78,7 +78,7 @@
 
     <build>
         <plugins>
-            <!-- Spring Boot Maven Plugin (đóng gói jar chạy được) -->
+            <!-- Spring Boot Maven Plugin  -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

@@ -8,6 +8,6 @@ import lombok.Data;
 public class Table {
     @Id
     private String id;
-    private int tableNumber; // 1, 2, 3, 4, 5, 6
-    private int capacity;    // 5, 12, 20
+    private int tableNumber;
+    private int capacity;
 }

@@ -5,7 +5,7 @@ public class OrderItem {
     private int quantity;
     private double price;
     private String image;
-    private String note;  // Ghi chú cho món ăn (không hành, ít rau...)
+    private String note;
 
     public OrderItem() {}
 

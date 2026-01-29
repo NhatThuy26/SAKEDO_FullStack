@@ -13,9 +13,7 @@ public interface OrderRepository extends MongoRepository<Order, String> {
 
     List<Order> findByStatus(int status);
 
-    // Tìm giỏ hàng của user (status = 0)
     Optional<Order> findByUserIdAndStatus(String userId, int status);
 
-    // Lấy tất cả đơn hàng của user
     List<Order> findByUserIdOrderByCreatedAtDesc(String userId);
 }

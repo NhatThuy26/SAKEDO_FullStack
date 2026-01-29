@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     if (cart.length === 0) {
         statusMsg.innerText = "Đơn hàng đã được ghi nhận hoặc giỏ hàng trống.";
-        // Vẫn cho quay về trang chủ nếu khách lỡ tay F5
         setTimeout(() => { window.location.href = "../index.html"; }, 2000);
         return;
     }
@@ -40,12 +39,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         if (response.ok) {
             console.log("Lưu MongoDB thành công!");
-            localStorage.removeItem("cart"); // Xóa giỏ hàng thành công
+            localStorage.removeItem("cart");
             statusMsg.style.color = "green";
             statusMsg.innerText = "✅ Đã lưu đơn hàng! Đang quay về trang chủ...";
 
             setTimeout(() => {
-                // Sử dụng đường dẫn tương đối từ /pages/ lùi ra ngoài
                 window.location.href = "../index.html";
             }, 2000);
         } else {

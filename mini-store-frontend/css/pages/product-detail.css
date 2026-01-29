@@ -1,4 +1,4 @@
-/* --- LAYOUT CHUNG --- */
+﻿
 .detail-container {
   max-width: 1100px;
   margin: 40px auto;
@@ -10,7 +10,7 @@
   padding-right: 20px;
 }
 
-/* CỘT TRÁI: ẢNH */
+
 .product-image-box img {
   width: 100%;
   border-radius: 20px;
@@ -18,7 +18,7 @@
   object-fit: cover;
 }
 
-/* CỘT PHẢI: THÔNG TIN */
+
 .product-info h1 {
   font-family: "Fruktur", cursive;
   color: var(--primary-color);
@@ -31,12 +31,12 @@
   color: #d32f2f;
   font-weight: 700;
   margin: 15px 0;
-  /* Thêm flex để căn chỉnh giá cũ và mới */
+  
   display: flex;
   align-items: center;
 }
 
-/* --- CLASS QUAN TRỌNG: HIỆN GIÁ CŨ GẠCH NGANG --- */
+
 .old-price {
   text-decoration: line-through;
   color: #999;
@@ -45,14 +45,14 @@
   font-weight: normal;
 }
 
-/* Giá hiện tại */
+
 .current-price {
   color: #d32f2f;
   font-size: 1.5rem;
   font-weight: 700;
 }
 
-/* Badge giảm giá */
+
 .discount-badge {
   background: #d32f2f;
   color: white;
@@ -62,7 +62,7 @@
   margin-left: 10px;
 }
 
-/* Wrapper cho giá */
+
 .price-wrapper {
   display: flex;
   align-items: center;
@@ -76,7 +76,7 @@
   margin-bottom: 25px;
 }
 
-/* --- GHI CHÚ MÓN ĂN --- */
+
 .note-box {
   margin-bottom: 25px;
 }
@@ -104,7 +104,7 @@
   outline: none;
 }
 
-/* --- ACTION AREA (SỐ LƯỢNG & BUTTONS) --- */
+
 .action-area {
   display: flex;
   flex-wrap: wrap;
@@ -144,7 +144,7 @@
   font-size: 0.9rem;
 }
 
-/* Nút Thêm Giỏ (Vàng) */
+
 .btn-add-cart {
   background-color: #ffeeb0;
   color: #d8b26e;
@@ -156,7 +156,7 @@
   color: #fff;
 }
 
-/* Nút Mua Ngay (Đỏ) */
+
 .btn-buy-now {
   background-color: #f3274c;
   color: #fff;
@@ -169,7 +169,7 @@
   transform: translateY(-2px);
 }
 
-/* --- CAM KẾT --- */
+
 .policy-box {
   background: #f9f9f9;
   padding: 15px;
@@ -185,14 +185,14 @@
   margin-right: 5px;
 }
 
-/* --- PHẦN ĐÁNH GIÁ (REVIEW) --- */
+
 .reviews-box {
   max-width: 800px;
   margin: 0 auto 60px;
   padding: 0 20px;
 }
 
-/* Form viết đánh giá */
+
 .write-review-area {
   background: #fff;
   border: 1px solid #eee;
@@ -245,7 +245,7 @@
   font-weight: bold;
 }
 
-/* Danh sách review cũ */
+
 .review-list {
   display: flex;
   flex-direction: column;
@@ -273,6 +273,19 @@
 .review-stars {
   color: #ffd600;
   font-size: 0.9rem;
+}
+
+
+.rating-text {
+  color: #777;
+  margin-left: 10px;
+  font-size: 0.9rem;
+}
+
+
+.section-heading {
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .review-text {

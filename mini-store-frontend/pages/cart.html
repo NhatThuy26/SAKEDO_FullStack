@@ -13,7 +13,7 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
-  <!-- Stylesheets - Dùng đường dẫn tương đối -->
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="../css/base/variables.css" />
   <link rel="stylesheet" href="../css/components/header.css" />
   <link rel="stylesheet" href="../css/components/footer.css" />
@@ -28,47 +28,17 @@
     <div class="container cart-container">
       <h1 class="page-title">Giỏ Hàng Của Bạn</h1>
 
-      <div id="cart-content" class="cart-layout">
+      <div id="cart-content" class="cart-layout cart-layout-simple">
         <div class="cart-list" id="cart-items-wrapper"></div>
 
-        <div class="cart-summary">
-          <h3 style="margin-bottom: 20px">Tóm tắt đơn hàng</h3>
-          <div class="summary-row">
-            <span>Tạm tính:</span>
-            <span id="sub-total">0đ</span>
-          </div>
-          <div class="summary-total">
+        <!-- Tổng cộng và nút Mua hàng ngay -->
+        <div class="cart-footer">
+          <div class="cart-total-row">
             <span>Tổng cộng:</span>
-            <span id="final-total" style="color: #d32f2f">0đ</span>
+            <span id="final-total" class="final-total">0đ</span>
           </div>
-
-          <!-- PHƯƠNG THỨC THANH TOÁN -->
-          <div class="payment-methods">
-            <h4>Phương thức thanh toán</h4>
-            <label class="payment-option">
-              <input type="radio" name="paymentMethod" value="cod" checked>
-              <span class="option-content">
-                <i class="fas fa-money-bill-wave"></i>
-                <div class="option-text">
-                  <span class="option-title">Tiền mặt (COD)</span>
-                  <span class="option-desc">Thanh toán khi nhận hàng</span>
-                </div>
-              </span>
-            </label>
-            <label class="payment-option">
-              <input type="radio" name="paymentMethod" value="bank">
-              <span class="option-content">
-                <i class="fas fa-qrcode"></i>
-                <div class="option-text">
-                  <span class="option-title">Chuyển khoản QR</span>
-                  <span class="option-desc">Quét mã QR để thanh toán</span>
-                </div>
-              </span>
-            </label>
-          </div>
-
           <button class="btn-checkout">
-            <i class="fas fa-shopping-bag"></i> ĐẶT HÀNG NGAY
+            <i class="fas fa-shopping-bag"></i> MUA HÀNG NGAY
           </button>
         </div>
       </div>

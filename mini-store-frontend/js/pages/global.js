@@ -1,9 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   console.log("--> Global Page JS đã tải.");
 
-  // ==================================================================
-  // Phần 1: Xử lý giỏ hàng cho tài khoản Guest
-  // ==================================================================
   try {
     const currentUser = JSON.parse(localStorage.getItem("user"));
     if (currentUser && currentUser.role === "guest") {
@@ -18,9 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
     console.error("Lỗi khi dọn dẹp giỏ hàng guest:", err);
   }
 
-  // ==================================================================
-  // Phần 2: XỬ LÝ THANH TOÁN TỪ PAYOS 
-  // ==================================================================
   async function handlePaymentCallback() {
     const urlParams = new URLSearchParams(window.location.search);
     const paymentStatus = urlParams.get('payment');
@@ -28,18 +22,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log("--> URL Params: payment=" + paymentStatus + ", status=" + payosStatus);
 
-    // 1. Nếu thanh toán THÀNH CÔNG (payment=success)
     if (paymentStatus === 'success') {
       console.log("--> Phát hiện thanh toán thành công. Bắt đầu xử lý...");
 
-      // Lấy pendingOrderId từ localStorage (được lưu khi tạo order trước khi chuyển sang PayOS)
       const pendingOrderId = localStorage.getItem("pendingOrderId");
 
       if (pendingOrderId) {
         console.log("--> Có pendingOrderId:", pendingOrderId, "- Cập nhật status order...");
 
         try {
-          // Cập nhật status order từ 0 -> 1 (đã thanh toán)
           const response = await fetch(`http://localhost:8080/api/orders/${pendingOrderId}/status?newStatus=1`, {
             method: "PUT",
             headers: {
@@ -56,13 +47,11 @@ document.addEventListener("DOMContentLoaded", function () {
           console.error("--> ❌ Lỗi kết nối:", error);
         }
 
-        // Xóa pendingOrderId
         localStorage.removeItem("pendingOrderId");
       } else {
         console.log("--> Không có pendingOrderId - Order đã được tạo trước đó.");
       }
 
-      // Xóa giỏ hàng (phòng trường hợp còn sót)
       localStorage.removeItem("cart");
 
       alert("✅ Thanh toán thành công! Đơn hàng đã được xác nhận.");
@@ -70,11 +59,9 @@ document.addEventListener("DOMContentLoaded", function () {
       location.reload();
     }
 
-    // 2. Nếu khách HỦY thanh toán (status=CANCELLED)
     else if (payosStatus === 'CANCELLED') {
       console.log("--> Khách hàng đã hủy thanh toán.");
 
-      // Hủy order đã tạo nếu có pendingOrderId
       const pendingOrderId = localStorage.getItem("pendingOrderId");
       if (pendingOrderId) {
         console.log("--> Hủy order:", pendingOrderId);
@@ -93,11 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
   handlePaymentCallback();
-
-
-  // ==================================================================
-  // Phần 3: RANG CHỦ: GỌI API & RENDER SẢN PHẨM
-  // ==================================================================
 
   function getImageUrl(imgName) {
     if (!imgName || imgName.trim() === "") return "https://placehold.co/300x300?text=No+Image";
@@ -121,7 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const products = await response.json();
 
-      // --- A. RENDER MỤC ƯU ĐÃI ---
       if (promoContainer) {
         const promoList = products.filter((p) => p.discount > 0).slice(0, 4);
         promoContainer.innerHTML = "";
@@ -149,7 +130,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
 
-      // --- B. RENDER MỤC MÓN NGON PHẢI THỬ ---
       if (mustTryContainer) {
         const bestSellerList = products.filter((p) => p.bestSeller === true).slice(0, 8);
         mustTryContainer.innerHTML = "";
@@ -198,10 +178,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   fetchAndRenderHomeData();
-
-  // ==================================================================
-  // Phần 4: TAB MENU, SLIDER, MODAL
-  // ==================================================================
 
   const menuImg = document.getElementById("menu-img");
   const menuTitle = document.getElementById("menu-title");
@@ -274,7 +250,6 @@ document.addEventListener("DOMContentLoaded", function () {
     renderMenu("dessert");
   }
 
-  // --- SLIDERS ---
   const track1 = document.getElementById("mustTryTrack");
   const dots1 = document.querySelectorAll(".must-try-section .carousel-dots .dot");
   if (track1 && dots1.length > 0) {
@@ -301,7 +276,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // --- VIDEO MODAL ---
   const videoBtn = document.getElementById("openVideoBtn");
   const videoModal = document.getElementById("videoModal");
   const closeVideo = document.querySelector(".close-video");
@@ -315,7 +289,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function closeVideoModal() {
       videoModal.style.display = "none";
       const currentSrc = iframe.src;
-      iframe.src = ""; // Stop video
+      iframe.src = "";
       iframe.src = currentSrc;
     }
     if (closeVideo) closeVideo.addEventListener("click", closeVideoModal);
@@ -323,9 +297,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (e.target === videoModal) closeVideoModal();
     });
   }
-  // ==================================================================
-  // Hàm check login (nếu các trang khác gọi)
-  // ==================================================================
+
   window.checkLoginRequired = function () {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) {

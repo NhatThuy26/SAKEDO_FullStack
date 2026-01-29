@@ -1,11 +1,7 @@
-/**
- * CART SYNC - Đồng bộ giỏ hàng với MongoDB
- * File này quản lý việc sync giỏ hàng realtime
- */
+/*CART SYNC - Đồng bộ giỏ hàng với MongoDB*/
 
 const API_BASE_URL = "http://localhost:8080/api";
 
-// Lấy userId từ localStorage
 function getCurrentUserId() {
     try {
         const user = JSON.parse(localStorage.getItem("user"));
@@ -13,7 +9,6 @@ function getCurrentUserId() {
         if (user && user.email) return user.email;
     } catch (e) { }
 
-    // Nếu chưa đăng nhập, tạo guest ID
     let guestId = localStorage.getItem("guestId");
     if (!guestId) {
         guestId = "guest_" + Date.now() + "_" + Math.random().toString(36).substring(7);
@@ -22,7 +17,6 @@ function getCurrentUserId() {
     return guestId;
 }
 
-// Lấy thông tin khách hàng
 function getCustomerInfo() {
     try {
         const user = JSON.parse(localStorage.getItem("user"));
@@ -37,10 +31,7 @@ function getCustomerInfo() {
     return { customerName: "", customerPhone: "", customerAddress: "" };
 }
 
-/**
- * SYNC GIỎ HÀNG LÊN MONGODB
- * Gọi hàm này mỗi khi giỏ hàng thay đổi
- */
+/*SYNC GIỎ HÀNG LÊN MONGODB*/
 async function syncCartToMongoDB() {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const userId = getCurrentUserId();
@@ -64,7 +55,6 @@ async function syncCartToMongoDB() {
         if (response.ok) {
             const result = await response.json();
             console.log("--> ✅ Sync thành công!", result);
-            // Lưu orderId để dùng khi thanh toán
             if (result.orderId) {
                 localStorage.setItem("currentOrderId", result.orderId);
             }
@@ -79,10 +69,7 @@ async function syncCartToMongoDB() {
     return null;
 }
 
-/**
- * THANH TOÁN ĐƠN HÀNG
- * Cập nhật status từ 0 -> 1
- */
+/*THANH TOÁN ĐƠN HÀNG */
 async function checkoutOrder() {
     const userId = getCurrentUserId();
     const orderId = localStorage.getItem("currentOrderId");
@@ -107,7 +94,6 @@ async function checkoutOrder() {
         if (response.ok) {
             const result = await response.json();
             console.log("--> ✅ Thanh toán thành công!", result);
-            // Xóa currentOrderId sau khi thanh toán
             localStorage.removeItem("currentOrderId");
             return result;
         } else {
@@ -120,11 +106,8 @@ async function checkoutOrder() {
     return null;
 }
 
-/**
- * HÀM THÊM VÀO GIỎ HÀNG (Thay thế quickAddToCart cũ)
- */
+/*HÀM THÊM VÀO GIỎ HÀNG */
 async function addToCartAndSync(id, name, price, originalPrice, image) {
-    // 1. Làm sạch ảnh
     let cleanImage = "no-image.png";
     if (image) {
         if (image.startsWith("http")) {
@@ -136,7 +119,6 @@ async function addToCartAndSync(id, name, price, originalPrice, image) {
         }
     }
 
-    // 2. Thêm vào localStorage
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const existing = cart.find((item) => item.id == id);
 
@@ -158,26 +140,18 @@ async function addToCartAndSync(id, name, price, originalPrice, image) {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
-
-    // 3. Cập nhật badge
     updateCartBadgeGlobal();
-
-    // 4. Sync lên MongoDB (chạy async, không block UI)
     syncCartToMongoDB();
-
     alert(`Đã thêm "${name}" vào giỏ hàng!`);
 }
 
-/**
- * CẬP NHẬT BADGE GIỎ HÀNG
- */
+/* CẬP NHẬT BADGE GIỎ HÀNG*/
 function updateCartBadgeGlobal() {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const total = cart.reduce((sum, item) => sum + item.quantity, 0);
     document.querySelectorAll(".cart-count").forEach((b) => (b.innerText = total));
 }
 
-// Export cho các file khác dùng
 window.syncCartToMongoDB = syncCartToMongoDB;
 window.checkoutOrder = checkoutOrder;
 window.addToCartAndSync = addToCartAndSync;

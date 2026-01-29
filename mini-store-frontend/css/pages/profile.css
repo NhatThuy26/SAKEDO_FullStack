@@ -1,16 +1,14 @@
-/* ==========================================================================
-   PROFILE PAGE - STYLE TRANG CÁ NHÂN (FULL)
-   ========================================================================== */
+﻿
 
-/* 1. CẤU TRÚC CHUNG */
+
 .profile-page {
   padding: 120px 0 80px;
   background-color: #f8f9fa;
-  /* Nền xám nhạt làm nổi bật card trắng */
+  
   min-height: 100vh;
 }
 
-/* Khung Card chung cho các mục (Thông tin, Đơn hàng, Bảo mật) */
+
 .profile-card {
   background: #fff;
   border-radius: 20px;
@@ -21,7 +19,7 @@
   transition: transform 0.3s ease;
 }
 
-/* Header của mỗi Card */
+
 .card-header-row {
   display: flex;
   justify-content: space-between;
@@ -45,7 +43,7 @@
 
 .card-title i {
   color: #d8b26e;
-  /* Màu vàng thương hiệu */
+  
   font-size: 1.5rem;
 }
 
@@ -57,11 +55,9 @@
   letter-spacing: 0.5px;
 }
 
-/* ==========================================================================
-   2. SECTION: THÔNG TIN CÁ NHÂN & CHỈNH SỬA
-   ========================================================================== */
 
-/* Nút Chỉnh sửa (Trạng thái mặc định) */
+
+
 .btn-edit {
   display: flex;
   align-items: center;
@@ -89,7 +85,7 @@
   align-items: flex-start;
 }
 
-/* --- CỘT AVATAR --- */
+
 .avatar-column {
   flex-shrink: 0;
   display: flex;
@@ -116,7 +112,7 @@
   background-color: #fff;
 }
 
-/* Nút Camera Upload Avatar */
+
 .avatar-upload {
   position: absolute;
   bottom: 5px;
@@ -152,7 +148,7 @@
   text-align: center;
 }
 
-/* --- CỘT FORM NHẬP LIỆU --- */
+
 .form-column {
   flex: 1;
   display: flex;
@@ -180,7 +176,7 @@
   text-align: center;
 }
 
-/* Style chung cho Input */
+
 .form-group input {
   width: 100%;
   padding: 14px 18px;
@@ -193,7 +189,7 @@
   transition: all 0.3s ease;
 }
 
-/* TRẠNG THÁI KHÓA (DISABLED) - Mode Xem */
+
 .form-group input:disabled {
   background-color: #f9f9f9;
   color: #666;
@@ -202,7 +198,7 @@
   box-shadow: none;
 }
 
-/* TRẠNG THÁI MỞ (ENABLED) - Mode Sửa */
+
 .form-group input:enabled {
   background-color: #fff;
   border-color: #d8b26e;
@@ -216,9 +212,7 @@
   box-shadow: 0 0 0 3px rgba(216, 178, 110, 0.2);
 }
 
-/* ==========================================================================
-   3. SECTION: ĐƠN HÀNG CỦA TÔI
-   ========================================================================== */
+
 .view-all-link {
   color: #999;
   text-decoration: none;
@@ -245,7 +239,7 @@
   transition: 0.3s;
 }
 
-/* Style cho đơn đang xử lý (có viền vàng) */
+
 .order-item.active-process {
   border: 2px solid #d8b26e;
   box-shadow: 0 5px 15px rgba(216, 178, 110, 0.1);
@@ -312,7 +306,7 @@
   color: #d32f2f;
 }
 
-/* Thanh Progress Mini */
+
 .mini-progress-bar {
   width: 100%;
   height: 6px;
@@ -358,9 +352,7 @@
   background-color: #c59f5e;
 }
 
-/* ==========================================================================
-   4. SECTION: BẢO MẬT TÀI KHOẢN (ĐÃ UPDATE GIAO DIỆN MỚI)
-   ========================================================================== */
+
 .security-card {
   padding-bottom: 30px;
 }
@@ -371,7 +363,7 @@
   gap: 15px;
 }
 
-/* Card nhỏ cho từng mục bảo mật */
+
 .security-item {
   display: flex;
   justify-content: space-between;
@@ -383,7 +375,7 @@
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Hover effect: Nổi lên và viền vàng */
+
 .security-item:hover {
   border-color: #d8b26e;
   transform: translateY(-3px);
@@ -396,7 +388,7 @@
   gap: 20px;
 }
 
-/* Icon trong vòng tròn */
+
 .security-icon {
   width: 55px;
   height: 55px;
@@ -438,7 +430,7 @@
   color: #777;
 }
 
-/* Nút Đổi mật khẩu (Outline Style) */
+
 .btn-security {
   background-color: transparent;
   color: #d8b26e;
@@ -462,9 +454,7 @@
   transform: scale(1.05);
 }
 
-/* ==========================================================================
-   5. MODAL: ĐỔI MẬT KHẨU (POPUP)
-   ========================================================================== */
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -473,7 +463,7 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   display: none;
-  /* JS sẽ đổi thành flex */
+  
   align-items: center;
   justify-content: center;
   z-index: 9999;
@@ -539,7 +529,7 @@
   margin: 0;
 }
 
-/* Input trong modal */
+
 .modal-content .form-group {
   margin-bottom: 20px;
 }
@@ -614,9 +604,7 @@
   background-color: #eee;
 }
 
-/* ==========================================================================
-   6. RESPONSIVE MOBILE
-   ========================================================================== */
+
 @media (max-width: 768px) {
   .profile-page {
     padding-top: 100px;
@@ -653,15 +641,13 @@
   }
 }
 
-/* ==========================================================================
-   7. GIAO DIỆN LỊCH SỬ ĐƠN HÀNG (BẢN FIX ĐẸP)
-   ========================================================================== */
 
-/* Khung thẻ đơn hàng */
+
+
 .order-card {
   background: #fff;
   border-radius: 12px;
-  /* Bo góc mềm mại hơn */
+  
   padding: 20px 25px;
   margin-bottom: 25px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
@@ -675,7 +661,7 @@
   border-color: #d8b26e;
 }
 
-/* --- HEADER (Mã đơn + Trạng thái) --- */
+
 .order-header {
   display: flex;
   justify-content: space-between;
@@ -706,7 +692,7 @@
   letter-spacing: 0.5px;
 }
 
-/* --- TIMELINE (Thanh tiến trình) --- */
+
 .order-timeline {
   display: flex;
   justify-content: space-between;
@@ -716,7 +702,7 @@
   padding: 0 15px;
 }
 
-/* Đường nền xám */
+
 .order-timeline::before {
   content: "";
   position: absolute;
@@ -730,7 +716,7 @@
   border-radius: 10px;
 }
 
-/* Đường màu chạy */
+
 .timeline-progress-bar {
   position: absolute;
   top: 50%;
@@ -743,7 +729,7 @@
   width: 0%;
 }
 
-/* Nốt tròn */
+
 .timeline-step {
   position: relative;
   z-index: 3;
@@ -772,7 +758,7 @@
   opacity: 0.7;
 }
 
-/* Active: Đang xử lý */
+
 .timeline-step.active {
   border-color: #d8b26e;
   color: #d8b26e;
@@ -787,14 +773,14 @@
   font-weight: 700;
 }
 
-/* Completed: Đã xong */
+
 .timeline-step.completed {
   background: #d8b26e;
   border-color: #d8b26e;
   color: #fff;
 }
 
-/* --- DANH SÁCH MÓN ĂN --- */
+
 .order-items-container {
   background: #fafafa;
   border-radius: 10px;
@@ -847,20 +833,20 @@
   font-size: 1rem;
 }
 
-/* --- FOOTER (Tổng tiền & Địa chỉ) --- */
+
 .order-footer {
   display: flex;
-  /* QUAN TRỌNG */
+  
   flex-direction: column;
-  /* Xếp dọc từ trên xuống */
+  
   gap: 15px;
-  /* Khoảng cách giữa các phần */
+  
 }
 
 .order-total-row {
   display: flex;
   justify-content: space-between;
-  /* Đẩy 2 bên: Chữ trái - Tiền phải */
+  
   align-items: center;
   padding-bottom: 15px;
   border-bottom: 1px solid #f0f0f0;
@@ -869,13 +855,13 @@
 .btn-cancel-order {
   padding: 8px 20px;
   border: 1px solid #ff4d4f;
-  /* Viền đỏ nhẹ */
+  
   color: #ff4d4f;
-  /* Chữ đỏ */
+  
   background-color: #fff;
-  /* Nền trắng */
+  
   border-radius: 30px;
-  /* Bo tròn hình viên thuốc */
+  
   font-weight: 600;
   font-size: 0.85rem;
   cursor: pointer;
@@ -883,7 +869,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  /* Khoảng cách icon và chữ */
+  
   box-shadow: 0 2px 5px rgba(255, 77, 79, 0.1);
 }
 
@@ -910,7 +896,7 @@
   font-size: 1.4rem;
 }
 
-/* Box địa chỉ */
+
 .delivery-route-box {
   display: flex;
   flex-direction: column;
@@ -970,16 +956,14 @@
   text-decoration: underline;
 }
 
-/* ==========================================================================
-   8. INLINE STYLES MOVED FROM HTML
-   ========================================================================== */
 
-/* Email input readonly */
+
+
 #profile-email {
   opacity: 0.7;
 }
 
-/* History Modal Styles */
+
 #history-modal {
   display: none;
   align-items: flex-start;
@@ -1010,7 +994,7 @@
   margin-top: 20px;
 }
 
-/* Form Control trong Modal */
+
 .form-control {
   width: 100%;
   padding: 10px;
@@ -1018,11 +1002,81 @@
   border-radius: 5px;
 }
 
-/* Password Form spacing */
+
 #password-form .form-group {
   margin-bottom: 15px;
 }
 
 #password-form .form-group:last-of-type {
   margin-bottom: 20px;
+}
+
+
+
+
+.guest-mode-container {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  background: #f9f9f9;
+  border-radius: 10px;
+}
+
+.guest-mode-container i {
+  font-size: 40px;
+  margin-bottom: 15px;
+  color: #d8b26e;
+}
+
+
+.loading-state {
+  text-align: center;
+  padding: 20px;
+  color: #999;
+}
+
+
+.empty-message {
+  text-align: center;
+  padding: 30px;
+  color: #777;
+}
+
+
+.order-card-active {
+  border: 1px solid #d8b26e;
+}
+
+.order-card-history {
+  border: 1px solid #eee;
+}
+
+
+.timeline-canceled {
+  opacity: 0.5;
+  filter: grayscale(1);
+}
+
+
+.total-row-flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.map-link {
+  font-size: 0.85rem;
+  color: #d8b26e;
+  text-decoration: none;
+  margin-top: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+}
+
+.map-link:hover {
+  color: #c59f5e;
+  text-decoration: underline;
 }

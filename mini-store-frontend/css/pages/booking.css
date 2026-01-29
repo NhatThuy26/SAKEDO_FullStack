@@ -1,4 +1,6 @@
-/* --- PHẦN HERO (NỀN ĐEN) --- */
+﻿/*BOOKING PAGE STYLES*/
+
+/*PHẦN HERO*/
 .booking-intro {
   background-color: #0c0c0c;
   padding: 100px 0;
@@ -49,7 +51,7 @@
   color: #d8b26e;
 }
 
-/* Visual Layering */
+/*VISUAL LAYERING*/
 .intro-visual {
   position: relative;
   width: 450px;
@@ -83,7 +85,7 @@
   z-index: 5;
 }
 
-/* --- PHẦN FORM (NỀN TRẮNG) --- */
+/*PHẦN FORM*/
 .booking-form-area {
   padding: 120px 0;
   padding-top: 140px;
@@ -129,17 +131,14 @@
   background: #fff;
 }
 
-/* Booking button frame & style */
+/*BOOKING BUTTON*/
 .btn-frame {
   margin-top: 16px;
   width: 100%;
   max-width: 560px;
-  /* match form width */
   margin: 0 auto;
-  /* center in form column */
   padding: 6px;
   background: #efe2b8;
-  /* subtle light gold frame */
   border-radius: 14px;
 }
 
@@ -175,7 +174,7 @@
   box-shadow: 0 0 0 4px rgba(216, 178, 110, 0.12);
 }
 
-/* Image Capsule Style */
+/*IMAGE CAPSULE*/
 .image-side {
   position: relative;
   display: flex;
@@ -186,7 +185,6 @@
   width: 240px;
   height: 380px;
   border-radius: 120px;
-  /* Tạo hình con nhộng */
   overflow: hidden;
 }
 
@@ -217,7 +215,7 @@
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* --- WELCOME TO SAKEDO SECTION --- */
+/*WELCOME SECTION*/
 .welcome-section {
   padding: 100px 0;
   background-color: #ffffff;
@@ -230,7 +228,6 @@
   gap: 40px;
 }
 
-/* Left Capsule Image - Pho */
 .welcome-img-left {
   flex-shrink: 0;
   position: relative;
@@ -274,7 +271,7 @@
   transform: scale(1.05);
 }
 
-/* Center Content */
+/*WELCOME CONTENT*/
 .welcome-content {
   flex: 1;
   text-align: center;
@@ -328,7 +325,7 @@
   border-color: #d8b26e;
 }
 
-/* Right Images */
+/*WELCOME IMAGES RIGHT*/
 .welcome-img-right {
   position: relative;
   flex-shrink: 0;
@@ -362,7 +359,7 @@
   margin-left: 0;
 }
 
-/* Restaurant Badge - Circular Rotating Text SVG */
+/*RESTAURANT BADGE*/
 .restaurant-badge {
   position: absolute;
   right: -60px;
@@ -396,7 +393,7 @@
   }
 }
 
-/* Responsive */
+/*RESPONSIVE WELCOME*/
 @media (max-width: 1200px) {
   .welcome-wrapper {
     flex-wrap: wrap;
@@ -439,7 +436,7 @@
   }
 }
 
-/* --- PROMOTION SECTION - ĂN CƠM NHÀ --- */
+/*PROMO SECTION*/
 .promo-section {
   padding: 100px 0;
   background-color: #fafafa;
@@ -452,7 +449,6 @@
   gap: 50px;
 }
 
-/* Left Title */
 .promo-title-left {
   flex: 0 0 250px;
 }
@@ -464,7 +460,6 @@
   line-height: 1.2;
 }
 
-/* Center Image */
 .promo-image-center {
   position: relative;
   flex: 0 0 auto;
@@ -514,7 +509,7 @@
   object-fit: cover;
 }
 
-/* Right Benefits */
+/*PROMO BENEFITS*/
 .promo-benefits {
   flex: 0 0 280px;
 }
@@ -566,7 +561,7 @@
   box-shadow: 0 12px 25px rgba(216, 178, 110, 0.4);
 }
 
-/* Promo Section Responsive */
+/*RESPONSIVE PROMO*/
 @media (max-width: 1200px) {
   .promo-wrapper {
     flex-wrap: wrap;
@@ -618,7 +613,7 @@
   }
 }
 
-/* --- MENU REGION SECTION - BẾP NHÀ SAKEDO --- */
+/*MENU REGION SECTION*/
 .menu-region-section {
   padding: 100px 0;
   background-color: #f5f8fd;
@@ -720,7 +715,7 @@
   margin: 0;
 }
 
-/* Menu Region Responsive */
+/*RESPONSIVE MENU REGION*/
 @media (max-width: 1100px) {
   .menu-cards-wrapper {
     flex-wrap: wrap;
@@ -751,7 +746,7 @@
   }
 }
 
-/* --- FEATURES SECTION - TRỌN VẸN YÊU THƯƠNG --- */
+/*FEATURES SECTION*/
 .features-section {
   padding: 100px 0;
   background: linear-gradient(135deg, #e8f0f8 0%, #f5f8fd 100%);
@@ -835,7 +830,7 @@
   margin: 0;
 }
 
-/* Features Responsive */
+/*RESPONSIVE FEATURES*/
 @media (max-width: 1100px) {
   .features-header {
     flex-direction: column;
@@ -881,7 +876,7 @@
   }
 }
 
-/* --- PARTY SECTION - GÓC BẾP SAKEDO --- */
+/*PARTY SECTION*/
 .party-section {
   padding: 100px 0;
   background-color: #ffffff;
@@ -980,7 +975,7 @@
   box-shadow: 0 12px 30px rgba(216, 178, 110, 0.45);
 }
 
-/* Party Section Responsive */
+/*RESPONSIVE PARTY*/
 @media (max-width: 992px) {
   .party-card {
     flex-direction: column;
@@ -1019,7 +1014,7 @@
   }
 }
 
-/* Booking responsive tweaks */
+/*RESPONSIVE BOOKING BUTTON*/
 @media (max-width: 768px) {
   .btn-frame {
     max-width: 100%;

@@ -34,7 +34,6 @@ function renderProductInfo(product) {
 
   const imgElement = document.getElementById("detail-img");
   if (imgElement) {
-    // Xử lý ảnh hiển thị
     let imgSrc = product.image || "";
     if (!imgSrc.startsWith("http") && !imgSrc.startsWith("data:")) {
       imgSrc = `../assets/images/${imgSrc.replace(/^.*[\\\/]/, '')}`;
@@ -63,7 +62,6 @@ function renderProductInfo(product) {
   }
 }
 
-// 🔥 SỬA HÀM NÀY ĐỂ FIX LỖI LƯU ẢNH 🔥
 function addToCartDetail(isBuyNow) {
   if (!currentProduct) return;
 
@@ -72,12 +70,11 @@ function addToCartDetail(isBuyNow) {
   const note = document.getElementById("order-note").value;
   const priceToAdd = currentProduct.finalPrice || currentProduct.price;
 
-  // --- LÀM SẠCH ẢNH ---
   let cleanImage = currentProduct.image || "no-image.png";
   if (cleanImage.startsWith("data:")) {
-    cleanImage = "no-image.png"; // Không lưu base64 nặng
+    cleanImage = "no-image.png";
   } else if (!cleanImage.startsWith("http")) {
-    cleanImage = cleanImage.replace(/^.*[\\\\/]/, ''); // Chỉ lấy tên file
+    cleanImage = cleanImage.replace(/^.*[\\\\/]/, '');
   }
 
   const cartItem = {
@@ -85,24 +82,20 @@ function addToCartDetail(isBuyNow) {
     name: currentProduct.name,
     price: priceToAdd,
     originalPrice: currentProduct.price,
-    image: cleanImage, // Lưu ảnh sạch
+    image: cleanImage,
     quantity: qty,
     note: note,
   };
 
   if (isBuyNow) {
-    // 🔥 MUA NGAY: Lưu giỏ hàng cũ và tạo giỏ hàng mới chỉ với món này
     const existingCart = localStorage.getItem("cart");
     if (existingCart) {
       localStorage.setItem("cart_backup", existingCart);
     }
-    // Tạo giỏ hàng mới chỉ chứa món đang mua
     localStorage.setItem("cart", JSON.stringify([cartItem]));
-    // Đánh dấu đây là mua ngay
     localStorage.setItem("buyNowMode", "true");
     window.location.href = "cart.html";
   } else {
-    // THÊM VÀO GIỎ: Logic cũ
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const existingItem = cart.find((item) => item.id == cartItem.id);
 
@@ -123,7 +116,6 @@ function addToCartDetail(isBuyNow) {
 function updateCartBadge() {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
-  // Tìm tất cả các phần tử có class cart-count
   const badges = document.querySelectorAll(".cart-count");
   badges.forEach((badge) => {
     badge.innerText = totalQty;

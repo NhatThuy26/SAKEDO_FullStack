@@ -1,179 +1,150 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Thanh Toán - Sakedo</title>
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;600;700&family=Fruktur&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thanh Toán - Sakedo</title>
 
-    <link rel="stylesheet" href="../css/base/variables.css" />
-    <link rel="stylesheet" href="../css/base/header.css" />
-    <link rel="stylesheet" href="../css/pages/global.css" />
-    <link rel="stylesheet" href="../css/pages/checkout.css" />
-  </head>
-  <body>
-    <header class="header">
-      <div class="container header-inner">
-        <a href="/index.html" class="logo">
-          <img src="/assets/images/logo.png" alt="Sakedo Logo" />
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;600;700&family=Fruktur&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="../css/base/variables.css" />
+  <link rel="stylesheet" href="../css/base/header.css" />
+  <link rel="stylesheet" href="../css/pages/global.css" />
+  <link rel="stylesheet" href="../css/pages/checkout.css" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="global.html" class="logo">
+        <img src="../assets/images/logo.png" alt="Sakedo Logo" />
+      </a>
+      <nav class="navbar">
+        <a href="cart.html" class="nav-link">
+          <i class="fas fa-arrow-left nav-icon"></i> Quay lại giỏ hàng
         </a>
-        <nav class="navbar">
-          <a href="/pages/cart.html" class="nav-link">
-            <i class="fas fa-arrow-left" style="margin-right: 5px"></i> Quay lại
-            giỏ hàng
-          </a>
-        </nav>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container checkout-container">
+    <div class="info-section">
+      <h2 class="section-title">Thông Tin Giao Hàng</h2>
+
+      <div class="delivery-note">
+        <i class="fas fa-shipping-fast"></i>
+        <span>
+          <strong>Lưu ý quan trọng:</strong> Hiện tại Sakedo chỉ hỗ trợ giao
+          hàng trong khu vực
+          <strong class="highlight-text">TP. Hồ Chí Minh</strong> để đảm bảo
+          hương vị và chất lượng món ăn được trọn vẹn nhất.
+        </span>
       </div>
-    </header>
 
-    <main class="container checkout-container">
-      <div class="info-section">
-        <h2 class="section-title">Thông Tin Giao Hàng</h2>
+      <form id="checkout-form" onsubmit="return false;">
+        <div class="form-group">
+          <label class="form-label">Họ và tên người nhận (*)</label>
+          <input type="text" id="cus-name" class="form-input" placeholder="Ví dụ: Nguyễn Văn A" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Số điện thoại (*)</label>
+          <input type="tel" id="cus-phone" class="form-input" placeholder="Ví dụ: 0901234567" required />
+        </div>
 
-        <div class="delivery-note">
-          <i class="fas fa-shipping-fast"></i>
-          <span>
-            <strong>Lưu ý quan trọng:</strong> Hiện tại Sakedo chỉ hỗ trợ giao
-            hàng trong khu vực
-            <strong style="color: #d32f2f">TP. Hồ Chí Minh</strong> để đảm bảo
-            hương vị và chất lượng món ăn được trọn vẹn nhất.
+        <div class="form-group">
+          <label class="form-label">Tỉnh / Thành phố</label>
+          <input type="text" class="form-input form-input-readonly" value="TP. Hồ Chí Minh" readonly />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Khu vực giao hàng (*)</label>
+          <select id="shipping-district" class="form-input" onchange="calculateShipping()" required>
+            <option value="" disabled selected>
+              -- Vui lòng chọn Quận/Huyện --
+            </option>
+            <option value="15000">Quận 1</option>
+            <option value="15000">Quận 3</option>
+            <option value="20000">Quận 5</option>
+            <option value="20000">Quận 10</option>
+            <option value="25000">Quận Bình Thạnh</option>
+            <option value="30000">TP. Thủ Đức</option>
+            <option value="35000">Quận 7</option>
+            <option value="40000">Huyện Bình Chánh</option>
+            <option value="50000">Các quận khác</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Địa chỉ chi tiết (*)</label>
+          <input type="text" id="cus-address-detail" class="form-input" placeholder="Số nhà, tên đường, tên tòa nhà..."
+            required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Ghi chú cho đơn hàng</label>
+          <textarea id="cus-note" class="form-input"
+            placeholder="Ví dụ: Giao giờ hành chính, gọi trước khi giao..."></textarea>
+        </div>
+      </form>
+    </div>
+
+    <div class="order-summary">
+      <h2 class="section-title section-title-sm">
+        Đơn Hàng Của Bạn
+      </h2>
+
+      <div id="mini-cart-list"></div>
+
+      <div class="order-row">
+        <span>Tạm tính:</span>
+        <span id="ck-subtotal">0đ</span>
+      </div>
+      <div class="order-row">
+        <span>Phí vận chuyển:</span>
+        <span id="shipping-fee-display" class="shipping-fee">0đ</span>
+      </div>
+
+      <div class="checkout-summary-total">
+        <span>Tổng thanh toán:</span>
+        <span id="ck-total" class="total-price">0đ</span>
+      </div>
+
+      <!-- PHƯƠNG THỨC THANH TOÁN -->
+      <div class="payment-methods">
+        <h4>Phương thức thanh toán</h4>
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod" value="cod" checked>
+          <span class="option-content">
+            <i class="fas fa-money-bill-wave"></i>
+            <div class="option-text">
+              <span class="option-title">Tiền mặt (COD)</span>
+              <span class="option-desc">Thanh toán khi nhận hàng</span>
+            </div>
           </span>
-        </div>
-
-        <form id="checkout-form" onsubmit="return false;">
-          <div class="form-group">
-            <label class="form-label">Họ và tên người nhận (*)</label>
-            <input
-              type="text"
-              id="cus-name"
-              class="form-input"
-              placeholder="Ví dụ: Nguyễn Văn A"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Số điện thoại (*)</label>
-            <input
-              type="tel"
-              id="cus-phone"
-              class="form-input"
-              placeholder="Ví dụ: 0901234567"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Tỉnh / Thành phố</label>
-            <input
-              type="text"
-              class="form-input"
-              value="TP. Hồ Chí Minh"
-              readonly
-              style="
-                background-color: #eee;
-                cursor: not-allowed;
-                font-weight: bold;
-                color: #555;
-              "
-            />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Khu vực giao hàng (*)</label>
-            <select
-              id="shipping-district"
-              class="form-input"
-              onchange="calculateShipping()"
-              required
-            >
-              <option value="" disabled selected>
-                -- Vui lòng chọn Quận/Huyện --
-              </option>
-              <option value="15000">Quận 1</option>
-              <option value="15000">Quận 3</option>
-              <option value="20000">Quận 5</option>
-              <option value="20000">Quận 10</option>
-              <option value="25000">Quận Bình Thạnh</option>
-              <option value="30000">TP. Thủ Đức</option>
-              <option value="35000">Quận 7</option>
-              <option value="40000">Huyện Bình Chánh</option>
-              <option value="50000">Các quận khác</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Địa chỉ chi tiết (*)</label>
-            <input
-              type="text"
-              id="cus-address-detail"
-              class="form-input"
-              placeholder="Số nhà, tên đường, tên tòa nhà..."
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Ghi chú cho đơn hàng</label>
-            <textarea
-              id="cus-note"
-              class="form-input"
-              placeholder="Ví dụ: Giao giờ hành chính, gọi trước khi giao..."
-            ></textarea>
-          </div>
-        </form>
+        </label>
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod" value="bank">
+          <span class="option-content">
+            <i class="fas fa-qrcode"></i>
+            <div class="option-text">
+              <span class="option-title">Chuyển khoản QR</span>
+              <span class="option-desc">Quét mã QR để thanh toán</span>
+            </div>
+          </span>
+        </label>
       </div>
 
-      <div class="order-summary">
-        <h2 class="section-title" style="font-size: 1.5rem; border: none">
-          Đơn Hàng Của Bạn
-        </h2>
+      <button type="button" class="btn-confirm" onclick="submitOrder()">
+        XÁC NHẬN ĐẶT HÀNG
+      </button>
+    </div>
+  </main>
 
-        <div id="mini-cart-list"></div>
+  <script src="../js/pages/global.js"></script>
+  <script src="../js/pages/checkout.js"></script>
+</body>
 
-        <div class="order-row">
-          <span>Tạm tính:</span>
-          <span id="ck-subtotal">0đ</span>
-        </div>
-        <div class="order-row">
-          <span>Phí vận chuyển:</span>
-          <span
-            id="shipping-fee-display"
-            style="font-weight: bold; color: #28a745"
-            >0đ</span
-          >
-        </div>
-
-        <div
-          class="summary-total"
-          style="
-            margin-top: 20px;
-            border-top: 1px dashed #ccc;
-            padding-top: 15px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 1.2rem;
-            font-weight: bold;
-          "
-        >
-          <span>Tổng thanh toán:</span>
-          <span id="ck-total" style="color: #d32f2f">0đ</span>
-        </div>
-
-        <button type="button" class="btn-confirm" onclick="submitOrder()">
-          XÁC NHẬN ĐẶT HÀNG
-        </button>
-      </div>
-    </main>
-
-    <script src="../js/pages/global.js"></script>
-    <script src="../js/pages/checkout.js"></script>
-  </body>
 </html>

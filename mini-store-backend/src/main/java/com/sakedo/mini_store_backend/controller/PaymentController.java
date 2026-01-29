@@ -19,7 +19,6 @@ public class PaymentController {
     private final String apiKey = "dff450a3-9c81-4679-b1fc-9e00d801e588";
     private final String checksumKey = "da3433f6c76493b96835f307946e45f369c904eed47de91e93f102599b0652e2";
 
-    // Tạo RestTemplate với timeout cao hơn để tránh lỗi Connection Reset
     private RestTemplate createRestTemplate() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(30000); // 30 giây
@@ -33,7 +32,6 @@ public class PaymentController {
             int amount = Integer.parseInt(requestData.get("amount").toString());
             long orderCode = System.currentTimeMillis() / 1000;
 
-            // Link trả về global.html (Trang chủ của bạn)
             String cancelUrl = "http://127.0.0.1:5500/mini-store-frontend/pages/global.html?status=CANCELLED";
             String returnUrl = "http://127.0.0.1:5500/mini-store-frontend/pages/global.html?payment=success";
             String description = "Nha hang Sakedo";
@@ -54,7 +52,6 @@ public class PaymentController {
             body.put("returnUrl", returnUrl);
             body.put("signature", signature);
 
-            // Sử dụng RestTemplate với cấu hình timeout
             RestTemplate restTemplate = createRestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);

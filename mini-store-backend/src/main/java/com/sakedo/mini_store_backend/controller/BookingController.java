@@ -18,7 +18,6 @@ public class BookingController {
     @PostMapping("/create")
     public ResponseEntity<?> createBooking(@RequestBody Booking booking) {
         try {
-            // Gọi đúng phương thức đã định nghĩa ở Service
             Booking savedBooking = bookingService.createBooking(booking);
             return ResponseEntity.ok(savedBooking);
         } catch (Exception e) {
