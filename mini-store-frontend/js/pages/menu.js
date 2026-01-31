@@ -1,7 +1,137 @@
 document.addEventListener("DOMContentLoaded", () => {
   fetchProducts();
   updateCartBadge();
+
+  // Xử lý tham số tìm kiếm từ URL
+  setTimeout(() => {
+    handleSearchParams();
+  }, 500); // Đợi render xong rồi mới scroll
 });
+
+// Xử lý tham số tìm kiếm từ header
+function handleSearchParams() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const productId = urlParams.get("productId");
+  const section = urlParams.get("section");
+  const searchName = urlParams.get("name");
+  const searchQuery = urlParams.get("search");
+
+  if (productId && section) {
+    // Cuộn đến section chứa món ăn
+    scrollToSection(section);
+
+    // Highlight món ăn
+    setTimeout(() => {
+      highlightProduct(productId, searchName);
+    }, 300);
+  } else if (searchQuery) {
+    // Tìm kiếm chung - highlight tất cả món khớp
+    highlightSearchResults(searchQuery);
+  }
+}
+
+// Cuộn đến section
+function scrollToSection(sectionName) {
+  let sectionElement = null;
+
+  switch (sectionName) {
+    case "best-sellers":
+      sectionElement = document.querySelector(".best-selling-section");
+      break;
+    case "daily-offers":
+      sectionElement = document.querySelector(".offer-section");
+      break;
+    case "main-dishes":
+      sectionElement = document.querySelector(".suggest-section");
+      break;
+    case "desserts":
+      sectionElement = document.querySelector(".dessert-section");
+      break;
+  }
+
+  if (sectionElement) {
+    sectionElement.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+// Highlight món ăn cụ thể
+function highlightProduct(productId, productName) {
+  // Tìm tất cả product cards
+  const allCards = document.querySelectorAll(".product-card, .offer-card, .dessert-card");
+
+  allCards.forEach(card => {
+    const cardName = card.querySelector(".product-title, .offer-title, .dessert-title");
+    if (cardName && productName && cardName.textContent.includes(decodeURIComponent(productName))) {
+      card.classList.add("search-highlight");
+      card.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      // Xóa highlight sau 3 giây
+      setTimeout(() => {
+        card.classList.remove("search-highlight");
+      }, 3000);
+    }
+  });
+}
+
+// Highlight tất cả kết quả tìm kiếm
+function highlightSearchResults(query) {
+  const decodedQuery = decodeURIComponent(query).toLowerCase();
+  const allCards = document.querySelectorAll(".product-card, .offer-card, .dessert-card");
+  let firstMatch = null;
+
+  allCards.forEach(card => {
+    const cardName = card.querySelector(".product-title, .offer-title, .dessert-title");
+    if (cardName && cardName.textContent.toLowerCase().includes(decodedQuery)) {
+      card.classList.add("search-highlight");
+      if (!firstMatch) firstMatch = card;
+
+      // Xóa highlight sau 5 giây
+      setTimeout(() => {
+        card.classList.remove("search-highlight");
+      }, 5000);
+    }
+  });
+
+  // Cuộn đến kết quả đầu tiên
+  if (firstMatch) {
+    firstMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+}
+
+// Dữ liệu fallback khi không kết nối được Backend
+const fallbackProducts = [
+  // Best Sellers (8 món)
+  { id: 1, name: "Cơm Tấm Sườn Bì Chả", price: 65000, discount: 15, bestSeller: true, category: "steak", image: "comtam.png" },
+  { id: 2, name: "Phở Bò Tái Nạm", price: 55000, discount: 10, bestSeller: true, category: "steak", image: "phobo.png" },
+  { id: 3, name: "Bánh Mì Chảo", price: 45000, discount: 20, bestSeller: true, category: "steak", image: "bmichao.png" },
+  { id: 4, name: "Bún Bò Huế", price: 60000, discount: 0, bestSeller: true, category: "steak", image: "bunbo.png" },
+  { id: 5, name: "Hủ Tiếu Nam Vang", price: 50000, discount: 15, bestSeller: true, category: "steak", image: "hutieu.png" },
+  { id: 6, name: "Cơm Gà Xối Mỡ", price: 55000, discount: 10, bestSeller: true, category: "steak", image: "comga.png" },
+  { id: 7, name: "Bánh Xèo Giòn", price: 45000, discount: 0, bestSeller: true, category: "steak", image: "banhxeo.png" },
+  { id: 8, name: "Gỏi Cuốn Tôm Thịt", price: 40000, discount: 0, bestSeller: true, category: "steak", image: "goicuonthit.png" },
+
+  // Main Dishes - Món chính (9 món)
+  { id: 9, name: "Cơm Chiên Dương Châu", price: 45000, discount: 0, bestSeller: false, category: "steak", image: "comchien.png" },
+  { id: 10, name: "Bún Riêu Cua", price: 55000, discount: 0, bestSeller: false, category: "steak", image: "bunrieuu.png" },
+  { id: 11, name: "Nem Nướng Nha Trang", price: 50000, discount: 0, bestSeller: false, category: "steak", image: "nemnuong.png" },
+  { id: 12, name: "Thịt Kho Tàu", price: 60000, discount: 0, bestSeller: false, category: "steak", image: "thitkho.png" },
+  { id: 13, name: "Cá Kho Tộ", price: 65000, discount: 0, bestSeller: false, category: "steak", image: "cakho.png" },
+  { id: 14, name: "Mì Quảng Đà Nẵng", price: 50000, discount: 0, bestSeller: false, category: "steak", image: "miquang2.png" },
+  { id: 15, name: "Gà Nướng Mật Ong", price: 85000, discount: 0, bestSeller: false, category: "steak", image: "ganuong.png" },
+  { id: 16, name: "Vịt Quay Bắc Kinh", price: 95000, discount: 0, bestSeller: false, category: "steak", image: "vitquay.png" },
+  { id: 17, name: "Bò Kho Bánh Mì", price: 55000, discount: 0, bestSeller: false, category: "steak", image: "bokho.png" },
+
+  // Desserts & Drinks - Tráng miệng & Đồ uống (9 món - không có discount)
+  { id: 18, name: "Chè Khúc Bạch", price: 35000, discount: 0, bestSeller: false, category: "dessert", image: "khucbach.png" },
+  { id: 19, name: "Chè Thái Thập Cẩm", price: 35000, discount: 0, bestSeller: false, category: "dessert", image: "chethai.png" },
+  { id: 20, name: "Chè Chuối Nướng", price: 30000, discount: 0, bestSeller: false, category: "dessert", image: "chechuoi.png" },
+  { id: 21, name: "Bánh Flan Caramen", price: 25000, discount: 0, bestSeller: false, category: "dessert", image: "banhplan.png" },
+  { id: 22, name: "Bánh Đậu Xanh", price: 30000, discount: 0, bestSeller: false, category: "dessert", image: "banhdau.png" },
+  { id: 23, name: "Bánh Lọt Lá Dứa", price: 30000, discount: 0, bestSeller: false, category: "dessert", image: "banhlot.png" },
+  { id: 24, name: "Trà Sen Vàng", price: 35000, discount: 0, bestSeller: false, category: "dessert", image: "trasen.png" },
+  { id: 25, name: "Nước Chanh Tươi", price: 25000, discount: 0, bestSeller: false, category: "dessert", image: "nuocchanh.png" },
+  { id: 26, name: "Bánh Dâu Tây", price: 40000, discount: 0, bestSeller: false, category: "dessert", image: "dautay.png" },
+];
 
 async function fetchProducts() {
   try {
@@ -17,6 +147,13 @@ async function fetchProducts() {
     renderDesserts(products);
   } catch (error) {
     console.error("Lỗi:", error);
+    console.log("--> Sử dụng dữ liệu fallback cho trang Menu...");
+
+    // Sử dụng dữ liệu fallback khi không kết nối được backend
+    renderBestSellers(fallbackProducts);
+    renderDailyOffers(fallbackProducts);
+    renderMainDishes(fallbackProducts);
+    renderDesserts(fallbackProducts);
   }
 }
 

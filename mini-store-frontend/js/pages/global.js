@@ -88,6 +88,91 @@ document.addEventListener("DOMContentLoaded", function () {
     return `../assets/images/${imgName}`;
   }
 
+  // Dữ liệu fallback khi không kết nối được Backend
+  const fallbackProducts = [
+    { id: 1, name: "Cơm Tấm Sườn Bì Chả", price: 65000, discount: 15, bestSeller: true, image: "comtam.png" },
+    { id: 2, name: "Phở Bò Tái Nạm", price: 55000, discount: 10, bestSeller: true, image: "phobo.png" },
+    { id: 3, name: "Bánh Mì Chảo", price: 45000, discount: 20, bestSeller: true, image: "bmichao.png" },
+    { id: 4, name: "Hủ Tiếu Nam Vang", price: 50000, discount: 15, bestSeller: true, image: "hutieu.png" },
+    { id: 5, name: "Bún Bò Huế", price: 60000, discount: 0, bestSeller: true, image: "bunbo.png" },
+    { id: 6, name: "Gỏi Cuốn Tôm Thịt", price: 40000, discount: 0, bestSeller: true, image: "goicuonthit.png" },
+    { id: 7, name: "Chè Thái Thập Cẩm", price: 35000, discount: 0, bestSeller: true, image: "chethai.png" },
+    { id: 8, name: "Coffee Sữa Đá", price: 35000, discount: 0, bestSeller: true, image: "coffee_set.png" },
+  ];
+
+  function renderPromoSection(promoContainer, products) {
+    const promoList = products.filter((p) => p.discount > 0).slice(0, 4);
+    promoContainer.innerHTML = "";
+
+    if (promoList.length === 0) {
+      promoContainer.innerHTML = "<p>Hiện chưa có chương trình khuyến mãi.</p>";
+    } else {
+      promoList.forEach((product) => {
+        const imgPath = getImageUrl(product.image);
+        const detailLink = `product-detail.html?id=${product.id}`;
+        const html = `
+            <div class="promo-card">
+                <a href="${detailLink}" style="display:block; width:100%; height:100%;">
+                    <img src="${imgPath}" alt="${product.name}" class="promo-img" 
+                         onerror="this.src='https://placehold.co/300x300?text=Sakedo'"/>
+                    <div class="promo-overlay">
+                        <h3 class="dish-name">${product.name}</h3>
+                    </div>
+                    <div class="discount-badge"><span>-${product.discount}%</span></div>
+                </a>
+            </div>
+        `;
+        promoContainer.innerHTML += html;
+      });
+    }
+  }
+
+  function renderMustTrySection(mustTryContainer, products) {
+    const bestSellerList = products.filter((p) => p.bestSeller === true).slice(0, 8);
+    mustTryContainer.innerHTML = "";
+
+    if (bestSellerList.length === 0) {
+      mustTryContainer.innerHTML = '<p style="text-align:center; color:#666;">Đang cập nhật món ngon...</p>';
+      return;
+    }
+
+    bestSellerList.forEach((product) => {
+      const oldPrice = product.price * (1 + (product.discount || 10) / 100);
+      const detailLink = `product-detail.html?id=${product.id}`;
+      const imgPath = getImageUrl(product.image);
+
+      const html = `
+            <div class="food-card">
+                <div class="card-header">
+                    <span class="sale-badge">HOT</span>
+                    <div class="img-bg"></div>
+                    <a href="${detailLink}">
+                        <img src="${imgPath}" alt="${product.name}" class="food-img"
+                             onerror="this.src='https://placehold.co/200x200?text=Mon+Ngon'"/>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <h3 class="food-title">
+                        <a href="${detailLink}" style="color: inherit; text-decoration: none;">
+                            ${product.name}
+                        </a>
+                    </h3>
+                    <div class="price-row">
+                        <div class="price-info">
+                            <span class="old-price">${oldPrice.toLocaleString()}đ</span>
+                            <span class="new-price">${product.price.toLocaleString()}đ</span>
+                        </div>
+                        <button class="cart-btn-small" onclick="window.location.href='${detailLink}'">
+                            <i class="fas fa-shopping-bag"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+      mustTryContainer.innerHTML += html;
+    });
+  }
+
   async function fetchAndRenderHomeData() {
     const promoContainer = document.getElementById("promo-container");
     const mustTryContainer = document.getElementById("mustTryTrack");
@@ -104,76 +189,23 @@ document.addEventListener("DOMContentLoaded", function () {
       const products = await response.json();
 
       if (promoContainer) {
-        const promoList = products.filter((p) => p.discount > 0).slice(0, 4);
-        promoContainer.innerHTML = "";
-
-        if (promoList.length === 0) {
-          promoContainer.innerHTML = "<p>Hiện chưa có chương trình khuyến mãi.</p>";
-        } else {
-          promoList.forEach((product) => {
-            const imgPath = getImageUrl(product.image);
-            const detailLink = `product-detail.html?id=${product.id}`;
-            const html = `
-                <div class="promo-card">
-                    <a href="${detailLink}" style="display:block; width:100%; height:100%;">
-                        <img src="${imgPath}" alt="${product.name}" class="promo-img" 
-                             onerror="this.src='https://placehold.co/300x300?text=Sakedo'"/>
-                        <div class="promo-overlay">
-                            <h3 class="dish-name">${product.name}</h3>
-                        </div>
-                        <div class="discount-badge"><span>-${product.discount}%</span></div>
-                    </a>
-                </div>
-            `;
-            promoContainer.innerHTML += html;
-          });
-        }
+        renderPromoSection(promoContainer, products);
       }
 
       if (mustTryContainer) {
-        const bestSellerList = products.filter((p) => p.bestSeller === true).slice(0, 8);
-        mustTryContainer.innerHTML = "";
-
-        bestSellerList.forEach((product) => {
-          const oldPrice = product.price * (1 + (product.discount || 10) / 100);
-          const detailLink = `product-detail.html?id=${product.id}`;
-          const imgPath = getImageUrl(product.image);
-
-          const html = `
-                <div class="food-card">
-                    <div class="card-header">
-                        <span class="sale-badge">HOT</span>
-                        <div class="img-bg"></div>
-                        <a href="${detailLink}">
-                            <img src="${imgPath}" alt="${product.name}" class="food-img"
-                                 onerror="this.src='https://placehold.co/200x200?text=Mon+Ngon'"/>
-                        </a>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="food-title">
-                            <a href="${detailLink}" style="color: inherit; text-decoration: none;">
-                                ${product.name}
-                            </a>
-                        </h3>
-                        <div class="price-row">
-                            <div class="price-info">
-                                <span class="old-price">${oldPrice.toLocaleString()}đ</span>
-                                <span class="new-price">${product.price.toLocaleString()}đ</span>
-                            </div>
-                            <button class="cart-btn-small" onclick="window.location.href='${detailLink}'">
-                                <i class="fas fa-shopping-bag"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-          mustTryContainer.innerHTML += html;
-        });
+        renderMustTrySection(mustTryContainer, products);
       }
     } catch (error) {
       console.error("Lỗi khi gọi API:", error);
-      if (promoContainer)
-        promoContainer.innerHTML = '<p style="color:red; text-align:center">Không kết nối được Server Backend!</p>';
+      console.log("--> Sử dụng dữ liệu fallback...");
+
+      // Sử dụng dữ liệu fallback khi không kết nối được backend
+      if (promoContainer) {
+        renderPromoSection(promoContainer, fallbackProducts);
+      }
+      if (mustTryContainer) {
+        renderMustTrySection(mustTryContainer, fallbackProducts);
+      }
     }
   }
 

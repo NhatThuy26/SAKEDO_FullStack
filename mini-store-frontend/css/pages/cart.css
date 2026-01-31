@@ -396,3 +396,131 @@
 .item-price-bold {
   font-weight: 700;
 }
+
+/* ===== Thanh Chọn Tất Cả ===== */
+.cart-select-all {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 20px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #eee;
+}
+
+.select-all-text {
+  font-weight: 600;
+  color: #333;
+}
+
+.selected-count {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+/* ===== Custom Checkbox ===== */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  height: 22px;
+  width: 22px;
+  background-color: #fff;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox-container:hover input~.checkmark {
+  border-color: #d8b26e;
+}
+
+.checkbox-container input:checked~.checkmark {
+  background-color: #d8b26e;
+  border-color: #d8b26e;
+}
+
+.checkmark:after {
+  content: "";
+  display: none;
+}
+
+.checkbox-container input:checked~.checkmark:after {
+  display: block;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  margin-bottom: 2px;
+}
+
+/* ===== Item Checkbox ===== */
+.item-checkbox {
+  margin-right: 5px;
+}
+
+.item-checkbox .checkmark {
+  height: 20px;
+  width: 20px;
+}
+
+/* ===== Cart Item Selected State ===== */
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  border: 2px solid #eee;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  background: #fff;
+  transition: all 0.3s;
+}
+
+.cart-item.selected {
+  border-color: #d8b26e;
+  background: linear-gradient(135deg, #fffbf5 0%, #fff 100%);
+  box-shadow: 0 3px 10px rgba(216, 178, 110, 0.15);
+}
+
+.cart-item:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .cart-select-all {
+    flex-wrap: wrap;
+  }
+
+  .cart-item {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .item-checkbox {
+    order: -1;
+  }
+
+  .qty-ctrl {
+    margin-left: auto;
+  }
+}

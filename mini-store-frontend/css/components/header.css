@@ -219,3 +219,131 @@
 .btn-logout-icon:hover {
     color: #b71c1c;
 }
+
+/* ===== Thanh Tìm Kiếm Mini ===== */
+.header-search {
+    display: flex;
+    align-items: center;
+    background: #f5f5f5;
+    border-radius: 25px;
+    padding: 5px 5px 5px 15px;
+    margin-right: 15px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.header-search:focus-within {
+    background: #fff;
+    border-color: #d8b26e;
+    box-shadow: 0 2px 8px rgba(216, 178, 110, 0.2);
+}
+
+.header-search .search-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    width: 140px;
+    color: #333;
+    font-family: inherit;
+}
+
+.header-search .search-input::placeholder {
+    color: #999;
+}
+
+.header-search .search-btn {
+    background: #d8b26e;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.header-search .search-btn:hover {
+    background: #c59f5e;
+    transform: scale(1.05);
+}
+
+.header-search .search-btn i {
+    color: #fff;
+    font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .header-search {
+        display: none;
+    }
+}
+
+/* ===== Dropdown Gợi Ý Tìm Kiếm ===== */
+.search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    margin-top: 8px;
+    display: none;
+    z-index: 1000;
+    overflow: hidden;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover,
+.suggestion-item.selected {
+    background: linear-gradient(135deg, #fffbf5 0%, #fff9ef 100%);
+}
+
+.suggestion-item i {
+    color: #d8b26e;
+    font-size: 14px;
+    width: 20px;
+    text-align: center;
+}
+
+.suggestion-item span {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+}
+
+.suggestion-item span strong {
+    color: #d8b26e;
+    font-weight: 700;
+}
+
+.suggestion-empty {
+    padding: 15px;
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+}
+
+/* Header search position relative for dropdown */
+.header-search {
+    position: relative;
+}

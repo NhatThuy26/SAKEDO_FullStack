@@ -29,12 +29,22 @@
       <h1 class="page-title">Giỏ Hàng Của Bạn</h1>
 
       <div id="cart-content" class="cart-layout cart-layout-simple">
+        <!-- Thanh Chọn tất cả -->
+        <div class="cart-select-all">
+          <label class="checkbox-container">
+            <input type="checkbox" id="select-all-checkbox" onchange="toggleSelectAll()">
+            <span class="checkmark"></span>
+            <span class="select-all-text">Chọn tất cả</span>
+          </label>
+          <span id="selected-count" class="selected-count">(0 món được chọn)</span>
+        </div>
+
         <div class="cart-list" id="cart-items-wrapper"></div>
 
         <!-- Tổng cộng và nút Mua hàng ngay -->
         <div class="cart-footer">
           <div class="cart-total-row">
-            <span>Tổng cộng:</span>
+            <span>Tổng cộng (<span id="selected-items-count">0</span> món):</span>
             <span id="final-total" class="final-total">0đ</span>
           </div>
           <button class="btn-checkout">

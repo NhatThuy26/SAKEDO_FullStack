@@ -695,3 +695,22 @@
 .more-menu-hidden {
   display: none;
 }
+
+/* ===== Highlight kết quả tìm kiếm ===== */
+.search-highlight {
+  animation: highlightPulse 0.6s ease-in-out 3;
+  border-color: #d8b26e !important;
+  box-shadow: 0 0 20px rgba(216, 178, 110, 0.5) !important;
+}
+
+@keyframes highlightPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(216, 178, 110, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 30px rgba(216, 178, 110, 0.8);
+  }
+}
